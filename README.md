@@ -1,3 +1,3 @@
-# Contributors : This Code is being developed and maintained by:
+# Contributors
 
 1.  Pranav Ajith
