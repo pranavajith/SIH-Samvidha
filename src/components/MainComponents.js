@@ -19,7 +19,7 @@ export { Component1 };
 const Component2 = () => {
     return (
         <a href="#" className="component third-width component-2">
-            <div className="overlay">
+            <div className="overlay overlay-locked">
                 <img src={lockImageUrl} alt="Locked" className="lock-icon" />
                 <p className="component-text">Legislature</p>
             </div>
@@ -32,7 +32,7 @@ export { Component2 };
 const Component3 = () => {
     return (
         <a href="#" className="component third-width component-3">
-            <div className="overlay">
+            <div className="overlay overlay-locked">
                 <img src={lockImageUrl} alt="Locked" className="lock-icon" />
                 <p className="component-text">Executive</p>
             </div>
@@ -45,7 +45,7 @@ export { Component3 };
 const Component4 = () => {
     return (
         <a href="#" className="component third-width component-4">
-            <div className="overlay">
+            <div className="overlay overlay-locked">
                 <img src={lockImageUrl} alt="Locked" className="lock-icon" />
                 <p className="component-text">Judiciary</p>
             </div>

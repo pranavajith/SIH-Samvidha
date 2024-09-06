@@ -6,13 +6,12 @@ html, body {
 }
 
 .footer {
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #585858;
+    color: #ffffff;
     text-align: center;
     padding: 15px 20px;
     position: relative;
     bottom: 0;
-    width: 100%;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     margin-top: auto;
 }
@@ -20,7 +19,7 @@ html, body {
 .footer-menu {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 0 0;
     display: flex;
     justify-content: center;
 }
@@ -31,7 +30,7 @@ html, body {
 
 .footer-menu li a {
     text-decoration: none;
-    color: #333;
+    color: #ffffff;
     font-size: 1rem;
     transition: color 0.3s ease;
 }
