@@ -22,7 +22,7 @@ html, body {
 }
 
 .component.full-width {
-    width: 100%;
+    /* width: 100%; */
     background-image: url('https://legal-wires.com/wp-content/uploads/light-of-Preamble-1024x455.png');
 }
 
@@ -53,10 +53,14 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4); /* Adjust the opacity for the shadow effect */
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+
+.overlay-locked {
+    background-color: rgba(0, 0, 0, 0.6); 
 }
 
 .lock-icon {
