@@ -38,7 +38,7 @@ const SplashScreen = () => {
     return (
         <div className={`intro ${hideIntro ? 'hide' : ''}`}>
             <div className="logo-header">
-                <span className="logo">Sam</span><span className="logo">vidha.</span>
+                <span className="logo">Sam</span><span className="logo">vidhan.</span>
             </div>
         </div>
     );
