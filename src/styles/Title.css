@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #f5f5f5;
+    background-color: #585858;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,7 +10,7 @@
 .navbar-brand {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
     margin: 0;
 }
 
@@ -27,7 +27,7 @@
 
 .navbar-item a {
     text-decoration: none;
-    color: #333;
+    color: #f8f8f8;
     font-size: 1rem;
     font-weight: 500;
     transition: color 0.3s ease;
