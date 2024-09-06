@@ -27,13 +27,13 @@ const questions = [
         //     { "value": "Equality", "correctStatus": false }, 
         //     { "value": "Fraternity", "correctStatus": true } 
         // ] }, 
-        // { "question": "According to the Preamble, which type of equality is guaranteed to Indian citizens?", 
-        // "Options": [ 
-        //     { "value": "Social", "correctStatus": false }, 
-        //     { "value": "Economic", "correctStatus": false }, 
-        //     { "value": "Political", "correctStatus": false }, 
-        //     { "value": "Status and Opportunity", "correctStatus": true } 
-        // ] } 
+        { "question": "According to the Preamble, which type of equality is guaranteed to Indian citizens?", 
+        "Options": [ 
+            { "value": "Social", "correctStatus": false }, 
+            { "value": "Economic", "correctStatus": false }, 
+            { "value": "Political", "correctStatus": false }, 
+            { "value": "Status and Opportunity", "correctStatus": true } 
+        ] } 
     ]
 
 export {questions};
