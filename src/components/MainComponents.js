@@ -1,17 +1,15 @@
-// MainComponents.js
-
 import './../styles/MainComponents.css';
 
 const lockImageUrl = 'https://www.freeiconspng.com/thumbs/lock-icon/lock-icon-11.png';
 
-const Component1 = () => {
-    return (
-        <a href="#" className="component full-width">
-            <div className="overlay">
-                <p className="component-text">Preamble</p>
-            </div>
-        </a>
-    );
+const Component1 = ({ onClick }) => {
+  return (
+    <a href="#" className="component full-width" onClick={onClick}>
+      <div className="overlay">
+        <p className="component-text">Preamble</p>
+      </div>
+    </a>
+  );
 };
 
 export { Component1 };
