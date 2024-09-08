@@ -44,14 +44,14 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.1); 
+    background-color: rgba(0, 0, 0, 0.2); 
 }
 
 .overlay-locked {
     background-size: cover;
     background-repeat: no-repeat; 
     background-position: center;
-    background-color: rgba(0, 0, 0, 0.4); 
+    background-color: rgba(0, 0, 0, 0.7); 
 }
 
 

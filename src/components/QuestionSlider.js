@@ -1,23 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../styles/QuestionSlider.css';
-import { questions as initialQuestions, preambleText } from './dummy-data/dummy-data'; 
 
-const QuestionSlider = () => {
-  const [questions, setQuestions] = useState(initialQuestions);
+const QuestionSlider = ({ display_questions, onComplete }) => {
+  const [questions, setQuestions] = useState(display_questions);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false); // New state for completion
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  useEffect(() => {
+    if (isCompleted && onComplete) {
+      const timer = setTimeout(() => {
+        onComplete();
+      }, 5000); // Wait for 5 seconds before calling onComplete
+
+      return () => clearTimeout(timer);
+    }
+  }, [isCompleted, onComplete]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setIsAnswered(true);
 
-    // If the answer is incorrect, append a new entry of the current question to the end of the list
     if (!option.correctStatus) {
       const updatedQuestions = [...questions];
       const currentQuestion = updatedQuestions[currentQuestionIndex];
-      updatedQuestions.push({ ...currentQuestion }); // Append a new entry of the same question
+      updatedQuestions.push({ ...currentQuestion });
       setQuestions(updatedQuestions);
     }
   };
@@ -26,10 +34,9 @@ const QuestionSlider = () => {
     setCurrentQuestionIndex((prevIndex) => {
       const nextIndex = (prevIndex + 1) % questions.length;
 
-      // Check if all questions have been answered
       if (nextIndex === 0) {
-        setIsCompleted(true); // Mark as completed
-        return prevIndex; // Stay on the current question
+        setIsCompleted(true);
+        return prevIndex;
       }
 
       return nextIndex;
@@ -42,11 +49,7 @@ const QuestionSlider = () => {
     return (
       <div className="completion-message">
         <h2>Congratulations!</h2>
-        <p>You have successfully learned about the Preamble!</p>
-        <div className="preamble-container">
-          <h3>The Preamble of the Indian Constitution</h3>
-          <p className="preamble-text">{preambleText}</p>
-        </div>
+        <p>You have successfully learned about the topic!</p>
       </div>
     );
   }
