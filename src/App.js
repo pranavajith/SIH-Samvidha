@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import './App.css';
 import { TitleBar } from './components/general-components/Title';
-import { Footer } from './components/general-components/Footer';
 import { SplashScreen } from './components/SpashScreen';
-import { Component1, Component2, Component3, Component4 } from './components/MainComponents';
-import QuestionSlider from './components/QuestionSlider'; // Import your QuestionSlider component
+import { urlList } from './urls';
+import { MainButton } from './components/MainComponents';
+import QuestionSlider from './components/QuestionSlider';
+
+console.log(urlList);
 
 function App() {
   const [showQuestionSlider, setShowQuestionSlider] = useState(false);
 
-  const handleComponent1Click = () => {
+  const handleMainClick = () => {
     setShowQuestionSlider(true);
   };
 
@@ -18,20 +20,24 @@ function App() {
       <SplashScreen />
       <TitleBar />
       {showQuestionSlider ? (
-        <QuestionSlider /> // Display the QuestionSlider component
+        <QuestionSlider /> 
       ) : (
         <>
-          <Component1 onClick={handleComponent1Click} />
-          <div style={{ display: 'flex', width: '100%', height: '50vh' }}>
-            <Component2 />
-            <Component3 />
-            <Component4 />
+          {/* First Row */}
+          <div className="flex-container" >
+            <MainButton imgUrl={urlList.PreambleUrl} buttonText={"Preamble"} onClick={handleMainClick} isLocked={false}/>
+          </div>
+          {/* Second Row */}
+          <div className="flex-container">
+            <MainButton imgUrl={urlList.LegislatureUrl} buttonText={"Legislature"} isLocked={true}/>
+            <MainButton imgUrl={urlList.ExecutiveUrl} buttonText={"Executive"} isLocked={true}/>
+            <MainButton imgUrl={urlList.JudicaryUrl} buttonText={"Judiciary"} isLocked={true}/>
           </div>
         </>
       )}
-      {/* <Footer /> */}
     </>
   );
 }
 
 export default App;
+
