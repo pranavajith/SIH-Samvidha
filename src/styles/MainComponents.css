@@ -19,32 +19,20 @@ html, body {
     background-position: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
+    flex-grow: 1;
+    flex-basis: 0;
 }
 
-.component.full-width {
-    /* width: 100%; */
-    background-image: url('https://legal-wires.com/wp-content/uploads/light-of-Preamble-1024x455.png');
-}
-
-.component-2 {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR2ZjfKmLE4olLUlPn1e5CGhK8ADxQeOiS_A&s');
-}
-
-.component-3 {
-    background-image: url('https://i.pinimg.com/originals/3a/f9/85/3af98539c7c6f98b629eaf46943bc761.jpg');
-}
-
-.component-4 {
-    background-image: url('https://images.thequint.com/thequint/2020-05/2179b199-eed8-4851-9571-b21aee09d148/Supreme_Court_Quint.jpg?auto=format,compress&fmt=webp&format=webp&w=1200&h=900&dpr=1.0');
-}
-
-.component.third-width {
-    width: 33.33%;
-}
 
 .component:hover {
     transform: scale(1.05);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .overlay {
@@ -60,17 +48,21 @@ html, body {
 }
 
 .overlay-locked {
-    background-color: rgba(0, 0, 0, 0.6); 
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.4); 
 }
+
 
 .lock-icon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px; /* Adjust size as needed */
+    width: 100px; 
     height: 100px;
-    opacity: 0.8; /* Slight transparency if desired */
+    opacity: 0.8; 
     background: none;
     border: none;
 }

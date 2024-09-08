@@ -1,54 +1,17 @@
 import './../styles/MainComponents.css';
+import { urlList } from '../urls';
 
-const lockImageUrl = 'https://www.freeiconspng.com/thumbs/lock-icon/lock-icon-11.png';
-
-const Component1 = ({ onClick }) => {
-  return (
-    <a href="#" className="component full-width" onClick={onClick}>
-      <div className="overlay">
-        <p className="component-text">Preamble</p>
-      </div>
-    </a>
-  );
-};
-
-export { Component1 };
-
-const Component2 = () => {
+const MainButton = ({ imgUrl, buttonText, onClick, isLocked }) => {
     return (
-        <a href="#" className="component third-width component-2">
-            <div className="overlay overlay-locked">
-                <img src={lockImageUrl} alt="Locked" className="lock-icon" />
-                <p className="component-text">Legislature</p>
+        <a href="#" className="component" style={{backgroundImage: `url(${imgUrl})`}}  onClick={onClick}>
+            <div
+                className={isLocked ? "overlay overlay-locked" : "overlay"}
+            >
+                {isLocked && <img src={urlList.LockUrl} alt="Locked" className="lock-icon" />}
+                <p className="component-text">{buttonText}</p>
             </div>
         </a>
     );
 };
 
-export { Component2 };
-
-const Component3 = () => {
-    return (
-        <a href="#" className="component third-width component-3">
-            <div className="overlay overlay-locked">
-                <img src={lockImageUrl} alt="Locked" className="lock-icon" />
-                <p className="component-text">Executive</p>
-            </div>
-        </a>
-    );
-};
-
-export { Component3 };
-
-const Component4 = () => {
-    return (
-        <a href="#" className="component third-width component-4">
-            <div className="overlay overlay-locked">
-                <img src={lockImageUrl} alt="Locked" className="lock-icon" />
-                <p className="component-text">Judiciary</p>
-            </div>
-        </a>
-    );
-};
-
-export { Component4 };
+export { MainButton };
