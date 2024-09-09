@@ -208,4 +208,89 @@ const preambleText = `
   IN OUR CONSTITUENT ASSEMBLY this twenty-sixth day of November, 1949, do HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.
 `;
 
-export {constitutional_questions};
+const constitutional_events = [
+    {
+      id: 1,
+      title: "Independence of India",
+      location: "New Delhi, India",
+      description: "India gained independence from British colonial rule on this day in 1947. The end of British rule marked the beginning of a new era for India as it embarked on its journey as a sovereign nation.",
+      date: "15 August 1947",
+      image: "https://www.rammadhav.in/wp-content/uploads/2022/08/Independence-Day-India-Getty.jpg"
+    },
+    {
+      id: 2,
+      title: "Constitution Adopted",
+      location: "New Delhi, India",
+      description: "On 26th November 1949, the Constituent Assembly of India formally adopted the Constitution of India. This was a significant milestone as it laid down the framework for the country's laws, governance, and fundamental rights.",
+      date: "26 November 1949",
+      image: "https://img1.wsimg.com/isteam/ip/63b04b47-d65a-4207-a58c-3e58f38419ef/op.jpg",
+    },
+    {
+      id: 3,
+      title: "Republic of India",
+      location: "New Delhi, India",
+      description: "The Constitution of India came into effect on 26th January 1950, transforming India from a British Dominion into a republic. This day, known as Republic Day, is celebrated to honor the adoption of the Constitution and India's democratic heritage.",
+      date: "26 January 1950",
+      image: "https://www.fairobserver.com/wp-content/uploads/2020/09/India.jpg",
+    },
+    {
+      id: 4,
+      title: "First Amendment Act",
+      location: "New Delhi, India",
+      description: "The First Amendment Act of 1951 was enacted to address issues related to freedom of speech, property rights, and other fundamental rights, aiming to balance individual rights with national security and public order.",
+      date: "18 June 1951",
+      image: "https://blog.examarly.com/wp-content/uploads/2022/10/1stAmend-44-1160x725.webp",
+    },
+    {
+      id: 5,
+      title: "States Reorganization Act",
+      location: "New Delhi, India",
+      description: "The States Reorganization Act of 1956 reorganized the boundaries of India's states and territories based on linguistic lines. This landmark legislation aimed at improving administrative efficiency and promoting regional harmony.",
+      date: "1 November 1956",
+      image: "https://st.adda247.com/https://www.studyiq.com/articles/wp-content/uploads/2023/01/13144953/Reorganisation-of-States.jpg",
+    },
+    {
+      id: 6,
+      title: "Constitution (42nd Amendment) Act",
+      location: "New Delhi, India",
+      description: "The 42nd Amendment Act of 1976 introduced significant changes to the Constitution, including alterations to the Preamble and the inclusion of Directive Principles of State Policy. It aimed to centralize powers and enhance the role of the government.",
+      date: "18 December 1976",
+      image: "https://unfoldlaw.in/wp-content/uploads/2023/12/42nd-Amendment.webp",
+    },
+    {
+      id: 7,
+      title: "Constitution (73rd Amendment) Act",
+      location: "New Delhi, India",
+      description: "The 73rd Amendment Act of 1992 aimed at strengthening the panchayati raj system and decentralized governance. It provided for the establishment of local self-government institutions and empowered rural areas through elected local bodies.",
+      date: "16 December 1992",
+      image: "https://media.geeksforgeeks.org/wp-content/uploads/20240213124445/73rd-Amendment-act-2024-copy.webp",
+    },
+    {
+      id: 8,
+      title: "Constitution (74th Amendment) Act",
+      location: "New Delhi, India",
+      description: "The 74th Amendment Act of 1993 focused on urban governance and the establishment of municipal bodies. It aimed to enhance the efficiency and responsiveness of local urban administration.",
+      date: "1 June 1993",
+      image: "https://images.squarespace-cdn.com/content/v1/5718b643e707eb46ff2abc3c/1622554692009-ZUYACVXLMZ1SN6TZAANB/9.png",
+    },
+    {
+      id: 9,
+      title: "Constitution (86th Amendment) Act",
+      location: "New Delhi, India",
+      description: "The 86th Amendment Act of 2002 made education a fundamental right for children aged 6 to 14 years. This historic amendment aimed to ensure that every child in India has access to free and compulsory education.",
+      date: "15 January 2002",
+      image: "https://st.adda247.com/https://www.studyiq.com/articles/wp-content/uploads/2023/02/08124400/Right-to-Education-Article-21-A.jpg",
+    },
+    {
+      id: 10,
+      title: "Constitution (103rd Amendment) Act",
+      location: "New Delhi, India",
+      description: "The 103rd Amendment Act of 2019 introduced reservations for economically weaker sections (EWS) in educational institutions and public employment. This amendment aimed to provide opportunities for underprivileged sections of society.",
+      date: "11 December 2019",
+      image: "https://plutusias.com/wp-content/uploads/2022/11/103-Amendment-of-Indian-Constitution.png",
+    }
+];
+
+  
+
+export {constitutional_questions, constitutional_events};

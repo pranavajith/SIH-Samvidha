@@ -3,6 +3,7 @@ import './App.css';
 import { TitleBar } from './components/general-components/Title';
 import { SplashScreen } from './components/SplashScreen';
 import { QuestionDisplay } from './components/QuestionDisplay';
+import { ConstitutionTimeline } from './components/ConstitutionTimeline';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <SplashScreen />
       <TitleBar />
       <QuestionDisplay />
+      <ConstitutionTimeline />
     </>
   );
 }
