@@ -1,0 +1,111 @@
+.timeline-body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    margin: 0;
+    padding: 2em;
+}
+
+.title {
+    font-size: 4em;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: "Bebas Neue", sans-serif;
+    margin: 0;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    color: #ffffff;
+}
+
+.vertical-timeline-element-content {
+    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.25),
+      0 0.4em 1.25em 0 rgba(0, 0, 0, 0.15) !important;
+    padding: 2em !important;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.timeline-image {
+    height: 200px;
+    width: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 1em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+.timeline-text {
+    flex: 1;
+}
+
+.vertical-timeline-element-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+    color: #333;
+    font-weight: bold;
+}
+
+#description {
+    margin: 10px 0 0 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5em;
+}
+
+.button {
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.vertical-timeline-element-date {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+/* @media only screen and (max-width: 1700px) {
+    .vertical-timeline-element-date {
+        display: block !important;
+        float: none !important;
+        color: rgb(255, 255, 255);
+    }
+
+    .vertical-timeline-element-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .timeline-image {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1em;
+    }
+} */
+
+/* @media only screen and (max-width: 768px) {
+    .title {
+        font-size: 3em;
+    }
+
+    .vertical-timeline-element-content {
+        padding: 1.5em !important;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .timeline-image {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1em;
+    }
+} */

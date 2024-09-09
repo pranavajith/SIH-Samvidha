@@ -1,86 +1,134 @@
+body {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
 .question-slider {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .option-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: none;
-    background-color: #f0f0f0;
-    cursor: pointer;
-  }
-  
-  .option-button.correct {
-    background-color: #d4edda;
-  }
-  
-  .option-button.incorrect {
-    background-color: #f8d7da;
-  }
-  
-  .feedback {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .next-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-
-  .completion-message {
-    text-align: center;
-    padding: 20px;
-    font-size: 1.5em;
-    color: #4caf50; /* Green color */
-    margin-bottom: 50px;
-  }
-  
-  .completion-message h2 {
-    margin-bottom: 10px;
-  }
-  
-  .completion-message p {
-    margin: 0;
-  }
-  
-
-  .completion-message {
-    text-align: center;
-    margin: 20px;
-  }
-  
-/* Center-align the Preamble heading and text */
-.preamble-container {
-  margin: 20px auto;
-  padding: 20px;
-  border: 2px solid #000;
   max-width: 600px;
-  background-color: #f4f4f4;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Center-align the text */
-  color: #333;
+  margin: 6% auto;
+  text-align: center;
+  perspective: 1000px; /* For 3D flipping effect */
 }
 
-.preamble-container h3 {
-  margin-bottom: 20px;
-  font-size: 1.8em;
-  font-family: 'Georgia', serif;
+.flashcard {
+  position: relative;
+  width: 100%;
+   min-height: 400px; 
+  transform-style: preserve-3d; /* Enables 3D transformation */
+  transition: transform 0.8s; /* Smooth flipping animation */
+  border-radius: 10px;
+  background-color: #333;
+  color: #f0f0f0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
 }
 
-.preamble-text {
-  font-family: 'Georgia', serif;
+.flashcard.flipped {
+  transform: rotateY(180deg); /* Flip the card */
+}
+
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hide the face when flipped */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.flashcard-front {
+  font-size: 20px;
+  white-space: pre-wrap;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg); /* Back face rotated 180 degrees */
+  background-color: #444;
+  color: #fff;
   font-size: 18px;
-  line-height: 1.6;
-  white-space: pre-wrap; /* Preserve the line breaks in the text */
-  color: #333;
-  text-align: center; /* Center-align the Preamble text */
+  padding: 10px;
+}
+
+.option-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #444;
+  color: #f0f0f0;
+  cursor: pointer;
+  border: none;
+}
+
+.option-button:hover {
+  background-color: #555;
+}
+
+.next-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.feedback {
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Centering the congratulations message */
+.completion-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh;  */
+  text-align: center;
+  flex-direction: column; /* Ensure content stacks vertically */
+  background-color: #323232;
+  padding: 40px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  color: #4caf50; /* Professional green color for success */
+  font-family: 'Arial', sans-serif;
+  max-width: 500px;
+  margin: 10% auto;
+}
+
+.completion-message h2 {
+  margin-bottom: 20px;
+  font-size: 36px; /* Larger font for heading */
+  font-weight: bold;
+}
+
+.completion-message p {
+  font-size: 18px; /* Slightly smaller font for the paragraph */
+  color: #ccc;
+  margin: 0;
+}
+
+
+
+.question-slider h2 {
+  margin-bottom: 20px;
+}
+
+.question-slider p {
+  margin-bottom: 30px;
+}
+
+.red-text {
+  color: rgb(255, 88, 88);
 }
