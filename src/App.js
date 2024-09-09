@@ -33,7 +33,7 @@ function App() {
         break;
     }
 
-    setCompletedNum(index + 1);
+    if (index + 1 > completedNum) setCompletedNum(index + 1);
   };
 
   const handleQuizCompletion = () => {
