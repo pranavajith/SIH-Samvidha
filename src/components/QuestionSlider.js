@@ -64,6 +64,8 @@ const QuestionSlider = ({ display_questions, onComplete }) => {
   const question = questions[currentQuestionIndex];
 
   return (
+    <div className = "question-slider-container">
+
     <div className="question-slider">
       <div className={`flashcard ${isFlipped ? 'flipped' : ''}`}>
         {/* Conditionally render front or back of the flashcard */}
@@ -73,10 +75,10 @@ const QuestionSlider = ({ display_questions, onComplete }) => {
           <div className="options">
             {question.Options.map((option, index) => (
               <button
-                key={index}
-                className="option-button"
-                onClick={() => handleOptionClick(option)}
-                disabled={isAnswered}
+              key={index}
+              className="option-button"
+              onClick={() => handleOptionClick(option)}
+              disabled={isAnswered}
               >
                 {option.value}
               </button>
@@ -102,6 +104,7 @@ const QuestionSlider = ({ display_questions, onComplete }) => {
         </div>
       </div>
     </div>
+          </div>
   );
 };
 

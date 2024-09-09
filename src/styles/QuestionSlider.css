@@ -94,7 +94,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh;  */
+  height: 100vh; 
   text-align: center;
   flex-direction: column; /* Ensure content stacks vertically */
   background-color: #323232;
@@ -131,4 +131,8 @@ body {
 
 .red-text {
   color: rgb(255, 88, 88);
+}
+
+.question-slider-container {
+  height: 70vh;
 }
