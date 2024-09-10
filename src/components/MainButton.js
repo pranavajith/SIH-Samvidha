@@ -1,4 +1,4 @@
-import './../styles/MainComponents.css';
+import './../styles/MainButton.css';
 import { urlList } from '../urls';
 
 const MainButton = ({ imgUrl, buttonText, onClick, isLocked }) => {

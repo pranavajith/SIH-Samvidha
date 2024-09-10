@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './../styles/QuestionSlider.css';
 
-const QuestionSlider = ({ display_questions, onComplete }) => {
+const QuestionSlider = ({ display_questions, onComplete, handleQuizReturn }) => {
   const [questions, setQuestions] = useState(display_questions);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -67,6 +67,7 @@ const QuestionSlider = ({ display_questions, onComplete }) => {
     <div className = "question-slider-container">
 
     <div className="question-slider">
+    
       <div className={`flashcard ${isFlipped ? 'flipped' : ''}`}>
         {/* Conditionally render front or back of the flashcard */}
         <div className="flashcard-face flashcard-front">
@@ -83,6 +84,7 @@ const QuestionSlider = ({ display_questions, onComplete }) => {
                 {option.value}
               </button>
             ))}
+            
           </div>
         </div>
         <div className="flashcard-face flashcard-back">
@@ -103,6 +105,13 @@ const QuestionSlider = ({ display_questions, onComplete }) => {
           )}
         </div>
       </div>
+      <button
+              className="back-option-button"
+              onClick={handleQuizReturn}
+              disabled={isAnswered}
+              >
+                Go Back
+              </button>
     </div>
           </div>
   );

@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+body {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+  /* font-family: Arial, sans-serif; */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

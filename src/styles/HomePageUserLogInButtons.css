@@ -1,0 +1,45 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Space between buttons */
+    margin-top: 20px; /* Adjust margin as needed */
+}   
+
+
+
+.signup-login-button {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background-color: #06d6a0;
+    color: white;
+    text-decoration: none;
+    font-family: "Happy Monkey", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-size: 1.2rem;
+    /* font-weight: bold; */
+    border-radius: 25px; /* Rounded edges */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Smooth shadow for depth */
+}
+
+.signup-button {
+    background-color: #06d6a0;
+}
+
+.signup-button:hover {
+    background-color: #05c08c;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+}
+
+.login-button {
+    background-color: #f9c74f;
+    color: #333; /* Dark text color for better contrast */
+}
+
+.login-button:hover {
+    background-color: #e0b445;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+}
