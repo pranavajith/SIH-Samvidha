@@ -1,8 +1,4 @@
-body {
-  background-color: #1a1a1a;
-  color: #f0f0f0;
-  font-family: Arial, sans-serif;
-}
+
 
 .question-slider {
   max-width: 600px;
@@ -70,6 +66,22 @@ body {
   border: none;
 }
 
+/* .options {
+  height: 300px;
+} */
+
+.back-option-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #328928;
+  color: #f0f0f0;
+  cursor: pointer;
+  border: none;
+}
+
 .option-button:hover {
   background-color: #555;
 }
@@ -131,4 +143,8 @@ body {
 
 .red-text {
   color: rgb(255, 88, 88);
+}
+
+.question-slider-container {
+  height: 70vh;
 }

@@ -1,9 +1,9 @@
-html, body {
+/* html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 .component {
     position: relative;
@@ -12,7 +12,9 @@ html, body {
     justify-content: center;
     color: white;
     font-size: 2rem;
-    font-weight: bold;
+    font-family: "Happy Monkey", system-ui;
+    font-weight: 400;
+    font-style: normal;
     text-align: center;
     height: 50vh;
     background-size: cover;

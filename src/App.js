@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { TitleBar } from './components/general-components/Title';
 import { SplashScreen } from './components/SplashScreen';
-import { QuestionDisplay } from './components/QuestionDisplay';
-import { ConstitutionTimeline } from './components/ConstitutionTimeline';
+import { HomePage } from './components/HomePage/HomePage';
+import { QuestionDisplay } from './components/QuestionDisplay'; // Import your QuestionDisplay component
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AboutUs from './components/AboutUs';
 
 function App() {
   return (
-    <>
-      <SplashScreen />
-      <TitleBar />
-      <QuestionDisplay />
-      <ConstitutionTimeline />
-    </>
+    <Router>
+      <div>
+        <SplashScreen />
+        <TitleBar /> 
+        <Routes>
+          <Route path="/" element={<HomePage />} /> 
+          <Route path="/demo" element={<QuestionDisplay />} /> 
+          <Route path="/about" element={<AboutUs />} /> 
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
