@@ -5,6 +5,7 @@ import { SplashScreen } from './components/SplashScreen';
 import { HomePage } from './components/HomePage/HomePage';
 import { QuestionDisplay } from './components/QuestionDisplay'; // Import your QuestionDisplay component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AboutUs from './components/AboutUs';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} /> 
           <Route path="/demo" element={<QuestionDisplay />} /> 
+          <Route path="/about" element={<AboutUs />} /> 
         </Routes>
       </div>
     </Router>

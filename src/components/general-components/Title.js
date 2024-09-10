@@ -6,7 +6,7 @@ const TitleBar = () => {
         <nav className="navbar">
             <Link to="/"><h1 className="navbar-brand">Samvidhan</h1></Link>
             <ul className="navbar-menu">
-                <li className="navbar-item"><a href="#about" className="navbar-button">About</a></li>
+            <Link to="/about" className="navbar-button">About</Link>
                 {/* Use Link instead of <a> for routing */}
                 <li className="navbar-item">
                     <Link to="/demo" className="navbar-button">Try a demo!</Link>
