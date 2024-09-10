@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './../styles/SignUp.css';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
-const Signup = () => {
+
+const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -89,11 +91,11 @@ const Signup = () => {
       </form>
       <div className="signup-footer">
         <p>
-          Already have an account? <a href="/login">Log in here</a>
+          Already have an account? <Link to="/signin">Sign in here</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default SignUp;

@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'; // Import Link for navigation
 const HomePageUserLogInButtons = () => {
     return (
         <div className="button-container">
-            <a href="#signup"><Link to="/signup" className="signup-login-button">Sign Up</Link></a>
+            <Link to="/signup" className="signup-login-button">Sign Up</Link>
             <br />
-            <a href="#login" className="login-button signup-login-button">Already have an account? Log In</a>
+            <Link to="/signin" className="signup-login-button login-button">Already have an account? Log In</Link>
         </div>
     );
 }
