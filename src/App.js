@@ -5,7 +5,9 @@ import { SplashScreen } from './components/SplashScreen';
 import { HomePage } from './components/HomePage/HomePage';
 import { QuestionDisplay } from './components/QuestionDisplay'; // Import your QuestionDisplay component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ConstitutionTimeline } from './components/ConstitutionTimeline';
 import AboutUs from './components/AboutUs';
+import Signup from './components/SignUp.js';
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
           <Route path="/" element={<HomePage />} /> 
           <Route path="/demo" element={<QuestionDisplay />} /> 
           <Route path="/about" element={<AboutUs />} /> 
+          <Route path="/signup" element={<Signup />} /> 
         </Routes>
       </div>
     </Router>
