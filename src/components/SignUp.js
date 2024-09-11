@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import './../styles/SignUp.css';
+import React, { useState } from "react";
+import "./../styles/SignUp.css";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
-const Signup = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -20,7 +21,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add form validation and submission logic
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
   };
 
   return (
@@ -29,7 +30,10 @@ const Signup = () => {
       <form className="signup-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">
-            <span role="img" aria-label="user">👤</span> Username
+            <span role="img" aria-label="user">
+              👤
+            </span>{" "}
+            Username
           </label>
           <input
             type="text"
@@ -43,7 +47,10 @@ const Signup = () => {
         </div>
         <div className="form-group">
           <label htmlFor="email">
-            <span role="img" aria-label="email">📧</span> Email
+            <span role="img" aria-label="email">
+              📧
+            </span>{" "}
+            Email
           </label>
           <input
             type="email"
@@ -57,7 +64,10 @@ const Signup = () => {
         </div>
         <div className="form-group">
           <label htmlFor="password">
-            <span role="img" aria-label="lock">🔒</span> Password
+            <span role="img" aria-label="lock">
+              🔒
+            </span>{" "}
+            Password
           </label>
           <input
             type="password"
@@ -71,7 +81,10 @@ const Signup = () => {
         </div>
         <div className="form-group">
           <label htmlFor="confirmPassword">
-            <span role="img" aria-label="lock">🔑</span> Confirm Password
+            <span role="img" aria-label="lock">
+              🔑
+            </span>{" "}
+            Confirm Password
           </label>
           <input
             type="password"
@@ -84,16 +97,19 @@ const Signup = () => {
           />
         </div>
         <button type="submit" className="signup-button">
-          <span role="img" aria-label="rocket">🚀</span> Sign Up
+          <span role="img" aria-label="rocket">
+            🚀
+          </span>{" "}
+          Sign Up
         </button>
       </form>
       <div className="signup-footer">
         <p>
-          Already have an account? <a href="/login">Log in here</a>
+          Already have an account? <Link to="/signin">Sign in here</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default SignUp;

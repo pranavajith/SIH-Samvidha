@@ -1,40 +1,41 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {
-    background-color: #585858;
-    color: #ffffff;
-    text-align: center;
-    padding: 15px 20px;
-    position: relative;
-    bottom: 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: auto;
+  background-color: #585858;
+  color: #ffffff;
+  text-align: center;
+  padding: 15px 20px;
+  position: relative;
+  bottom: 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: auto;
 }
 
 .footer-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 0 0;
-    display: flex;
-    justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 0;
+  display: flex;
+  justify-content: center;
 }
 
 .footer-menu li {
-    margin: 0 15px;
+  margin: 0 15px;
 }
 
 .footer-menu li a {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
 .footer-menu li a:hover {
-    color: #007bff;
+  color: #007bff;
 }

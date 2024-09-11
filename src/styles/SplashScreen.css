@@ -1,42 +1,42 @@
 .intro {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: #161616;
-    transition: 1s;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #161616;
+  transition: 1s;
 }
 
 .intro.hide {
-    top: -100vh;
+  top: -100vh;
 }
 
 .logo-header {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
 }
 
 .logo {
-    position: relative;
-    display: inline-block;
-    bottom: -20px;
-    opacity: 0;
-    font-size: 3rem;
+  position: relative;
+  display: inline-block;
+  bottom: -20px;
+  opacity: 0;
+  font-size: 3rem;
 }
 
 .logo.active {
-    bottom: 0;
-    opacity: 1;
-    transition: ease-in-out 0.5s;
+  bottom: 0;
+  opacity: 1;
+  transition: ease-in-out 0.5s;
 }
 
 .logo.fade {
-    bottom: 150px;
-    opacity: 0;
-    transition: ease-in-out 0.5s;
+  bottom: 150px;
+  opacity: 0;
+  transition: ease-in-out 0.5s;
 }

@@ -1,7 +1,7 @@
 .homepage-container {
-    display: flex; /* Use Flexbox layout */
-    justify-content: center; /* Space out the child elements */
-    align-items: center; /* Align items at the start of the container */
-    gap: 20px; /* Optional: Adjust space between the elements if needed */
-    padding: 50px; /* Optional: Adjust padding around the container */
+  display: flex; /* Use Flexbox layout */
+  justify-content: center; /* Space out the child elements */
+  align-items: center; /* Align items at the start of the container */
+  gap: 20px; /* Optional: Adjust space between the elements if needed */
+  padding: 50px; /* Optional: Adjust padding around the container */
 }

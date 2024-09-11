@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './../styles/QuestionSlider.css';
+import React, { useState, useEffect } from "react";
+import "./../styles/QuestionSlider.css";
 
-const QuestionSlider = ({ display_questions, onComplete, handleQuizReturn }) => {
+const QuestionSlider = ({
+  display_questions,
+  onComplete,
+  handleQuizReturn,
+}) => {
   const [questions, setQuestions] = useState(display_questions);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -64,56 +68,58 @@ const QuestionSlider = ({ display_questions, onComplete, handleQuizReturn }) => 
   const question = questions[currentQuestionIndex];
 
   return (
-    <div className = "question-slider-container">
-
-    <div className="question-slider">
-    
-      <div className={`flashcard ${isFlipped ? 'flipped' : ''}`}>
-        {/* Conditionally render front or back of the flashcard */}
-        <div className="flashcard-face flashcard-front">
-          {currentQuestionIndex < display_questions.length ? <h2>Question {currentQuestionIndex + 1}</h2> : <h2 className = "red-text"> Previously Incorrect Question </h2>}
-          <p>{question.question}</p>
-          <div className="options">
-            {question.Options.map((option, index) => (
-              <button
-              key={index}
-              className="option-button"
-              onClick={() => handleOptionClick(option)}
-              disabled={isAnswered}
-              >
-                {option.value}
-              </button>
-            ))}
-            
-          </div>
-        </div>
-        <div className="flashcard-face flashcard-back">
-          {isAnswered && (
-            <div className="feedback">
-              {selectedOption.correctStatus ? (
-                'Correct!'
-              ) : (
-                <span>
-                  <h3 className = "red-text">Incorrect!</h3>The correct answer is: {question.Options.find(o => o.correctStatus).value}
-                </span>
-              )}
-              <br />
-              <button className="next-button" onClick={handleNextQuestion}>
-                Next Question
-              </button>
+    <div className="question-slider-container">
+      <div className="question-slider">
+        <div className={`flashcard ${isFlipped ? "flipped" : ""}`}>
+          {/* Conditionally render front or back of the flashcard */}
+          <div className="flashcard-face flashcard-front">
+            {currentQuestionIndex < display_questions.length ? (
+              <h2>Question {currentQuestionIndex + 1}</h2>
+            ) : (
+              <h2 className="red-text"> Previously Incorrect Question </h2>
+            )}
+            <p>{question.question}</p>
+            <div className="options">
+              {question.Options.map((option, index) => (
+                <button
+                  key={index}
+                  className="option-button"
+                  onClick={() => handleOptionClick(option)}
+                  disabled={isAnswered}
+                >
+                  {option.value}
+                </button>
+              ))}
             </div>
-          )}
-        </div>
-      </div>
-      <button
-              className="back-option-button"
-              onClick={handleQuizReturn}
-              disabled={isAnswered}
-              >
-                Go Back
-              </button>
-    </div>
           </div>
+          <div className="flashcard-face flashcard-back">
+            {isAnswered && (
+              <div className="feedback">
+                {selectedOption.correctStatus ? (
+                  "Correct!"
+                ) : (
+                  <span>
+                    <h3 className="red-text">Incorrect!</h3>The correct answer
+                    is: {question.Options.find((o) => o.correctStatus).value}
+                  </span>
+                )}
+                <br />
+                <button className="next-button" onClick={handleNextQuestion}>
+                  Next Question
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        <button
+          className="back-option-button"
+          onClick={handleQuizReturn}
+          disabled={isAnswered}
+        >
+          Go Back
+        </button>
+      </div>
+    </div>
   );
 };
 

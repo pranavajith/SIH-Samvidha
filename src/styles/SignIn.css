@@ -1,8 +1,8 @@
-/* Container for the signup page */
-.signup-container {
+/* Container for the login page */
+.signin-container {
   padding: 2rem;
   max-width: 400px;
-  margin: 10px auto;
+  margin: 25px auto;
   background-color: #333;
   color: white;
   border-radius: 10px;
@@ -10,8 +10,8 @@
   font-family: "Happy Monkey", system-ui;
 }
 
-/* Title of the signup page */
-.signup-title {
+/* Title of the login page */
+.signin-title {
   font-size: 2rem;
   color: #06d6a0;
   text-align: center;
@@ -19,7 +19,7 @@
 }
 
 /* Form styling */
-.signup-form {
+.signin-form {
   display: flex;
   flex-direction: column;
 }
@@ -61,8 +61,8 @@
   outline: none;
 }
 
-/* Signup button */
-.signup-button {
+/* Login button */
+.signin-button {
   background-color: #06d6a0;
   color: white;
   padding: 0.8rem;
@@ -75,42 +75,38 @@
   margin-top: 1rem;
 }
 
-.signup-button:hover {
+.signin-button:hover {
   background-color: #05c08c;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Footer with link */
-.signup-footer {
+.signin-footer {
   text-align: center;
   margin-top: 2rem;
 }
 
-.signup-footer a {
+.signin-footer a {
   color: #06d6a0;
   text-decoration: none;
   font-weight: 500;
 }
 
-.signup-footer a:hover {
+.signin-footer a:hover {
   text-decoration: underline;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .signup-container {
+  .signin-container {
     padding: 1.5rem;
   }
 
-  .signup-title {
+  .signin-title {
     font-size: 1.8rem;
   }
 
-  .signup-footer {
+  .signin-footer {
     font-size: 0.9rem;
   }
-}
-
-input {
-  max-width: 95%;
 }
