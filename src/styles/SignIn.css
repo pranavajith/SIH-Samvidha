@@ -1,112 +1,112 @@
 /* Container for the login page */
 .signin-container {
-    padding: 2rem;
-    max-width: 400px;
-    margin: 25px auto;
-    background-color: #333;
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Happy Monkey', system-ui;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 25px auto;
+  background-color: #333;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Happy Monkey", system-ui;
 }
 
 /* Title of the login page */
 .signin-title {
-    font-size: 2rem;
-    color: #06d6a0;
-    text-align: center;
-    margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #06d6a0;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 /* Form styling */
 .signin-form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Form group container */
 .form-group {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Form labels */
 .form-group label {
-    display: block;
-    font-size: 1rem;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
 }
 
 /* Input fields */
 .form-group input {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #555;
-    color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #555;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
 .form-group input::placeholder {
-    color: #bbbbbb;
+  color: #bbbbbb;
 }
 
 /* Input hover effect */
 .form-group input:hover,
 .form-group input:focus {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    outline: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  outline: none;
 }
 
 /* Login button */
 .signin-button {
-    background-color: #06d6a0;
-    color: white;
-    padding: 0.8rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 1rem;
+  background-color: #06d6a0;
+  color: white;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
 }
 
 .signin-button:hover {
-    background-color: #05c08c;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  background-color: #05c08c;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Footer with link */
 .signin-footer {
-    text-align: center;
-    margin-top: 2rem;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 .signin-footer a {
-    color: #06d6a0;
-    text-decoration: none;
-    font-weight: 500;
+  color: #06d6a0;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .signin-footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .signin-container {
-        padding: 1.5rem;
-    }
+  .signin-container {
+    padding: 1.5rem;
+  }
 
-    .signin-title {
-        font-size: 1.8rem;
-    }
+  .signin-title {
+    font-size: 1.8rem;
+  }
 
-    .signin-footer {
-        font-size: 0.9rem;
-    }
+  .signin-footer {
+    font-size: 0.9rem;
+  }
 }

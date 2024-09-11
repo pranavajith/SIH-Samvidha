@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import './../styles/SignIn.css';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import "./../styles/SignIn.css";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -19,7 +19,7 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add form validation and submission logic
-    console.log('Login form submitted:', formData);
+    console.log("Login form submitted:", formData);
   };
 
   return (
@@ -28,7 +28,10 @@ const SignIn = () => {
       <form className="signin-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">
-            <span role="img" aria-label="email">📧</span> Email
+            <span role="img" aria-label="email">
+              📧
+            </span>{" "}
+            Email
           </label>
           <input
             type="email"
@@ -42,7 +45,10 @@ const SignIn = () => {
         </div>
         <div className="form-group">
           <label htmlFor="password">
-            <span role="img" aria-label="lock">🔒</span> Password
+            <span role="img" aria-label="lock">
+              🔒
+            </span>{" "}
+            Password
           </label>
           <input
             type="password"
@@ -55,7 +61,10 @@ const SignIn = () => {
           />
         </div>
         <button type="submit" className="signin-button">
-          <span role="img" aria-label="key">🔑</span> Log In
+          <span role="img" aria-label="key">
+            🔑
+          </span>{" "}
+          Log In
         </button>
       </form>
       <div className="signin-footer">

@@ -1,37 +1,37 @@
 .homepage-animation-text-container {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
 }
 
 .homepage-animation-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Space between the animations */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Space between the animations */
 }
 
 dotlottie-player {
-    display: block; /* Ensure each dotlottie-player is treated as a block element */
+  display: block; /* Ensure each dotlottie-player is treated as a block element */
 }
 
 .text-container {
-    text-align: center; /* Center the text */
-    margin-top: 20px; /* Space above the text */
+  text-align: center; /* Center the text */
+  margin-top: 20px; /* Space above the text */
 }
 
 .text-container span {
-    display: block;
-    font-family: "Happy Monkey", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    margin: 10px 0;
+  display: block;
+  font-family: "Happy Monkey", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  margin: 10px 0;
 }
 
 .text-container .large {
-    font-size: 2.3em; /* Larger font size for the first and last spans */
+  font-size: 2.3em; /* Larger font size for the first and last spans */
 }
 
 .text-container .medium {
-    font-size: 1.3em; /* Medium font size for the middle span */
+  font-size: 1.3em; /* Medium font size for the middle span */
 }

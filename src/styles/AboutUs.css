@@ -1,117 +1,117 @@
 /* Container for the entire page */
 .about-us-container {
-    padding: 2rem;
-    background-color: #333;
-    font-family: 'Happy Monkey', system-ui;
-    color: #ffffff;
+  padding: 2rem;
+  background-color: #333;
+  font-family: "Happy Monkey", system-ui;
+  color: #ffffff;
 }
 
 /* Title of the page */
 .about-us-title {
-    font-size: 2.5rem;
-    color: #06d6a0;
-    text-align: center;
-    margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: #06d6a0;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 /* Team section layout */
 .team-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
 }
 
 /* Individual team member container */
 .team-member {
-    text-align: center;
-    margin: 1rem;
-    max-width: 150px;
+  text-align: center;
+  margin: 1rem;
+  max-width: 150px;
 }
 
 /* Image container for the team */
 .image-container {
-    border-radius: 50%;
-    overflow: hidden;
-    width: 150px;
-    height: 150px;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
 .image-container:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Image styling for the team */
 .team-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Team member name styling */
 .team-name {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin: 0;
-    color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  color: #ffffff;
 }
 
 /* Team member role styling */
 .team-role {
-    font-size: 1rem;
-    font-weight: 300;
-    color: #b4b4b4;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #b4b4b4;
 }
 
 /* Hackathon section */
 .hackathon-section {
-    text-align: center;
-    background-color: #595858;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #595858;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Hackathon title styling */
 .hackathon-title {
-    font-size: 2rem;
-    color: #06d6a0;
-    margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #06d6a0;
+  margin-bottom: 1.5rem;
 }
 
 /* Hackathon description styling */
 .hackathon-description {
-    font-size: 1rem;
-    color: white;
-    line-height: 1.6;
-    margin-bottom: 1rem;
+  font-size: 1rem;
+  color: white;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
-    .team-section {
-        flex-direction: column;
-        align-items: center;
-    }
+  .team-section {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .team-member {
-        max-width: 100%;
-    }
+  .team-member {
+    max-width: 100%;
+  }
 
-    .image-container {
-        width: 120px;
-        height: 120px;
-    }
+  .image-container {
+    width: 120px;
+    height: 120px;
+  }
 
-    .hackathon-title {
-        font-size: 1.8rem;
-    }
+  .hackathon-title {
+    font-size: 1.8rem;
+  }
 
-    .hackathon-description {
-        font-size: 0.9rem;
-    }
+  .hackathon-description {
+    font-size: 0.9rem;
+  }
 }
