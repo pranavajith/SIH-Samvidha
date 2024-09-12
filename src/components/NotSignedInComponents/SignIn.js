@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import Banner from "../general-components/Banner";
 
 const SignIn = () => {
-  // const { login } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const location = useLocation();
   const bannerMessage = location.state?.message;
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const SignIn = () => {
   };
 
   const handleSubmit = (e) => {
-    // login();
+    login();
     e.preventDefault();
 
     // Add form validation and submission logic
