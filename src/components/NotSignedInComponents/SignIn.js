@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import "./../styles/SignIn.css";
+import "./../../styles/SignIn.css";
 import { Link } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 const SignIn = () => {
   const { login } = useContext(UserContext);
@@ -20,7 +20,6 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     login();
-
     e.preventDefault();
 
     // Add form validation and submission logic

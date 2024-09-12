@@ -1,4 +1,4 @@
-import "./../../styles/HomePageAnimation.css";
+import "./../../../styles/HomePageAnimation.css";
 
 const HomePageAnimation = () => {
   return (

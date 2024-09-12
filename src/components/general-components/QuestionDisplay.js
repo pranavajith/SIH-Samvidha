@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./../App.css";
+import "./../../App.css";
 import { MainButton } from "./MainButton";
-import { urlList } from "../urls";
+import { urlList } from "../../urls";
 import QuestionSlider from "./QuestionSlider";
-import { constitutional_questions } from "./dummy-data/dummy-data";
+import { constitutional_questions } from "./../dummy-data/dummy-data";
 
 const QuestionDisplay = () => {
   const [questions, setQuestions] = useState(null);

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NotSignedInSection } from "./components/NotSignedInSection";
+import { NotSignedInSection } from "./components/NotSignedInComponents/NotSignedInSection";
 import { SignedInComponent } from "./components/SignedInComponents/SignedInComponent";
 import { UserContext } from "./context/UserContext";
 

@@ -1,5 +1,5 @@
-import "./../styles/ConstitutionTimeline.css";
-import { constitutional_events } from "./dummy-data/dummy-data";
+import "./../../styles/ConstitutionTimeline.css";
+import { constitutional_events } from "./../dummy-data/dummy-data";
 
 // can add icons to timeline
 // can add learn more button at end

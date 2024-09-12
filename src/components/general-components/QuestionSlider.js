@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./../styles/QuestionSlider.css";
+import "./../../styles/QuestionSlider.css";
 
 const QuestionSlider = ({
   display_questions,
