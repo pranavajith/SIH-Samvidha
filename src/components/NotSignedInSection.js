@@ -1,8 +1,8 @@
 import React from "react";
 import "./../App.css";
-import { TitleBar } from "./general-components/Title";
+import { TitleBar } from "./general-components/Title.js";
 import { SplashScreen } from "./SplashScreen";
-import { HomePage } from "./HomePage/HomePage";
+import { HomePage } from "./HomePage/HomePage.js";
 import { QuestionDisplay } from "./QuestionDisplay"; // Import your QuestionDisplay component
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ConstitutionTimeline } from "./ConstitutionTimeline";

@@ -360,4 +360,18 @@ const constitutional_events = [
   },
 ];
 
-export { constitutional_questions, constitutional_events };
+const UserData = {
+  firstName: "Pranav",
+  lastName: "Ajith",
+  userName: "pranav.ajith.cse21@itbhu.ac.in",
+  password: "fakePassword",
+  gameProgress: {
+    progress: 0.1,
+  },
+  streakData: {
+    latestPlayed: "2023-10-01",
+    latestStreakStartDate: "2023-08-01",
+  },
+};
+
+export { constitutional_questions, constitutional_events, UserData };
