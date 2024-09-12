@@ -8,6 +8,7 @@ const SignIn = () => {
   const { login } = useContext(UserContext);
   const location = useLocation();
   const bannerMessage = location.state?.message;
+  console.log(bannerMessage);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
