@@ -8,7 +8,6 @@ const SignedInComponent = () => {
       <ProtectedRoute>
         <SignedInTitle />
       </ProtectedRoute>
-
       <Routes></Routes>
     </Router>
   );
