@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./../styles/SplashScreen.css";
+import "./../../styles/SplashScreen.css";
 
 const SplashScreen = () => {
   const [active, setActive] = useState(false); // Control 'active' class

@@ -1,5 +1,5 @@
-import "./../styles/MainButton.css";
-import { urlList } from "../urls";
+import "./../../styles/MainButton.css";
+import { urlList } from "./../../urls";
 
 const MainButton = ({ imgUrl, buttonText, onClick, isLocked }) => {
   return (

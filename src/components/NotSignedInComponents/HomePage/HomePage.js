@@ -1,6 +1,6 @@
 import { HomePageAnimation } from "./HomePageAnimation";
 import { HomePageUserLogInButtons } from "./HomePageUserLogInButtons";
-import "./../../styles/HomePage.css";
+import "./../../../styles/HomePage.css";
 
 const HomePage = () => {
   return (

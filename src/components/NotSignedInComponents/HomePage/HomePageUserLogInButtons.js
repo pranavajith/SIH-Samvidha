@@ -1,4 +1,4 @@
-import "./../../styles/HomePageUserLogInButtons.css";
+import "./../../../styles/HomePageUserLogInButtons.css";
 import { Link } from "react-router-dom"; // Import Link for navigation
 
 const HomePageUserLogInButtons = () => {

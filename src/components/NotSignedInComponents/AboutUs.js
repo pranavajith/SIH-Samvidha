@@ -1,5 +1,5 @@
 import React from "react";
-import "./../styles/AboutUs.css"; // Importing a separate CSS file for the About Us page
+import "./../../styles/AboutUs.css"; // Importing a separate CSS file for the About Us page
 
 const AboutUs = () => {
   const teamMembers = [

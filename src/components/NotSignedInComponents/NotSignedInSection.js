@@ -1,17 +1,16 @@
 import React from "react";
-import "./../App.css";
-import { TitleBar } from "./general-components/Title";
-import { SplashScreen } from "./SplashScreen";
-import { HomePage } from "./HomePage/HomePage";
-import { QuestionDisplay } from "./QuestionDisplay"; // Import your QuestionDisplay component
+import "./../../App.css";
+import { TitleBar } from "./../general-components/Title.js";
+import { SplashScreen } from "../general-components/SplashScreen.js";
+import { HomePage } from "./HomePage/HomePage.js";
+import { QuestionDisplay } from "../general-components/QuestionDisplay.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ConstitutionTimeline } from "./ConstitutionTimeline";
-import AboutUs from "./AboutUs";
+import { ConstitutionTimeline } from "./ConstitutionTimeline.js";
+import AboutUs from "./AboutUs.js";
 import Signup from "./SignUp.js";
 import SignIn from "./SignIn.js";
 
 const NotSignedInSection = () => {
-  const UserProfile = null;
   return (
     <Router>
       <div>

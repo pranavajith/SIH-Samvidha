@@ -1,9 +1,14 @@
-import React from "react";
-import { NotSignedInSection } from "./components/NotSignedInSection";
+import React, { useContext } from "react";
+import { NotSignedInSection } from "./components/NotSignedInComponents/NotSignedInSection";
+import { SignedInComponent } from "./components/SignedInComponents/SignedInComponent";
+import { UserContext } from "./context/UserContext";
 
 function App() {
   const UserProfile = null;
-  return <>{UserProfile ? <div>hi</div> : <NotSignedInSection />}</>;
+
+  const { user } = useContext(UserContext);
+
+  return <>{user ? <SignedInComponent /> : <NotSignedInSection />}</>;
 }
 
 export default App;
