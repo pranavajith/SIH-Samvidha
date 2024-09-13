@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    ports:
+      - "5000:5000"
+    # depends_on:
+    #   - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000
+      # Environment variable for frontend to know backend URL
+
+  # backend:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/backend.Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - ../backend/.env
+
+# I recommend docker for easy isolation
+
+# React frontend example, to access backend:
+# const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+# fetch(`${backendUrl}/api/endpoint`)
+#   .then(response => response.json())
+#   .then(data => console.log(data));
+
+# docker-compose up --build
+# docker-compose up --build frontend
+# docker-compose up --build backend
+# docker-compose down -v
