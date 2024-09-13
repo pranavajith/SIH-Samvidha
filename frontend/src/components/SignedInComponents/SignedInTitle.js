@@ -13,7 +13,7 @@ const SignedInTitle = () => {
   };
   return (
     <nav className="navbar">
-      <Link to="/">
+      <Link to="/user">
         <h1 className="navbar-brand">Samvidhan</h1>
       </Link>
       <ul className="navbar-menu">

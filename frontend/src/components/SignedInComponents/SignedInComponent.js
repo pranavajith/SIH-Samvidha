@@ -6,6 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
 import { UserProgress } from "./UserProgress";
+import TypeGame from "./TypeGame";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -31,7 +32,8 @@ const SignedInComponent = () => {
           path="/user"
           element={
             <ProtectedRoute>
-              <UserProgress />
+              {/* <UserProgress /> */}
+              <TypeGame />
             </ProtectedRoute>
           }
         />
