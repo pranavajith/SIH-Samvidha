@@ -1,3 +1,5 @@
+import { urlList } from "../../urls";
+
 const constitutional_questions = {
   preamble_questions: [
     {
@@ -364,6 +366,10 @@ const UserData = {
   firstName: "Pranav",
   lastName: "Ajith",
   userName: "pranav.ajith.cse21@itbhu.ac.in",
+  userProfileImage: {
+    type: "url",
+    path: urlList.GenericKidImageUrl,
+  },
   password: "fakePassword",
   gameProgress: {
     progress: 0.1,

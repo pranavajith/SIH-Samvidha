@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserContext";
 
 const SignedInTitle = () => {
   const navigate = useNavigate();
-  const { logout } = useContext(UserContext);
+  const { logout, user } = useContext(UserContext);
 
   const handleSignOut = () => {
     logout();
@@ -18,9 +18,9 @@ const SignedInTitle = () => {
       </Link>
       <ul className="navbar-menu">
         <li className="navbar-item">
-          <Link to="/user/profile" className="navbar-button">
+          {/* <Link to="/user/profile" className="navbar-button">
             Profile
-          </Link>
+          </Link> */}
         </li>
         <li className="navbar-item">
           <Link to="/user/leaderboard" className="navbar-button">
@@ -28,9 +28,23 @@ const SignedInTitle = () => {
           </Link>
         </li>
         <li className="navbar-item">
+          <Link to="/user/askAI" className="navbar-button">
+            askAI
+          </Link>
+        </li>
+        <li className="navbar-item">
           <div onClick={handleSignOut} className="navbar-button">
             Sign Out
           </div>
+        </li>
+        <li className="navbar-item">
+          <Link to="/user/profile" className="navbar-profile">
+            <img
+              src={user.userProfileImage.path} // Assuming the profile image is available in userData
+              alt={`${user.firstName} ${user.lastName}`}
+              className="navbar-profile-image"
+            />
+          </Link>
         </li>
       </ul>
     </nav>
