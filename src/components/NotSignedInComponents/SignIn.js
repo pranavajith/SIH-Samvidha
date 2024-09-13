@@ -9,7 +9,6 @@ const SignIn = () => {
   const { login } = useContext(UserContext);
   const location = useLocation();
   const bannerMessage = location.state?.message;
-  console.log(bannerMessage);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,8 +30,6 @@ const SignIn = () => {
     // Add form validation and submission logic
     console.log("Login form submitted:", formData);
   };
-
-  console.log(bannerMessage);
 
   return (
     <>

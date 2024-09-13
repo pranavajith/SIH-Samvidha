@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
+import { QuestionDisplay } from "../general-components/QuestionDisplay";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -14,7 +15,6 @@ const SignedInComponent = () => {
         text1={"Welcome"}
         text2={", " + user.firstName + " " + user.lastName}
       />
-      {/* <Router> */}
       <ProtectedRoute>
         <SignedInTitle />
       </ProtectedRoute>
@@ -28,7 +28,6 @@ const SignedInComponent = () => {
           }
         />
       </Routes>
-      {/* </Router> */}
     </>
   );
 };

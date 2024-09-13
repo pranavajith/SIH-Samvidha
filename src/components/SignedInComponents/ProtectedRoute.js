@@ -11,8 +11,6 @@ const ProtectedRoute = ({ children }) => {
       setShouldRedirect(true);
     }
   }, []);
-
-  console.log("Entering protected section. User is ", user, shouldRedirect);
   if (shouldRedirect) {
     return <Navigate to="/signin" state={{ message: "Sign In to Continue" }} />;
   }

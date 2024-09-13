@@ -6,7 +6,6 @@ import { UserContext } from "../../../context/UserContext";
 
 const HomePage = () => {
   const { user } = useContext(UserContext);
-  console.log("HomePage User", user);
   return (
     <>
       <div className="homepage-container">
