@@ -3,6 +3,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { SignedInTitle } from "./SignedInTitle";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import { UserProfile } from "./UserProfile";
 
 const SignedInComponent = () => {
   return (
@@ -10,7 +11,16 @@ const SignedInComponent = () => {
       <ProtectedRoute>
         <SignedInTitle />
       </ProtectedRoute>
-      <Routes></Routes>
+      <Routes>
+        <Route
+          path="/user/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </Router>
   );
 };
