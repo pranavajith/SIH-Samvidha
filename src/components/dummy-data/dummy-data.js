@@ -375,8 +375,8 @@ const UserData = {
     progress: 0.1,
   },
   streakData: {
-    latestPlayed: "2023-10-01",
-    latestStreakStartDate: "2023-08-01",
+    latestPlayed: "2024-09-12",
+    latestStreakStartDate: "2024-08-01",
   },
 };
 

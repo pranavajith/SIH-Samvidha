@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import "./../../styles/UserProfile.css";
 import { UserContext } from "../../context/UserContext";
+import { format, differenceInCalendarDays } from "date-fns"; // date-fns for better date manipulation
 
 const UserProfile = () => {
   const { user } = useContext(UserContext);
@@ -19,9 +20,39 @@ const UserProfile = () => {
   };
 
   const handleSave = () => {
+    // Call function to update user details, if needed
     // updateUser(updatedDetails);
     setEditing(false);
   };
+
+  // Helper function to check if a date is today
+  const isToday = (date) => {
+    const today = new Date();
+    return format(new Date(date), "yyyy-MM-dd") === format(today, "yyyy-MM-dd");
+  };
+
+  // Helper function to check if a date was yesterday
+  const isYesterday = (date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    return (
+      format(new Date(date), "yyyy-MM-dd") === format(yesterday, "yyyy-MM-dd")
+    );
+  };
+
+  // Calculate streak status and current streak
+  const latestPlayedDate = new Date(user.streakData.latestPlayed);
+  const streakStartDate = new Date(user.streakData.latestStreakStartDate);
+
+  const streakStatus =
+    isToday(latestPlayedDate) || isYesterday(latestPlayedDate);
+
+  let currentStreak = 0;
+  if (streakStatus || isYesterday(latestPlayedDate)) {
+    currentStreak =
+      differenceInCalendarDays(latestPlayedDate, streakStartDate) + 1;
+  }
 
   return (
     <div className="profile-container">
@@ -95,10 +126,20 @@ const UserProfile = () => {
             </span>
           </div>
           <div className="detail-item">
-            <label className="detail-label">Streak:</label>
+            <label className="detail-label">Streak Start Date:</label>
             <span className="detail-value">
-              Streak Start Date: {user.streakData.latestStreakStartDate}
+              {user.streakData.latestStreakStartDate}
             </span>
+          </div>
+          <div className="detail-item">
+            <label className="detail-label">Streak Status:</label>
+            <span className="detail-value">
+              {streakStatus ? "True" : "False"}
+            </span>
+          </div>
+          <div className="detail-item">
+            <label className="detail-label">Current Streak:</label>
+            <span className="detail-value">{currentStreak} days</span>
           </div>
         </div>
 

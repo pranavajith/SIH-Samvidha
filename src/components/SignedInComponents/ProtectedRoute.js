@@ -10,13 +10,22 @@ const ProtectedRoute = ({ children }) => {
     if (!user) {
       setShouldRedirect(true);
     }
-  }, [user]);
+  }, []);
 
+  console.log("Entering protected section. User is ", user, shouldRedirect);
   if (shouldRedirect) {
     return <Navigate to="/signin" state={{ message: "Sign In to Continue" }} />;
   }
 
-  return children;
+  return (
+    <>
+      {user ? (
+        children
+      ) : (
+        <Navigate to="/signin" state={{ message: "Sign In to Continue" }} />
+      )}
+    </>
+  );
 };
 
 export { ProtectedRoute };
