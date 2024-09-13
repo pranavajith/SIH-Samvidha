@@ -1,2 +1,5 @@
-fastapi[standard]
-uvicorn[standard]
+fastapi[all]
+python-dotenv
+authlib
+sqlalchemy
+bcrypt
