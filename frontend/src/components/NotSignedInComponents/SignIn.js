@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import "./../../styles/SignIn.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import Banner from "../general-components/Banner";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const { login } = useContext(UserContext);
   const location = useLocation();
   const bannerMessage = location.state?.message;
-  console.log(bannerMessage);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,13 +24,12 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     login();
+    navigate("/user");
     e.preventDefault();
 
     // Add form validation and submission logic
     console.log("Login form submitted:", formData);
   };
-
-  console.log(bannerMessage);
 
   return (
     <>

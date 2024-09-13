@@ -10,12 +10,12 @@ import Signup from "./SignUp";
 import SignIn from "./SignIn";
 
 const NotSignedInSection = () => {
-  const location = useLocation();
-  const isUserRoute = location.pathname.startsWith("/user");
+  // const location = useLocation();
+  // const isUserRoute = location.pathname.startsWith("/user");
 
-  if (isUserRoute) {
-    return <Navigate to="/signin" state={{ message: "Sign in to continue" }} />;
-  }
+  // if (isUserRoute) {
+  //   return <Navigate to="/signin" state={{ message: "Sign in to continue" }} />;
+  // }
 
   return (
     <>

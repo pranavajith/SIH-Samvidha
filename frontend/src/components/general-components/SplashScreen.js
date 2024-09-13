@@ -34,7 +34,6 @@ const SplashScreen = ({ text1, text2 }) => {
       setHideIntro(true); // Move the splash screen up
     }, 2300); // Move up after 2.3 seconds
   }, []);
-  console.log(text1, text2);
   return (
     <div className={`intro ${hideIntro ? "hide" : ""}`}>
       <div className="logo-header">
