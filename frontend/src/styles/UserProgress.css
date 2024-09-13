@@ -9,7 +9,7 @@
     border-bottom: 2px solid #06d6a0;
     height: 100vh;
     box-sizing: border-box;
-    position: fixed; 
+    /* position: fixed;  */
     left: 0; /* Stick it to the left side */
     /* top: 0;  */
     overflow-y: auto;
