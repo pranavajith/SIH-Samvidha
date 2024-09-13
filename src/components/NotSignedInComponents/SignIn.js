@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import "./../../styles/SignIn.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import Banner from "../general-components/Banner";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const { login } = useContext(UserContext);
   const location = useLocation();
   const bannerMessage = location.state?.message;
@@ -24,6 +25,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     login();
+    navigate("/");
     e.preventDefault();
 
     // Add form validation and submission logic

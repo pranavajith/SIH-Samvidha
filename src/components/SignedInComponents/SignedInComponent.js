@@ -14,21 +14,21 @@ const SignedInComponent = () => {
         text1={"Welcome"}
         text2={", " + user.firstName + " " + user.lastName}
       />
-      <Router>
-        <ProtectedRoute>
-          <SignedInTitle />
-        </ProtectedRoute>
-        <Routes>
-          <Route
-            path="/user/profile"
-            element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
+      {/* <Router> */}
+      <ProtectedRoute>
+        <SignedInTitle />
+      </ProtectedRoute>
+      <Routes>
+        <Route
+          path="/user/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      {/* </Router> */}
     </>
   );
 };
