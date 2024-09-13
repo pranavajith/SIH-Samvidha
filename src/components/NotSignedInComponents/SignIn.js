@@ -1,10 +1,14 @@
 import React, { useContext, useState } from "react";
 import "./../../styles/SignIn.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import Banner from "../general-components/Banner";
 
 const SignIn = () => {
   const { login } = useContext(UserContext);
+  const location = useLocation();
+  const bannerMessage = location.state?.message;
+  console.log(bannerMessage);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -26,57 +30,62 @@ const SignIn = () => {
     console.log("Login form submitted:", formData);
   };
 
+  console.log(bannerMessage);
+
   return (
-    <div className="signin-container">
-      <h1 className="signin-title">Welcome Back!</h1>
-      <form className="signin-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">
-            <span role="img" aria-label="email">
-              📧
+    <>
+      {bannerMessage && <Banner message={bannerMessage} />}
+      <div className="signin-container">
+        <h1 className="signin-title">Welcome Back!</h1>
+        <form className="signin-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">
+              <span role="img" aria-label="email">
+                📧
+              </span>{" "}
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">
+              <span role="img" aria-label="lock">
+                🔒
+              </span>{" "}
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button type="submit" className="signin-button">
+            <span role="img" aria-label="key">
+              🔑
             </span>{" "}
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            required
-          />
+            Log In
+          </button>
+        </form>
+        <div className="signin-footer">
+          <p>
+            Don't have an account? <Link to="/signup">Sign up here</Link>
+          </p>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">
-            <span role="img" aria-label="lock">
-              🔒
-            </span>{" "}
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
-        </div>
-        <button type="submit" className="signin-button">
-          <span role="img" aria-label="key">
-            🔑
-          </span>{" "}
-          Log In
-        </button>
-      </form>
-      <div className="signin-footer">
-        <p>
-          Don't have an account? <Link to="/signup">Sign up here</Link>
-        </p>
       </div>
-    </div>
+    </>
   );
 };
 

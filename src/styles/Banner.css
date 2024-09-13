@@ -1,0 +1,20 @@
+.banner {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  font-family: "Happy Monkey", system-ui;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Smooth transition */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.banner.hidden {
+  opacity: 0;
+  transform: translateY(-20px); /* Moves the banner slightly upwards when hidden */
+  pointer-events: none; /* Disable interaction with hidden banner */
+}
