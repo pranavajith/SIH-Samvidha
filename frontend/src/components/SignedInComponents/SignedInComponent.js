@@ -7,6 +7,7 @@ import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
 import { UserProgress } from "./UserProgress";
 import TypeGame from "./TypeGame";
+import { TypeGameData } from "../dummy-data/dummy-data";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -33,7 +34,7 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               {/* <UserProgress /> */}
-              <TypeGame />
+              <TypeGame displayData={TypeGameData.preamble} />
             </ProtectedRoute>
           }
         />

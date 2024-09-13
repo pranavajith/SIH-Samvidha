@@ -246,6 +246,34 @@ const constitutional_questions = {
   ],
 };
 
+const TypeGameData = {
+  preamble: {
+    text: `WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens:
+    JUSTICE, social, economic and political;
+    LIBERTY of thought, expression, belief, faith and worship;
+    EQUALITY of status and of opportunity;
+    and to promote among them all FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation;
+    
+    IN OUR CONSTITUENT ASSEMBLY this twenty-sixth day of November, 1949, do HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.
+`,
+    keywords: [
+      { word: "Sovereign", choices: ["Sovereign", "Socialist", "Republic"] },
+      { word: "Republic", choices: ["Democratic", "Republic", "Secular"] },
+      { word: "People", choices: ["People", "Humans", "Citizens"] },
+      { word: "Justice", choices: ["Equality", "Justice", "Freedom"] },
+      { word: "Liberty", choices: ["Faith", "Liberty", "Rights"] },
+      { word: "Fraternity", choices: ["Diversity", "Fraternity", "Unity"] },
+      {
+        word: "Constitution",
+        choices: ["Constitution", "Declaration", "Bill"],
+      },
+      { word: "Equality", choices: ["Freedom", "Rights", "Equality"] },
+      { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
+      { word: "Dignity", choices: ["Unity", "Dignity", "Respect"] },
+    ],
+  },
+};
+
 const preambleText = `
   WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a
   SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens:
@@ -380,4 +408,9 @@ const UserData = {
   },
 };
 
-export { constitutional_questions, constitutional_events, UserData };
+export {
+  constitutional_questions,
+  constitutional_events,
+  UserData,
+  TypeGameData,
+};
