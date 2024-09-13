@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./../../styles/SplashScreen.css";
 
-const SplashScreen = () => {
+const SplashScreen = ({ text1, text2 }) => {
   const [active, setActive] = useState(false); // Control 'active' class
   const [fade, setFade] = useState(false); // Control 'fade' class
   const [hideIntro, setHideIntro] = useState(false); // Control hiding the intro
@@ -34,12 +34,12 @@ const SplashScreen = () => {
       setHideIntro(true); // Move the splash screen up
     }, 2300); // Move up after 2.3 seconds
   }, []);
-
+  console.log(text1, text2);
   return (
     <div className={`intro ${hideIntro ? "hide" : ""}`}>
       <div className="logo-header">
-        <span className="logo">Sam</span>
-        <span className="logo">vidhan.</span>
+        <span className="logo">{text1}</span>
+        <span className="logo">{text2}</span>
       </div>
     </div>
   );

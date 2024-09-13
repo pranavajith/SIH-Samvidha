@@ -14,28 +14,30 @@ import { ProtectedRoute } from "../SignedInComponents/ProtectedRoute.js";
 
 const NotSignedInSection = () => {
   return (
-    <Router>
-      <div>
-        {/* <SplashScreen /> */}
-        <TitleBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/demo" element={<QuestionDisplay />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/timeline" element={<ConstitutionTimeline />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route
-            path="/user/profile"
-            element={
-              <ProtectedRoute>
-                <UserProfile />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+    <>
+      <SplashScreen text1={"Sam"} text2={"vidhan."} />
+      <Router>
+        <div>
+          <TitleBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/demo" element={<QuestionDisplay />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/timeline" element={<ConstitutionTimeline />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route
+              path="/user/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 };
 
