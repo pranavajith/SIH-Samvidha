@@ -62,7 +62,7 @@ const UserProfile = () => {
         <div className="profile-image-section">
           <img
             src={user.userProfileImage.path}
-            alt={`${user.firstName} ${user.lastName}`}
+            alt={`${user.firstName[0]} ${user.lastName[0]}`}
             className="profile-image"
           />
           <p className="profile-name">
