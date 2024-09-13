@@ -25,6 +25,8 @@ class User(Base):
     
     primid = Column(Integer, primary_key=True, index=True)
     userid = Column(String, unique=True, index=True)
+    fsname = Column(String)
+    lsname = Column(String)
     hashed = Column(String)
     mailid = Column(String)
     quesct = Column(Integer)
