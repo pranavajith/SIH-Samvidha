@@ -1,72 +1,65 @@
 import React, { useState, useEffect } from "react";
 import "./../../styles/TypeGame.css";
+import { TypeGameData } from "../dummy-data/dummy-data";
 
-const preamble = [
-  "We",
-  "the",
-  "people",
-  "of",
-  "India,",
-  "having",
-  "solemnly",
-  "resolved",
-  "to",
-  "constitute",
-  "India",
-  "into",
-  "a",
-  "Sovereign,",
-  "Socialist,",
-  "Secular,",
-  "Democratic",
-  "Republic",
-  "and",
-  "to",
-  "secure",
-  "to",
-  "all",
-  "its",
-  "citizens:",
-];
+const tokenizeText = (inputText) => {
+  const wordsArray = inputText.split(/(\s+|[.,;:])+/).filter(Boolean);
+  return wordsArray;
+};
 
-const keyWords = [
-  { word: "Sovereign,", choices: ["Sovereign,", "Socialist,", "Republic"] },
-  { word: "Republic", choices: ["Democratic", "Republic", "Secular"] },
-];
-
-const TypeGame = () => {
+const TypeGame = ({ displayData }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentKeyWordIndex, setCurrentKeyWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isInputMode, setIsInputMode] = useState(false);
+  const [currentKeyWord, setCurrentKeyWord] = useState(null);
   const [feedback, setFeedback] = useState("");
+  const [feedbackClass, setFeedbackClass] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
+
+  const { text: preambleText, keywords } = displayData;
+  const wordsArray = tokenizeText(preambleText);
 
   useEffect(() => {
-    if (currentWordIndex < preamble.length && !isInputMode) {
-      const word = preamble[currentWordIndex];
-      const keyWord = keyWords[currentKeyWordIndex];
+    if (currentWordIndex < wordsArray.length && !isInputMode) {
+      const word = wordsArray[currentWordIndex].replace(/[.,;:]/g, "");
 
-      if (keyWord && keyWord.word === word) {
+      const keyword = keywords.find(
+        (k) => k.word.toLowerCase() === word.toLowerCase()
+      );
+
+      if (keyword) {
         setIsInputMode(true);
+        setCurrentKeyWord(keyword);
       } else {
         setTimeout(() => {
-          setDisplayText((prev) => prev + word + " ");
+          setDisplayText((prev) => prev + wordsArray[currentWordIndex]);
           setCurrentWordIndex((prev) => prev + 1);
-        }, 300); // Controls typing speed
+        }, 100);
       }
+    } else if (currentWordIndex >= wordsArray.length) {
+      setIsComplete(true);
     }
-  }, [currentWordIndex, isInputMode]);
+  }, [currentWordIndex, isInputMode, wordsArray, keywords]);
 
-  const checkAnswer = (selected) => {
-    const correctWord = keyWords[currentKeyWordIndex].word;
-    if (selected === correctWord) {
+  const handleChoice = (choice) => {
+    const correctWord = currentKeyWord.word;
+    if (choice === correctWord) {
       setIsInputMode(false);
-      setFeedback("");
-      setDisplayText((prev) => prev + selected + " ");
+      setFeedback("Correct!");
+      setFeedbackClass("correct-feedback");
+      setDisplayText((prev) => prev + correctWord + " ");
       setCurrentWordIndex((prev) => prev + 1);
-      setCurrentKeyWordIndex((prev) => prev + 1);
+      setCurrentKeyWord(null);
+      setTimeout(() => setFeedback(""), 1000);
     } else {
-      setFeedback("Incorrect! Starting over...");
+      setFeedback(
+        <>
+          Incorrect! The correct word was "{correctWord}".
+          <br />
+          Restarting...
+        </>
+      );
+      setFeedbackClass("incorrect-feedback");
       setTimeout(resetGame, 2000);
     }
   };
@@ -74,21 +67,37 @@ const TypeGame = () => {
   const resetGame = () => {
     setDisplayText("");
     setCurrentWordIndex(0);
-    setCurrentKeyWordIndex(0);
+    setCurrentKeyWord(null);
     setFeedback("");
+    setFeedbackClass("");
     setIsInputMode(false);
+    setIsComplete(false); // Reset completion status
   };
 
   return (
     <div className="gameplay-container">
-      <div className="display-text">{displayText}</div>
+      <div className="display-text">
+        {displayText.split("\n").map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </div>
 
-      {isInputMode && (
+      {isComplete && !isInputMode && (
+        <div className="congratulations">
+          <p>Congratulations! You've completed this round.</p>
+        </div>
+      )}
+
+      {isInputMode && currentKeyWord && (
         <div className="input-section">
           <p>What should come next?</p>
           <div className="options">
-            {keyWords[currentKeyWordIndex].choices.map((choice, idx) => (
-              <button key={idx} onClick={() => checkAnswer(choice)}>
+            {currentKeyWord.choices.map((choice, idx) => (
+              <button
+                key={idx}
+                className="option-button"
+                onClick={() => handleChoice(choice)}
+              >
                 {choice}
               </button>
             ))}
@@ -96,7 +105,7 @@ const TypeGame = () => {
         </div>
       )}
 
-      <p className="feedback">{feedback}</p>
+      <p className={`feedback ${feedbackClass}`}>{feedback}</p>
     </div>
   );
 };
