@@ -8,7 +8,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-CORS_ORIGIN = os.getenv("CORS_ALLOWED_HOST", "http://localhost:5000")
+CORS_ORIGIN = os.getenv("CORS_ALLOWED_HOST", "*")
 
 app.add_middleware(
     CORSMiddleware,
