@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
-import { QuestionDisplay } from "../general-components/QuestionDisplay";
+import { UserProgress } from "./UserProgress";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -24,6 +24,14 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <UserProgress />
             </ProtectedRoute>
           }
         />

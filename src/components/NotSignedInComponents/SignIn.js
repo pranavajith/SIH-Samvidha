@@ -24,7 +24,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     login();
-    navigate("/");
+    navigate("/user");
     e.preventDefault();
 
     // Add form validation and submission logic
