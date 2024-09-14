@@ -1,6 +1,7 @@
 .gameplay-container {
     padding: 2rem;
     background-color: #333;
+    width: 100%;
     color: white;
     max-width: 800px;
     margin: 0 auto;

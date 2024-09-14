@@ -8,6 +8,7 @@ const tokenizeText = (inputText) => {
 };
 
 const TypeGame = ({ displayData }) => {
+  console.log("Here is displayData: ", displayData);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isInputMode, setIsInputMode] = useState(false);
@@ -17,6 +18,8 @@ const TypeGame = ({ displayData }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   const { text: preambleText, keywords } = displayData;
+  console.log("PrambleText: ", preambleText);
+  console.log("KeyWords: ", keywords);
   const wordsArray = tokenizeText(preambleText);
 
   useEffect(() => {

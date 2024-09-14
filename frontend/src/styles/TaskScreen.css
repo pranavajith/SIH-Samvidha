@@ -1,22 +1,32 @@
-.task-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .complete-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .complete-button:disabled {
-    background-color: #888;
-    cursor: not-allowed;
-  }
-  
+.task-screen-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  height: 100vh;
+  padding: 20px;
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.completion-message {
+  text-align: center;
+}
+
+.next-level-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.next-level-button:hover {
+  background-color: #45a049;
+}

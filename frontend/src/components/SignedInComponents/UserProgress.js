@@ -45,10 +45,10 @@ const UserProgress = () => {
       <UserProgressAnimationDisplay percentage={completedPercentage} />
 
       <div className="progress-details">
-        <div className="progress-item">
+        {/* <div className="progress-item">
           <strong>Current Level:</strong>
           <span>{currentLevel}</span>
-        </div>
+        </div> */}
 
         <div className="progress-item">
           <strong>Completed Games:</strong>

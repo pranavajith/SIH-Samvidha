@@ -1,25 +1,53 @@
-import React, { useState } from 'react';
-import '../../styles/TaskScreen.css';  // Importing the CSS from the styles folder
+import React, { useState, useCallback } from 'react';
+import '../../styles/TaskScreen.css';
+import QuestionSlider from '../general-components/QuestionSlider';
+import TypeGame from '../SignedInComponents/TypeGame';
 
 const TaskScreen = ({ level, onComplete }) => {
-  const [tasksCompleted, setTasksCompleted] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
-  const completeTasks = () => {
-    setTasksCompleted(true);
-    onComplete(); // Unlock the next level
+  const handleComplete = useCallback(() => {
+    setIsComplete(true);
+    onComplete(); // Notify parent about completion
+  }, [onComplete]);
+
+  const handleReturn = useCallback(() => {
+    setIsComplete(false);
+    onComplete(); // Notify parent to potentially reset or navigate back
+  }, [onComplete]);
+
+  const renderGame = () => {
+    switch (level.questionType) {
+      case 'flashcard':
+        return (
+          <QuestionSlider
+            display_questions={level.questionData}
+            onComplete={handleComplete}
+            handleQuizReturn={handleReturn}
+          />
+        );
+      case 'TypeGame':
+        // console.log(level.questionData);
+        return (
+        <TypeGame displayData={level.questionData} />
+      );
+      default:
+        return <div>Unsupported game type</div>;
+    }
   };
 
   return (
-    <div className="task-screen">
-      <h1>{`Tasks for Level ${level.number}`}</h1>
-      <p>Complete all tasks to unlock the next level.</p>
-      <button 
-        className="complete-button" 
-        onClick={completeTasks}
-        disabled={tasksCompleted}
-      >
-        {tasksCompleted ? 'Tasks Completed' : 'Complete Tasks'}
-      </button>
+    <div className="task-screen-container">
+      {isComplete ? (
+        <div className="completion-message">
+          <h2>Level Completed!</h2>
+          <button className="next-level-button" onClick={onComplete}>
+            Proceed to Next Level
+          </button>
+        </div>
+      ) : (
+        renderGame()
+      )}
     </div>
   );
 };
