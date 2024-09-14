@@ -1,0 +1,33 @@
+/* Container for the animation and text */
+.user-progress-animation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 20px; */
+  }
+  
+  /* Wrapper for the Lottie animation */
+  /* .animation-wrapper {
+    margin-bottom: 20px;
+  } */
+  
+  /* Style for the text below the animation */
+  .animation-text {
+    text-align: center;
+    font-family: "Happy Monkey", system-ui;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .animation-wrapper {
+      width: 80%;
+    }
+  
+    .animation-text {
+      font-size: 1.3rem;
+    }
+  }
+  

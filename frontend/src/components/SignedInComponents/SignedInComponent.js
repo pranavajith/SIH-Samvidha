@@ -8,6 +8,7 @@ import { SplashScreen } from "../general-components/SplashScreen";
 import { UserProgress } from "./UserProgress";
 import TypeGame from "./TypeGame";
 import { TypeGameData } from "../dummy-data/dummy-data";
+import { UserHomePage } from "./UserHomepage";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -33,8 +34,7 @@ const SignedInComponent = () => {
           path="/user"
           element={
             <ProtectedRoute>
-              {/* <UserProgress /> */}
-              <TypeGame displayData={TypeGameData.preamble} />
+              <UserHomePage />
             </ProtectedRoute>
           }
         />

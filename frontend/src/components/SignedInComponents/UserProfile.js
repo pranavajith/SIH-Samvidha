@@ -54,6 +54,11 @@ const UserProfile = () => {
       differenceInCalendarDays(latestPlayedDate, streakStartDate) + 1;
   }
 
+  // Calculate game progress as the ratio of levels complete to total levels
+  const gameProgressPercentage =
+    (user.gameProgress.levelsComplete.length / user.gameProgress.totalLevels) *
+    100;
+
   return (
     <div className="profile-container">
       <h1 className="profile-title">User Profile</h1>
@@ -122,7 +127,7 @@ const UserProfile = () => {
           <div className="detail-item">
             <label className="detail-label">Game Progress:</label>
             <span className="detail-value">
-              {(user.gameProgress.progress * 100).toFixed(1)}%
+              {gameProgressPercentage.toFixed(1)}%
             </span>
           </div>
           <div className="detail-item">
@@ -134,7 +139,7 @@ const UserProfile = () => {
           <div className="detail-item">
             <label className="detail-label">Streak Status:</label>
             <span className="detail-value">
-              {streakStatus ? "True" : "False"}
+              {streakStatus ? "Ongoing" : "Inactive"}
             </span>
           </div>
           <div className="detail-item">
