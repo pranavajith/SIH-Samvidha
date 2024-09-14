@@ -311,8 +311,7 @@ const constitutional_events = [
     description:
       "The First Amendment Act of 1951 was enacted to address issues related to freedom of speech, property rights, and other fundamental rights, aiming to balance individual rights with national security and public order.",
     date: "18 June 1951",
-    image:
-      "https://blog.examarly.com/wp-content/uploads/2022/10/1stAmend-44-1160x725.webp",
+    image: "https://pbs.twimg.com/media/GCgCRGPbMAA9JOa.jpg",
   },
   {
     id: 5,
