@@ -1,6 +1,5 @@
 import bcrypt
 import hashlib
-from app.data import TokenModel
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from pydantic import BaseModel
