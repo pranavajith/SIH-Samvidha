@@ -1,0 +1,21 @@
+/* styles/UserHomePage.css */
+
+.user-homepage-container {
+    display: flex;
+    justify-content: space-between; /* Space between the two components */
+    align-items: flex-start; /* Align items to the top */
+    width: 100%; /* Ensure it takes the full width of the viewport */
+    padding: 20px; /* Optional: Add padding */
+    box-sizing: border-box; /* Make sure padding is included in width calculation */
+  }
+  
+  /* Set specific widths for each component */
+  .user-homepage-container > :first-child {
+    flex: 0 0 25%; /* UserProgress takes 20% of the total width */
+  }
+  
+  .user-homepage-container > :nth-child(2) {
+    flex: 1; /* TypeGame takes the remaining space (80%) */
+    min-width: 0; /* Prevents overflow issues */
+  }
+  

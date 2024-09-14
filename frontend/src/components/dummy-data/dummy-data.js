@@ -386,10 +386,11 @@ const UserData = {
   },
   password: "fakePassword",
   gameProgress: {
-    progress: 0.1,
+    levelsComplete: [1, 2],
+    totalLevels: 10,
   },
   streakData: {
-    latestPlayed: "2024-09-12",
+    latestPlayed: "2024-09-14",
     latestStreakStartDate: "2024-08-01",
   },
 };
