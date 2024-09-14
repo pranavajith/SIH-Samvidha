@@ -379,7 +379,8 @@ const constitutional_events = [
 const UserData = {
   firstName: "Pranav",
   lastName: "Ajith",
-  userName: "pranav.ajith.cse21@itbhu.ac.in",
+  username: "Pranav Ajith",
+  email: "pranav.ajith.cse21@itbhu.ac.in",
   userProfileImage: {
     type: "url",
     path: urlList.GenericKidImageUrl,
@@ -395,7 +396,41 @@ const UserData = {
   },
 };
 
+const leaderboardData = [
+  {
+    username: "Pranav Ajith",
+    score: 500,
+    league: "Bronze",
+  },
+  {
+    username: "Aditya Abhiram",
+    score: 600,
+    league: "Silver",
+  },
+  {
+    username: "Anish Dixit",
+    score: 700,
+    league: "Gold",
+  },
+  {
+    username: "Kancharla Kiranmai",
+    score: 800,
+    league: "Platinum",
+  },
+  {
+    username: "Niranjan",
+    score: 900,
+    league: "Ruby",
+  },
+  {
+    username: "Ishika Saini",
+    score: 1000,
+    league: "Diamond",
+  },
+];
+
 export {
+  leaderboardData,
   constitutional_questions,
   constitutional_events,
   UserData,

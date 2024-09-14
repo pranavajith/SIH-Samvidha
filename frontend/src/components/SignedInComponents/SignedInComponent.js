@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { SignedInTitle } from "./SignedInTitle";
@@ -8,8 +8,9 @@ import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
 import { UserProgress } from "./UserProgress";
 import TypeGame from "./TypeGame";
-import { TypeGameData } from "../dummy-data/dummy-data";
-import  UserHomePage  from "./UserHomepage";
+import { leaderboardData, TypeGameData } from "../dummy-data/dummy-data";
+import UserHomePage from "./UserHomepage";
+import { Leaderboard } from "./Leaderboard";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -36,6 +37,14 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <UserHomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/leaderboard"
+          element={
+            <ProtectedRoute>
+              <Leaderboard data={leaderboardData} />
             </ProtectedRoute>
           }
         />

@@ -1,0 +1,68 @@
+.leaderboard-container {
+    font-family: "Montserrat", sans-serif;
+    padding: 2em;
+    background-color: #121212; /* Dark background */
+    border-radius: 8px;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.25);
+    max-width: 600px;
+    margin: 29px auto;
+}
+
+.leaderboard-title {
+    font-size: 3em;
+    text-align: center;
+    color: #ffffff; /* Light text for contrast */
+    margin-bottom: 1em;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    text-align: left;
+    padding: 1em;
+    border-bottom: 1px solid #444; /* Subtle border color */
+    font-size: 1.2em;
+}
+
+.leaderboard-table th {
+    background-color: #333; /* Darker header */
+    color: #ffffff; /* White text for the header */
+}
+
+.leaderboard-table td {
+    color: #cccccc; /* Light grey for normal rows */
+}
+
+.highlighted-row {
+    background-color: #06d6a0; /* Highlight color */
+    color: white;
+    font-weight: bold;
+}
+
+.highlighted-row td {
+    color: white; /* White text in the highlighted row */
+}
+
+.leaderboard-table tr:hover {
+    background-color: #333; /* Slightly darker hover effect */
+}
+
+@media only screen and (max-width: 768px) {
+    .leaderboard-container {
+      padding: 1.5em;
+    }
+
+    .leaderboard-title {
+      font-size: 2em;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      font-size: 1em;
+    }
+}
