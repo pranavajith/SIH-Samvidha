@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   frontend:
+    container_name: samvidhan_frontend
+    restart: always
     build:
       context: ..
       dockerfile: docker/frontend.Dockerfile
@@ -13,6 +15,8 @@ services:
       - REACT_BACKEND_URL=http://backend:8000
 
   backend:
+    container_name: samvidhan_backend
+    restart: always
     build:
       context: ..
       dockerfile: docker/backend.Dockerfile
@@ -20,16 +24,10 @@ services:
       - "8000:8000"
     volumes:
       - ../backend/db.sqlite3:/db.sqlite3
+      - ../pydata:/data
     environment:
       - CORS_ALLOWED_HOST=http://frontend:3000
 
-# React frontend example, to access backend:
-# const backendUrl = process.env.REACT_BACKEND_URL || 'http://localhost:8000';
-# fetch(`${backendUrl}/api/endpoint`)
-#   .then(response => response.json())
-#   .then(data => console.log(data));
-
 # docker-compose up --build
-# docker-compose up --build frontend
-# docker-compose up --build backend
 # docker-compose down -v
+# tree -a -I ".git|team-photo"

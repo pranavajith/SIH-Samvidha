@@ -1,8 +1,6 @@
 import os
-from app.data import Base, db_handler, engine
-from app.auth import new_user, chk_user
+import app.data as db
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from starlette.middleware.cors import CORSMiddleware
 
@@ -18,16 +16,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.post("/api/signin")
 async def signin():
+    # HTTPException(status_code=401, detail="Invalid Credentials")
     pass
-
 
 @app.post("/api/signup")
 async def signup():
     pass
-
 
 @app.post("/api/leader")
 async def leader():
