@@ -1,5 +1,7 @@
-fastapi[all]
-python-dotenv
 authlib
-sqlalchemy
 bcrypt
+fastapi[all]
+pydantic
+python-jose
+sqlalchemy
+uvicorn
