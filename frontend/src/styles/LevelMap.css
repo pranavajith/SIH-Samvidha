@@ -1,11 +1,63 @@
 .level-map {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;  /* Ensures equal spacing between the levels */
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  margin-left: 10px;
+  width: 80%;
+}
+
+.level-container {
+  margin:0;
+  padding:0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.level {
+  width: 100px;           /* Adjust the size */
+  height: 100px;          /* Keep width and height equal */
+  border-radius: 50%;      /* Makes the div circular */
+  background-size: 90%;
+  background-position: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.level-connector {
+  width: 300px;             /* Length of the line connecting the levels */
+  height: 6px;              /* Thickness of the line */
+  background-color: #06d6a0; /* Color of the line */
+  /* margin-left: 10px;        
+  margin-right: 10px;        */
+  margin: 0;
+  position: relative;
+}
+
+.level.unlocked:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.level.locked {
+  filter: grayscale(100%);
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .level-map {
+    flex-direction: column;  /* Stack levels vertically on smaller screens */
+    align-items: flex-start;
   }
-  
-  .level {
-    margin: 10px;
+
+  .level-connector {
+    width: 6px;              /* Line height becomes vertical in mobile view */
+    height: 100px;           /* Length of vertical connector */
+    margin: 10px 0;          /* Space between the levels */
   }
-  
+}

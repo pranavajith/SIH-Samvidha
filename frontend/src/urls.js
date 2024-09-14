@@ -15,6 +15,14 @@ const urlList = {
   WorkImageUrl: "https://cdn-icons-png.flaticon.com/512/2344/2344036.png",
   GenericKidImageUrl:
     "https://png.pngtree.com/background/20230528/original/pngtree-photo-of-a-girl-in-sunglasses-picture-image_2778708.jpg",
+  TrophyPicUrl:
+    "https://static.vecteezy.com/system/resources/previews/022/419/488/original/medal-isolated-on-a-transparent-background-free-png.png",
+  CheckpointUrl:
+    "https://i.pinimg.com/474x/3c/fe/54/3cfe546290941b7e420a052f6b36dad1.jpg",
+  TrophyGifUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+  CheckpointGifUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
+  WhiteLockUrl:
+    "https://static.vecteezy.com/system/resources/previews/009/589/656/original/lock-icon-transparent-free-png.png",
 };
 
 export { urlList };
