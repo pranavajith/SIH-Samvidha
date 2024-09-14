@@ -2,9 +2,13 @@ FROM python:3.11-alpine
 
 WORKDIR /app
 
-COPY backend/ .
+# https://stackoverflow.com/a/34399661
+COPY backend/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+# To prevent Cache Invalidation Error
+COPY backend/ .
 
 EXPOSE 8000
 

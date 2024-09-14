@@ -23,7 +23,6 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../backend/db.sqlite3:/db.sqlite3
       - ../pydata:/data
     environment:
       - CORS_ALLOWED_HOST=http://frontend:3000
