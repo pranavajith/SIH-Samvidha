@@ -3,19 +3,22 @@
     background-color: #333;
     color: white;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 0 auto;
     font-family: "Happy Monkey", system-ui;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/000/126/874/small/vector-old-paper-texture.jpg");
+    background-size: cover;
   }
   
   .display-text {
-    background-color: #444;
+    background-color: #e8e3cb;
     padding: 1.5rem;
     border-radius: 10px;
     font-size: 1.2rem;
     line-height: 1.6;
     white-space: pre-line;
+    color: black;
   }
   
   .display-text p {
@@ -30,7 +33,7 @@
   
   .input-section p {
     font-size: 1.2rem;
-    color: #06d6a0;
+    color: #225547;
   }
   
   .options {
@@ -65,7 +68,7 @@
   }
   
   .correct-feedback {
-    color: #06d6a0;
+    color: #277f68;
   }
   
   .incorrect-feedback {
@@ -75,7 +78,7 @@
   .congratulations {
     margin-top: 1.5rem;
     font-size: 1.5rem;
-    color: #06d6a0;
+    color: #277f68;
     text-align: center;
     font-weight: bold;
   }

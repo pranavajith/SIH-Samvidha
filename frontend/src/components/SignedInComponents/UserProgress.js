@@ -23,7 +23,7 @@ const UserProgress = () => {
       : "All levels complete";
 
   // Calculate the percentage for the pie chart
-  const completedPercentage = 75;
+  const completedPercentage = (completedGames / totalLevels) * 100;
   // const remainingPercentage = 100 - completedPercentage;
 
   return (
@@ -64,8 +64,9 @@ const UserProgress = () => {
           <strong>Next Milestone:</strong>
           <span>{nextMilestone}</span>
         </div>
+
         <div className="progress-item">
-          <strong>Completed Percentage:</strong>
+          <strong>Gameplay completed:</strong>
           <span>{completedPercentage}%</span>
         </div>
 
