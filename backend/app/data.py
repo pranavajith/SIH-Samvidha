@@ -3,7 +3,8 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-engine = create_engine("sqlite:///data/db.sqlite3", connect_args={"check_same_thread": False})
+# https://stackoverflow.com/a/70834382
+engine = create_engine("sqlite:////data/db.sqlite3")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -18,11 +19,11 @@ class User(Base):
     __tablename__ = "users"
     
     primid = Column(Integer, primary_key=True, index=True)
-    mailid = Column(String, unique=True)
-    userid = Column(String, unique=True, index=True)
-    fsname = Column(String)
-    lsname = Column(String)
-    hashed = Column(String)
+    mailid = Column(String(64), unique=True, index=True)
+    userid = Column(String(16), unique=True, index=True)
+    fsname = Column(String(32))
+    lsname = Column(String(32))
+    hashed = Column(String(64))
     quesct = Column(Integer)
     goodqn = Column(Integer)
 
