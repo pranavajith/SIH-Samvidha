@@ -3,6 +3,7 @@ import { NotSignedInSection } from "./components/NotSignedInComponents/NotSigned
 import { SignedInComponent } from "./components/SignedInComponents/SignedInComponent";
 import { UserContext } from "./context/UserContext";
 
+
 function App() {
   const { user } = useContext(UserContext);
   return <>{user ? <SignedInComponent /> : <NotSignedInSection />}</>;

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { SignedInTitle } from "./SignedInTitle";
@@ -8,7 +9,7 @@ import { SplashScreen } from "../general-components/SplashScreen";
 import { UserProgress } from "./UserProgress";
 import TypeGame from "./TypeGame";
 import { TypeGameData } from "../dummy-data/dummy-data";
-import { UserHomePage } from "./UserHomepage";
+import  UserHomePage  from "./UserHomepage";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
