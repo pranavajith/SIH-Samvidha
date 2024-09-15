@@ -50,12 +50,17 @@ const UserGameplay = () => {
     setCurrentLevel(null);
   };
 
+  const handleIncompleteReturn = () => {
+    setCurrentLevel(null);
+  };
+
   return (
     <div>
       {currentLevel ? (
         <TaskScreen
           level={currentLevel}
           onComplete={() => handleCompleteTasks(currentLevel.number)}
+          handleIncompleteReturn={handleIncompleteReturn}
         />
       ) : (
         <LevelMap levels={levels} onLevelClick={handleLevelClick} />
