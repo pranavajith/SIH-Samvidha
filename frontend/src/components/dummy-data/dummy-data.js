@@ -343,7 +343,7 @@ const preambleLevels = [
   },
   {
     number: 3,
-    status: "locked",
+    status: "unlocked",
     videoUrl: urlList.TrophyGifUrl,
     questionType: "TypeGame",
     questionData: TypeGameData.preamble,

@@ -35,7 +35,7 @@ const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
         setCurrentKeyWord(keyword);
       } else {
         setTimeout(() => {
-          setDisplayText((prev) => prev + wordsArray[currentWordIndex]);
+          setDisplayText((prev) => prev + (prev.endsWith(" ") ? " " : " ") + wordsArray[currentWordIndex]);
           setCurrentWordIndex((prev) => prev + 1);
         }, 100);
       }
@@ -45,7 +45,7 @@ const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
         onComplete();
       }, 1500);
     }
-  }, [currentWordIndex, isInputMode, wordsArray, keywords]);
+  }, [currentWordIndex, isInputMode, wordsArray, keywords, onComplete]);
 
   const handleChoice = (choice) => {
     const correctWord = currentKeyWord.word;
