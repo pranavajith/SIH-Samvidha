@@ -1,29 +1,12 @@
 from app.auth import AuthHelper
-from pydantic import BaseModel
-from sqlalchemy import Column, Integer, String
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, validates
+from fastapi import Depends
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
 # https://stackoverflow.com/a/70834382
 engine = create_engine("sqlite:////data/db.sqlite3")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
-
-
-def handle():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-def make_userid(context):
-    # https://stackoverflow.com/a/75678715
-    params = context.get_current_parameters()
-    return AuthHelper.getuid(params['fsname'], params['lsname'], params['mailid'])
-
 
 class User(Base):
     __tablename__ = "users"
@@ -35,21 +18,50 @@ class User(Base):
     hashed = Column(String(64))
     quesct = Column(Integer, default=lambda context: 0)
     goodqn = Column(Integer, default=lambda context: 0)
-    userid = Column(String(16), unique=True, index=True, default=make_userid)
+    userid = Column(String(16), unique=True, index=True,
+        # https://stackoverflow.com/a/75678715
+        default=lambda context: AuthHelper.getuid(
+            context.get_current_parameters()['fsname'],
+            context.get_current_parameters()['lsname'],
+            context.get_current_parameters()['mailid']
+        )
+    )
 
-
-class UserCreate(BaseModel):
-    fsname: str
-    lsname: str
-    passwd: str
-    mailid: str
-
-class UserLogin(BaseModel):
-    mailid: str
-    passwd: str
-
-class TokenModel(BaseModel):
-    token: str
-
-# Must be called after models are defined
+# Must be called after tables are defined
 Base.metadata.create_all(bind=engine)
+
+def DB_handle():
+    def __innate_handle__():
+        db = SessionLocal()
+        try:
+            yield db
+        finally:
+            db.close()
+    return Depends(__innate_handle__)
+
+def get_leaders(*args, db=DB_handle(), limit=10):
+
+    score = 1000 * func.floor(case(
+        [(User.quesct == 0, 0)],
+        else_=func.coalesce( User.goodqn / User.quesct, 0)
+    ))
+    
+    league = case(
+        [(score <= 125, "Copper"),
+         (score <= 250, "Bronze"),
+         (score <= 375, "Iron"),
+         (score <= 500, "Silver"),
+         (score <= 625, "Gold"),
+         (score <= 750, "Platinum"),
+         (score <= 875, "Ruby")],
+        else_="Diamond"
+    )
+    
+    results = db.query(
+        (User.fsname) + ' ' + (User.lsname).label('usname'),
+        score.label('uscore'), league.label('league')
+    ).order_by(
+        score.desc(), User.quesct.desc()
+    ).limit(limit).all()
+
+    return results
