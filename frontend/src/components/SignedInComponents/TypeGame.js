@@ -7,7 +7,7 @@ const tokenizeText = (inputText) => {
   return wordsArray;
 };
 
-const TypeGame = ({ displayData }) => {
+const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
   console.log("Here is displayData: ", displayData);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -41,6 +41,9 @@ const TypeGame = ({ displayData }) => {
       }
     } else if (currentWordIndex >= wordsArray.length) {
       setIsComplete(true);
+      setTimeout(() => {
+        onComplete();
+      }, 1500);
     }
   }, [currentWordIndex, isInputMode, wordsArray, keywords]);
 
@@ -85,10 +88,14 @@ const TypeGame = ({ displayData }) => {
         ))}
       </div>
 
-      {isComplete && !isInputMode && (
+      {isComplete && !isInputMode ? (
         <div className="congratulations">
           <p>Congratulations! You've completed this round.</p>
         </div>
+      ) : (
+        <button className="back-option-button" onClick={handleIncompleteReturn}>
+          Go Back
+        </button>
       )}
 
       {isInputMode && currentKeyWord && (

@@ -2,36 +2,9 @@ import React, { useState } from "react";
 import "./../../styles/UserGameplay.css";
 import LevelMap from "../GameComponents/LevelMap";
 import TaskScreen from "../GameComponents/TaskScreen";
-import {
-  constitutional_questions,
-  TypeGameData,
-} from "../dummy-data/dummy-data";
-import { urlList } from "../../urls";
 
-const UserGameplay = () => {
-  const [levels, setLevels] = useState([
-    {
-      number: 1,
-      status: "unlocked",
-      videoUrl: urlList.CheckpointGifUrl,
-      questionType: "flashcard",
-      questionData: constitutional_questions.constitution_history_questions,
-    },
-    {
-      number: 2,
-      status: "locked",
-      videoUrl: urlList.CheckpointGifUrl,
-      questionType: "flashcard",
-      questionData: constitutional_questions.preamble_questions,
-    },
-    {
-      number: 3,
-      status: "locked",
-      videoUrl: urlList.TrophyGifUrl,
-      questionType: "TypeGame",
-      questionData: TypeGameData.preamble,
-    },
-  ]);
+const UserGameplay = ({ inputLevels }) => {
+  const [levels, setLevels] = useState(inputLevels);
 
   const [currentLevel, setCurrentLevel] = useState(null);
 

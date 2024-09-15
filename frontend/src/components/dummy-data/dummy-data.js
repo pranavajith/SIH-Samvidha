@@ -313,18 +313,42 @@ const TypeGameData = {
       { word: "Republic", choices: ["Democratic", "Republic", "Secular"] },
       { word: "People", choices: ["People", "Humans", "Citizens"] },
       { word: "Justice", choices: ["Equality", "Justice", "Freedom"] },
-      { word: "Liberty", choices: ["Faith", "Liberty", "Rights"] },
+      // { word: "Liberty", choices: ["Faith", "Liberty", "Rights"] },
       { word: "Fraternity", choices: ["Diversity", "Fraternity", "Unity"] },
       {
         word: "Constitution",
         choices: ["Constitution", "Declaration", "Bill"],
       },
-      { word: "Equality", choices: ["Freedom", "Rights", "Equality"] },
-      { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
+      // { word: "Equality", choices: ["Freedom", "Rights", "Equality"] },
+      // { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
       { word: "Dignity", choices: ["Unity", "Dignity", "Respect"] },
     ],
   },
 };
+
+const preambleLevels = [
+  {
+    number: 1,
+    status: "unlocked",
+    videoUrl: urlList.CheckpointGifUrl,
+    questionType: "flashcard",
+    questionData: constitutional_questions.constitution_history_questions,
+  },
+  {
+    number: 2,
+    status: "unlocked",
+    videoUrl: urlList.CheckpointGifUrl,
+    questionType: "flashcard",
+    questionData: constitutional_questions.preamble_questions,
+  },
+  {
+    number: 3,
+    status: "locked",
+    videoUrl: urlList.TrophyGifUrl,
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+];
 
 const constitutional_events = [
   {
@@ -481,6 +505,7 @@ const leaderboardData = [
 ];
 
 export {
+  preambleLevels,
   leaderboardData,
   constitutional_questions,
   constitutional_events,
