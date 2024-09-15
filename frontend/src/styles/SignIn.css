@@ -68,12 +68,15 @@
   padding: 0.8rem;
   font-size: 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
+  margin: 1rem auto 0; /* Centers the button */
+  display: block; /* Ensures it takes full width */
+  width: 150px; /* Adjust the width to fit content */
 }
+
 
 .signin-button:hover {
   background-color: #05c08c;

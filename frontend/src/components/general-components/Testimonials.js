@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../styles/Testimonials.css";
 import "./../../utils/i18n";
 import { useTranslation } from "react-i18next";
-import { use } from "i18next";
+
 const Testimonials = ({ testimonials }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -12,17 +12,17 @@ const Testimonials = ({ testimonials }) => {
     );
   };
 
+  setTimeout(nextTestimonial, 3000);
+
   const prevTestimonial = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     );
   };
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <div className="testimonials-container">
-      <h2 className="testimonials-header">
-        {t("testimonial")}
-      </h2>
+      <h2 className="testimonials-header">{t("testimonial")}</h2>
       <div className="testimonial-card">
         <div className="testimonial-left">
           <img

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AskAI.css";
+import "./../../styles/AskAI.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatbotAnimation from "./ChatbotAnimation";
 
