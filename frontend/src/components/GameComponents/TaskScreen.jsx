@@ -11,11 +11,6 @@ const TaskScreen = ({ level, onComplete, handleIncompleteReturn }) => {
     onComplete(); // Notify parent about completion
   }, [onComplete]);
 
-  const handleReturn = useCallback(() => {
-    setIsComplete(false);
-    onComplete(); // Notify parent to potentially reset or navigate back
-  }, [onComplete]);
-
   const renderGame = () => {
     switch (level.questionType) {
       case 'flashcard':
@@ -29,7 +24,7 @@ const TaskScreen = ({ level, onComplete, handleIncompleteReturn }) => {
       case 'TypeGame':
         // console.log(level.questionData);
         return (
-        <TypeGame displayData={level.questionData} />
+        <TypeGame displayData={level.questionData} onComplete={onComplete} handleIncompleteReturn={handleIncompleteReturn} />
       );
       default:
         return <div>Unsupported game type</div>;

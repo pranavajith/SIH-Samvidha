@@ -4,8 +4,8 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  /* margin-left: 10px; */
-  width: 80%;
+  margin-right: 10px;
+  width: 95%;
 }
 
 .level-text {
@@ -50,8 +50,8 @@
 }
 
 .level-connector {
-  width: 250px;             /* Length of the line connecting the levels */
-  height: 6px;              /* Thickness of the line */
+  width: 270px;             /* Length of the line connecting the levels */
+  height: 10px;              /* Thickness of the line */
   background-color: #06d6a0; /* Color of the line */
   /* margin-left: 10px;        
   margin-right: 10px;        */
