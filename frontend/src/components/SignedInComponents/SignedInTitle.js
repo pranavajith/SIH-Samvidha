@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import "./../../styles/Title.css";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./../../styles/Title.css"; // Ensure this path is correct
 import { UserContext } from "../../context/UserContext";
 
 const SignedInTitle = () => {
@@ -11,6 +11,10 @@ const SignedInTitle = () => {
     logout();
     navigate("/");
   };
+
+  console.log("SignedInTitle Rendered");
+  console.log("User:", user);
+
   return (
     <nav className="navbar">
       <Link to="/user">
@@ -40,7 +44,7 @@ const SignedInTitle = () => {
         <li className="navbar-item">
           <Link to="/user/profile" className="navbar-profile">
             <img
-              src={user.userProfileImage.path} // Assuming the profile image is available in userData
+              src={user.userProfileImage.path} // Ensure the image path is correct
               alt={`${user.firstName} ${user.lastName}`}
               className="navbar-profile-image"
             />

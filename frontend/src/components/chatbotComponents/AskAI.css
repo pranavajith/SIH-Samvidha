@@ -1,0 +1,80 @@
+.askai {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #333;
+  color: #fff;
+  position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.askai-container {
+  margin-left: 40px; /* Adjust this value to move the container to the right */
+}
+
+
+.animation-placeholder {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+}
+
+.welcome-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.chat-window {
+  width: 100%;
+  max-width: 800px;
+  height: 60vh;
+  overflow-y: auto;
+  border: 1px solid #666;
+  border-radius: 8px;
+  background-color: #444;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-sizing: border-box;
+}
+
+.chat-window .user-message {
+  color: #06d6a0;
+}
+
+.chat-window .bot-message {
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  width: calc(110% - 80px);
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #888;
+  background-color: #222;
+  color: #ffffff;
+  margin-right: 10px;
+}
+
+button {
+  width: 70px;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #06d6a0;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #04b89f;
+}

@@ -121,7 +121,9 @@
   margin-bottom: 20px;
   font-size: 36px; /* Larger font for heading */
   font-weight: bold;
+  /* padding-left: 20px; Adjust this value to move the heading to the right */
 }
+
 
 .completion-message p {
   font-size: 18px; /* Slightly smaller font for the paragraph */
