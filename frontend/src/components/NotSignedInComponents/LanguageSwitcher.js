@@ -22,10 +22,10 @@ function LanguageSwitcher() {
       >
         <option value="en">Language: English</option>
         <option value="hi">भाषा: हिन्दी</option>
+        <option value="te">భాష: తెలుగు</option>
         {/* Everything below is not functional.  */}
         <option value="en">ভাষা: বাংলা</option>
         <option value="en">ഭാഷ: മലയാളം</option>
-        <option value="en">భాష: తెలుగు</option>
         <option value="en">மொழி: தமிழ்</option>
         <option value="en">ಭಾಷೆ: ಕನ್ನಡ</option>
       </select>
