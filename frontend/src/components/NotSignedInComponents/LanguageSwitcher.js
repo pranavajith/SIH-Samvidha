@@ -1,32 +1,36 @@
-import React, { useEffect, useState } from "react";
+// LanguageSwitcher.js (Modified)
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import "../../styles/LanguageSwitcher.css"; // Assuming you will create this CSS file
-import "./../../utils/i18n";
+import "./../../styles/LanguageSwitcher.css";
 
-const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
-  const [currentLang, setCurrentLang] = useState("en");
+function LanguageSwitcher() {
+  const { i18n } = useTranslation(); // Get i18n from the useTranslation hook
+  const [language, setLanguage] = useState("en"); // Default to English
 
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") || "en";
-    i18n.changeLanguage(savedLanguage);
-    setCurrentLang(savedLanguage);
-  }, [i18n]);
-
-  const toggleLanguage = () => {
-    const newLang = currentLang === "en" ? "hi" : "en";
-    i18n.changeLanguage(newLang);
-    localStorage.setItem("language", newLang);
-    setCurrentLang(newLang);
+  const changeLanguage = (selectedLanguage) => {
+    setLanguage(selectedLanguage);
+    i18n.changeLanguage(selectedLanguage); // Use i18n to change the language
   };
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
-    <div className="language-switcher">
-      <button className="language-button" onClick={toggleLanguage}>
-        {t("toggle")}
-      </button>
+    <div>
+      {/* <label htmlFor="language">Choose Language: </label> */}
+      <select
+        className="language-selector-input"
+        value={language}
+        onChange={(e) => changeLanguage(e.target.value)}
+      >
+        <option value="en">Language: English</option>
+        <option value="hi">भाषा: हिन्दी</option>
+        {/* Everything below is not functional.  */}
+        <option value="en">ভাষা: বাংলা</option>
+        <option value="en">ഭാഷ: മലയാളം</option>
+        <option value="en">భాష: తెలుగు</option>
+        <option value="en">மொழி: தமிழ்</option>
+        <option value="en">ಭಾಷೆ: ಕನ್ನಡ</option>
+      </select>
     </div>
   );
-};
+}
 
 export default LanguageSwitcher;
