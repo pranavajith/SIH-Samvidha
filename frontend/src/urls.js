@@ -25,6 +25,8 @@ const urlList = {
     "https://static.vecteezy.com/system/resources/previews/009/589/656/original/lock-icon-transparent-free-png.png",
   StagePicUrl:
     "https://img.freepik.com/premium-photo/conference-hall-business-event-empty-stage-empty-stage-with-screen-procto_386094-230.jpg?w=360",
+  ConstitutionMakersPic:
+    "https://s02.sgp1.cdn.digitaloceanspaces.com/article/114370-qwxkrlmtwv-1567065827.jpg",
 };
 
 export { urlList };
