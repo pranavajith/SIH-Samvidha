@@ -1,0 +1,32 @@
+.language-switcher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 1rem; */
+  }
+  
+  .language-button {
+    padding: 0.8rem 1.5rem;
+    background-color: #06d6a0;
+    color: white;
+    text-decoration: none;
+    font-family: "Happy Monkey", system-ui;
+    font-weight: 400;
+    font-size: 1rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .language-button:hover {
+    background-color: #05c08c;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  @media (max-width: 768px) {
+    .language-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  

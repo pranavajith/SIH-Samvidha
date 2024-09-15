@@ -451,6 +451,41 @@ const constitutional_events = [
   },
 ];
 
+const testimonials = [
+  {
+    name: "USS Uppuluri",
+    image: "/testimonial-pics/uss.jpg",
+    occupation: "Entrepreneur, CMD of Edvenswa Enterprises Limited",
+    Testimonial:
+      "The platform simplifies constitutional literacy with engaging tools. It’s invaluable for understanding institutional functions, which is crucial for corporate governance and business leaders like me.",
+    Date: "September 15, 2024",
+  },
+  {
+    name: "Rajesh Gupta",
+    image: "/testimonial-pics/rajesh.png",
+    occupation: "IIT(BHU) Alumnus, Co-Founder @ DricPro",
+    Testimonial:
+      "Aspirational and foresightful entrepreneurs like myself are always looking for quick and effective ways to understand and appreciate the Indian Governance, as well as the Political and Governmental Structure. This makes reading up the Constitution vital. This website would cater to a poweful audience among us.",
+    Date: "September 15, 2024",
+  },
+  {
+    name: "Gayathry Ajith",
+    image: "/testimonial-pics/gayathry.jpg",
+    occupation: "Chartered Accountant, Big 4",
+    Testimonial:
+      "This platform merges professional and civic knowledge, making constitutional concepts easy to grasp. Its fun approach is ideal for anyone navigating governance in a business context.",
+    Date: "September 14, 2024",
+  },
+  {
+    name: "Dr. Anupama Boinepalli",
+    image: "/testimonial-pics/anupama.jpg",
+    occupation: "Chief Doctor at Snigdha Ayurvedic Hospitals",
+    Testimonial:
+      "Understanding constitutional roles is crucial for healthcare policies. This platform makes it accessible and interactive for professionals navigating legal frameworks in healthcare.",
+    Date: "September 13, 2024",
+  },
+];
+
 const UserData = {
   firstName: "Pranav",
   lastName: "Ajith",
@@ -463,7 +498,7 @@ const UserData = {
   password: "fakePassword",
   gameProgress: {
     levelsComplete: [1, 2],
-    totalLevels: 10,
+    totalLevels: 3,
   },
   streakData: {
     latestPlayed: "2024-09-14",
@@ -505,6 +540,7 @@ const leaderboardData = [
 ];
 
 export {
+  testimonials,
   preambleLevels,
   leaderboardData,
   constitutional_questions,
