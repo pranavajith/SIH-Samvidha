@@ -1,26 +1,17 @@
-import React, { useEffect, useRef } from 'react';
-import lottie from 'lottie-web';
-import animationData from './Animation - 1726408998335.json';
+import React from "react";
 
 const ChatbotAnimation = () => {
-    const container = useRef(null);
-
-    useEffect(() => {
-        lottie.loadAnimation({
-            container: container.current,
-            animationData,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-        });
-
-        // Cleanup on component unmount
-        return () => lottie.stop();
-    }, []);
-
-    return (
-        <div className="animation-container" ref={container}></div>
-    );
+  return (
+    <dotlottie-player
+      className="books-fall"
+      src="https://lottie.host/eae66761-adf7-4474-be8c-766ead075a96/7FAiwoTJ7d.json"
+      background="transparent"
+      speed="1"
+      style={{ width: "300px", height: "300px" }}
+      loop
+      autoplay
+    ></dotlottie-player>
+  );
 };
 
 export default ChatbotAnimation;
