@@ -6,10 +6,12 @@ from pydantic import BaseModel
 
 __UAUTH_KEY__ = "5b22b7$=1e6864e4617b"
 __TOKEN_KEY__ = "f92dddf0e41db3034cac3ff632ad18f2bb82603331220e73097ffa47"
-__TOKEN_EXPIRE_MINUTES__ = 30
+__TOKEN_EXPIRE_MINUTES__ = 10
 
 class AuthHelper:
-    """Basic user management"""
+    """
+    Class for User Validation, and ID Generation
+    """
 
     def __new__(cls, *args, **kwargs):
         raise RuntimeError('%s should not be instantiated' % cls)
@@ -40,7 +42,10 @@ class AuthHelper:
         
 
 class JWTHelper:
-    """Basic Session management"""
+    """
+    Session management with JSON Web Tokens
+    Reset timer/token for every valid request
+    """
 
     def __new__(cls, *args, **kwargs):
         raise RuntimeError('%s should not be instantiated' % cls)
@@ -57,21 +62,24 @@ class JWTHelper:
         return token
 
     @staticmethod
-    def check_token(userid, token):
-        # Decode payload & check validity
+    def from_token(token):
+        # Returns userid on valid token
+        # Return values: 
+        #   valid:   -> 200: OK
+        #   invalid: -> 403: Forbidden
+        #   expired: -> 401: Unauthorized
         try:
             payload = jwt.decode(token, __TOKEN_KEY__, algorithms=["HS256"])
             val1 = int(datetime.timestamp(datetime.utcnow()))
-            val2 = int(datetime.timestamp(payload['userid']))
+            val2 = int(datetime.timestamp(payload['access']))
 
-            if (payload['userid'] != userid or val1 != val2):
-                raise JWTError
+            if (val1 != val2):
+                return [401, "Session Timeout"]
             else:
-                return True
+                return [200, payload['userid']]
 
         except JWTError:
-            # either decode error or invalidity
-            return False
+            return [403, "Malformed Request"]
 
 
 
