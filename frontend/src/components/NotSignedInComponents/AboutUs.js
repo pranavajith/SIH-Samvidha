@@ -1,7 +1,11 @@
 import React from "react";
 import "./../../styles/AboutUs.css"; // Importing a separate CSS file for the About Us page
-
+import { useTranslation } from "react-i18next";
+// can add icons to timeline
+// can add learn more button at end
+import "./../../utils/i18n";
 const AboutUs = () => {
+  const {t} = useTranslation();
   const teamMembers = [
     {
       name: "Pranav Ajith",
@@ -55,20 +59,12 @@ const AboutUs = () => {
       </div>
 
       <div className="hackathon-section">
-        <h2 className="hackathon-title">About Smart India Hackathon</h2>
+        <h2 className="hackathon-title"> {t("SIH")} </h2>
         <p className="hackathon-description">
-          The <strong>Smart India Hackathon (SIH)</strong> is a nationwide
-          initiative to provide students with a platform to solve some of the
-          pressing problems we face in our daily lives. Launched by the
-          Government of India, SIH aims to foster innovation and creativity
-          while enhancing skills like problem-solving and collaboration. It
-          brings together bright minds to create solutions for real-world
-          problems in a competitive environment.
+          <strong>{t("SIH")} (SIH)</strong> {t("SIHbody")}
         </p>
         <p className="hackathon-description">
-          We are proud to have developed this website as part of the Smart India
-          Hackathon, showcasing our team's dedication to learning, growing, and
-          contributing to technological advancements.
+          {t("proud")}
         </p>
       </div>
     </div>
