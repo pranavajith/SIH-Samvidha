@@ -3,7 +3,8 @@ import "./../../styles/SignIn.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import Banner from "../general-components/Banner";
-
+import "./../../utils/i18n";
+import { useTranslation } from "react-i18next";
 const SignIn = () => {
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
@@ -30,19 +31,19 @@ const SignIn = () => {
     // Add form validation and submission logic
     console.log("Login form submitted:", formData);
   };
-
+  const {t} = useTranslation();
   return (
     <>
       {bannerMessage && <Banner message={bannerMessage} />}
       <div className="signin-container">
-        <h1 className="signin-title">Welcome Back!</h1>
+        <h1 className="signin-title">{t("wlcm")}</h1>
         <form className="signin-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">
               <span role="img" aria-label="email">
                 📧
               </span>{" "}
-              Email
+              {t("email")}
             </label>
             <input
               type="email"
@@ -50,7 +51,7 @@ const SignIn = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
+              placeholder={t("emailh")}
               required
             />
           </div>
@@ -59,7 +60,7 @@ const SignIn = () => {
               <span role="img" aria-label="lock">
                 🔒
               </span>{" "}
-              Password
+              {t("pass")}
             </label>
             <input
               type="password"
@@ -67,7 +68,7 @@ const SignIn = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder={t("passh")}
               required
             />
           </div>
@@ -75,12 +76,12 @@ const SignIn = () => {
             <span role="img" aria-label="key">
               🔑
             </span>{" "}
-            Log In
+            {t("login")}
           </button>
         </form>
         <div className="signin-footer">
           <p>
-            Don't have an account? <Link to="/signup">Sign up here</Link>
+            {t("accna")}<Link to="/signup">{t("sup")}</Link>
           </p>
         </div>
       </div>

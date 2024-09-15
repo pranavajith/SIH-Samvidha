@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "../../styles/LanguageSwitcher.css"; // Assuming you will create this CSS file
+import "./../../utils/i18n";
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -18,11 +19,11 @@ const LanguageSwitcher = () => {
     localStorage.setItem("language", newLang);
     setCurrentLang(newLang);
   };
-
+  const {t} = useTranslation();
   return (
     <div className="language-switcher">
       <button className="language-button" onClick={toggleLanguage}>
-        Toggle Language
+        {t("toggle")}
       </button>
     </div>
   );
