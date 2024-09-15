@@ -313,18 +313,42 @@ const TypeGameData = {
       { word: "Republic", choices: ["Democratic", "Republic", "Secular"] },
       { word: "People", choices: ["People", "Humans", "Citizens"] },
       { word: "Justice", choices: ["Equality", "Justice", "Freedom"] },
-      { word: "Liberty", choices: ["Faith", "Liberty", "Rights"] },
+      // { word: "Liberty", choices: ["Faith", "Liberty", "Rights"] },
       { word: "Fraternity", choices: ["Diversity", "Fraternity", "Unity"] },
       {
         word: "Constitution",
         choices: ["Constitution", "Declaration", "Bill"],
       },
-      { word: "Equality", choices: ["Freedom", "Rights", "Equality"] },
-      { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
+      // { word: "Equality", choices: ["Freedom", "Rights", "Equality"] },
+      // { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
       { word: "Dignity", choices: ["Unity", "Dignity", "Respect"] },
     ],
   },
 };
+
+const preambleLevels = [
+  {
+    number: 1,
+    status: "unlocked",
+    videoUrl: urlList.CheckpointGifUrl,
+    questionType: "flashcard",
+    questionData: constitutional_questions.constitution_history_questions,
+  },
+  {
+    number: 2,
+    status: "unlocked",
+    videoUrl: urlList.CheckpointGifUrl,
+    questionType: "flashcard",
+    questionData: constitutional_questions.preamble_questions,
+  },
+  {
+    number: 3,
+    status: "unlocked",
+    videoUrl: urlList.TrophyGifUrl,
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+];
 
 const constitutional_events = [
   {
@@ -427,6 +451,49 @@ const constitutional_events = [
   },
 ];
 
+const testimonials = [
+  {
+    name: "USS Uppuluri",
+    image: "/testimonial-pics/uss.jpg",
+    occupation: "Entrepreneur, CMD of Edvenswa Enterprises Limited",
+    Testimonial:
+      "The platform simplifies constitutional literacy with engaging tools. It’s invaluable for understanding institutional functions, which is crucial for corporate governance and business leaders like me.",
+    Date: "September 15, 2024",
+  },
+  {
+    name: "Soumya Srivastava",
+    image: "/testimonial-pics/soumya.png",
+    occupation: "Clinical Psychologist, IIT-BHU",
+    Testimonial:
+      "Everyday we see the need for citizens of our country to better understand the Constitution, and respect it. This website is definitely a step in the right direction to ensure the uplifting of the average person of our country.",
+    Date: "September 15, 2024",
+  },
+  {
+    name: "Rajesh Gupta",
+    image: "/testimonial-pics/rajesh.png",
+    occupation: "IIT(BHU) Alumnus, Co-Founder @ DricPro",
+    Testimonial:
+      "Aspirational and foresightful entrepreneurs like myself are always looking for quick and effective ways to understand and appreciate the Indian Governance, as well as the Political and Governmental Structure. This makes reading up the Constitution vital. This website would cater to a poweful audience among us.",
+    Date: "September 15, 2024",
+  },
+  {
+    name: "Gayathry Ajith",
+    image: "/testimonial-pics/gayathry.jpg",
+    occupation: "Chartered Accountant, Big 4",
+    Testimonial:
+      "Informative, Educational, Apt. Very much in need in today's generation.",
+    Date: "September 14, 2024",
+  },
+  {
+    name: "Dr. Anupama Boinepalli",
+    image: "/testimonial-pics/anupama.jpg",
+    occupation: "Chief Doctor at Snigdha Ayurvedic Hospitals",
+    Testimonial:
+      "Understanding constitutional roles is crucial for healthcare policies. This platform makes it accessible and interactive for professionals navigating legal frameworks in healthcare.",
+    Date: "September 13, 2024",
+  },
+];
+
 const UserData = {
   firstName: "Pranav",
   lastName: "Ajith",
@@ -439,7 +506,7 @@ const UserData = {
   password: "fakePassword",
   gameProgress: {
     levelsComplete: [1, 2],
-    totalLevels: 10,
+    totalLevels: 3,
   },
   streakData: {
     latestPlayed: "2024-09-14",
@@ -481,6 +548,8 @@ const leaderboardData = [
 ];
 
 export {
+  testimonials,
+  preambleLevels,
   leaderboardData,
   constitutional_questions,
   constitutional_events,

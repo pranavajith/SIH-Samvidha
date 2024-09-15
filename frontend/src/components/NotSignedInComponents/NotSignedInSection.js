@@ -8,7 +8,10 @@ import { ConstitutionTimeline } from "./ConstitutionTimeline";
 import AboutUs from "./AboutUs";
 import Signup from "./SignUp";
 import SignIn from "./SignIn";
-
+import { useTranslation } from "react-i18next";
+// can add icons to timeline
+// can add learn more button at end
+import "./../../utils/i18n";
 const NotSignedInSection = () => {
   // const location = useLocation();
   // const isUserRoute = location.pathname.startsWith("/user");
@@ -16,10 +19,10 @@ const NotSignedInSection = () => {
   // if (isUserRoute) {
   //   return <Navigate to="/signin" state={{ message: "Sign in to continue" }} />;
   // }
-
+const {t} = useTranslation();
   return (
     <>
-      <SplashScreen text1={"Sam"} text2={"vidhan."} />
+      <SplashScreen text1={t("Sam")} text2={t("vidhan")} />
       <TitleBar />
       <Routes>
         <Route path="/" element={<HomePage />} />

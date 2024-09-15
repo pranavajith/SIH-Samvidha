@@ -3,17 +3,12 @@ import '../../styles/TaskScreen.css';
 import QuestionSlider from '../general-components/QuestionSlider';
 import TypeGame from '../SignedInComponents/TypeGame';
 
-const TaskScreen = ({ level, onComplete }) => {
+const TaskScreen = ({ level, onComplete, handleIncompleteReturn }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   const handleComplete = useCallback(() => {
     setIsComplete(true);
     onComplete(); // Notify parent about completion
-  }, [onComplete]);
-
-  const handleReturn = useCallback(() => {
-    setIsComplete(false);
-    onComplete(); // Notify parent to potentially reset or navigate back
   }, [onComplete]);
 
   const renderGame = () => {
@@ -23,13 +18,13 @@ const TaskScreen = ({ level, onComplete }) => {
           <QuestionSlider
             display_questions={level.questionData}
             onComplete={handleComplete}
-            handleQuizReturn={handleReturn}
+            handleQuizReturn={handleIncompleteReturn}
           />
         );
       case 'TypeGame':
         // console.log(level.questionData);
         return (
-        <TypeGame displayData={level.questionData} />
+        <TypeGame displayData={level.questionData} onComplete={onComplete} handleIncompleteReturn={handleIncompleteReturn} />
       );
       default:
         return <div>Unsupported game type</div>;

@@ -1,35 +1,39 @@
 import React from "react";
 import "./../../styles/AboutUs.css"; // Importing a separate CSS file for the About Us page
-
+import { useTranslation } from "react-i18next";
+// can add icons to timeline
+// can add learn more button at end
+import "./../../utils/i18n";
 const AboutUs = () => {
+  const {t} = useTranslation();
   const teamMembers = [
     {
-      name: "Pranav Ajith",
+      name: t("PA"),
       imageUrl: "/team-photo/Pranav.jpeg",
       role: "Team Leader",
     },
     {
-      name: "Ishika Saini",
+      name: t("IS"),
       imageUrl: "/team-photo/Ishika.jpg",
       role: "Front End Developer",
     },
     {
-      name: "Aditya A. Uppuluri",
+      name: t("AAU"),
       imageUrl: "/team-photo/Aditya.jpg",
       role: "Backend Engineer",
     },
     {
-      name: "Kancharla Kiranmai",
+      name: t("KK"),
       imageUrl: "/team-photo/Kiranmai.png",
       role: "UI/UX Developer",
     },
     {
-      name: "Anish Dixit",
+      name: t("AD"),
       imageUrl: "/team-photo/Anish.png",
       role: "API Integration Engineer",
     },
     {
-      name: "B. Niranjan",
+      name: t("NB"),
       imageUrl: "/team-photo/Niranjan.jpg",
       role: "ML Engineer",
     },
@@ -37,7 +41,7 @@ const AboutUs = () => {
 
   return (
     <div className="about-us-container">
-      <h1 className="about-us-title">Meet Our Team</h1>
+      <h1 className="about-us-title">{t("team")}</h1>
       <div className="team-section">
         {teamMembers.map((member, index) => (
           <div key={index} className="team-member">
@@ -55,20 +59,12 @@ const AboutUs = () => {
       </div>
 
       <div className="hackathon-section">
-        <h2 className="hackathon-title">About Smart India Hackathon</h2>
+        <h2 className="hackathon-title"> {t("SIH")} </h2>
         <p className="hackathon-description">
-          The <strong>Smart India Hackathon (SIH)</strong> is a nationwide
-          initiative to provide students with a platform to solve some of the
-          pressing problems we face in our daily lives. Launched by the
-          Government of India, SIH aims to foster innovation and creativity
-          while enhancing skills like problem-solving and collaboration. It
-          brings together bright minds to create solutions for real-world
-          problems in a competitive environment.
+          <strong>{t("SIH")} (SIH)</strong> {t("SIHbody")}
         </p>
         <p className="hackathon-description">
-          We are proud to have developed this website as part of the Smart India
-          Hackathon, showcasing our team's dedication to learning, growing, and
-          contributing to technological advancements.
+          {t("proud")}
         </p>
       </div>
     </div>

@@ -1,0 +1,10 @@
+.parallax-screen {
+    min-height: 300vh; /* Set a minimum height of 500px */
+    background-size: cover; /* Ensure the background image covers the entire div */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    background-attachment: fixed;
+    background-position-x: 200px;
+    width: 100%; /* Ensure it takes up the full width of the container */
+  }
+  

@@ -67,7 +67,7 @@ const UserProgress = () => {
 
         <div className="progress-item">
           <strong>Gameplay completed:</strong>
-          <span>{completedPercentage}%</span>
+          <span>{completedPercentage.toFixed(1)}%</span>
         </div>
 
         {user.bonus && (

@@ -23,6 +23,8 @@ const urlList = {
   CheckpointGifUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
   WhiteLockUrl:
     "https://static.vecteezy.com/system/resources/previews/009/589/656/original/lock-icon-transparent-free-png.png",
+  StagePicUrl:
+    "https://img.freepik.com/premium-photo/conference-hall-business-event-empty-stage-empty-stage-with-screen-procto_386094-230.jpg?w=360",
 };
 
 export { urlList };

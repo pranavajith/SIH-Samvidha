@@ -17,7 +17,7 @@ const QuestionSlider = ({
     if (isCompleted && onComplete) {
       const timer = setTimeout(() => {
         onComplete();
-      }, 4000);
+      }, 2500);
 
       return () => clearTimeout(timer);
     }
