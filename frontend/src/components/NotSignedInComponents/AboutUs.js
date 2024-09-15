@@ -8,32 +8,32 @@ const AboutUs = () => {
   const {t} = useTranslation();
   const teamMembers = [
     {
-      name: "Pranav Ajith",
+      name: t("PA"),
       imageUrl: "/team-photo/Pranav.jpeg",
       role: "Team Leader",
     },
     {
-      name: "Ishika Saini",
+      name: t("IS"),
       imageUrl: "/team-photo/Ishika.jpg",
       role: "Front End Developer",
     },
     {
-      name: "Aditya A. Uppuluri",
+      name: t("AAU"),
       imageUrl: "/team-photo/Aditya.jpg",
       role: "Backend Engineer",
     },
     {
-      name: "Kancharla Kiranmai",
+      name: t("KK"),
       imageUrl: "/team-photo/Kiranmai.png",
       role: "UI/UX Developer",
     },
     {
-      name: "Anish Dixit",
+      name: t("AD"),
       imageUrl: "/team-photo/Anish.png",
       role: "API Integration Engineer",
     },
     {
-      name: "B. Niranjan",
+      name: t("NB"),
       imageUrl: "/team-photo/Niranjan.jpg",
       role: "ML Engineer",
     },
