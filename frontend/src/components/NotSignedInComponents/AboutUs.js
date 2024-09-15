@@ -41,7 +41,7 @@ const AboutUs = () => {
 
   return (
     <div className="about-us-container">
-      <h1 className="about-us-title">Meet Our Team</h1>
+      <h1 className="about-us-title">{t("team")}</h1>
       <div className="team-section">
         {teamMembers.map((member, index) => (
           <div key={index} className="team-member">
