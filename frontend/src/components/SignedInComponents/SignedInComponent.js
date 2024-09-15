@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { SignedInTitle } from "./SignedInTitle";
-import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
-import { UserProgress } from "./UserProgress";
-import TypeGame from "./TypeGame";
-import { leaderboardData, TypeGameData } from "../dummy-data/dummy-data";
-import UserHomePage from "./UserHomepage";
+import UserHomePage from "./UserHomepage"; // Ensure this path is correct
 import { Leaderboard } from "./Leaderboard";
+import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
+import { leaderboardData } from "../dummy-data/dummy-data"; // Ensure this path is correct
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
+
   return (
     <>
       <SplashScreen
@@ -45,6 +44,14 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <Leaderboard data={leaderboardData} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/askAI"
+          element={
+            <ProtectedRoute>
+              <AskAI />
             </ProtectedRoute>
           }
         />
