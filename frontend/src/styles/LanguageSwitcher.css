@@ -1,32 +1,41 @@
-.language-switcher {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin: 1rem; */
-  }
-  
-  .language-button {
-    padding: 0.8rem 1.5rem;
-    background-color: #06d6a0;
-    color: white;
-    text-decoration: none;
-    font-family: "Happy Monkey", system-ui;
-    font-weight: 400;
-    font-size: 1rem;
-    border-radius: 25px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .language-button:hover {
-    background-color: #05c08c;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  @media (max-width: 768px) {
-    .language-button {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  
+.language-selector-container {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.language-selector-label {
+  margin-right: 10px;
+  font-family: "Happy Monkey", system-ui;
+  font-size: 1rem;
+  color: white;
+}
+
+.language-selector-input {
+  background-color: #06d6a0;
+  border: none;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-family: "Happy Monkey", system-ui;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none;
+  text-align: center;
+}
+
+.language-selector-input:focus {
+  outline: none;
+}
+
+.language-selector-input:hover {
+  background-color: #05c08c;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.language-selector-input option {
+  background-color: white;
+  color: black;
+}
