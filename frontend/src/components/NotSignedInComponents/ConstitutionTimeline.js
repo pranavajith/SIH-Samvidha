@@ -1,9 +1,9 @@
 import "./../../styles/ConstitutionTimeline.css";
 import { constitutional_events } from "./../dummy-data/dummy-data";
-
+import { useTranslation } from "react-i18next";
 // can add icons to timeline
 // can add learn more button at end
-
+import "./../../utils/i18n";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -12,15 +12,16 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 
 const ConstitutionTimeline = () => {
+  const {t}  = useTranslation();
   return (
     <div className="timeline-body">
-      <h1 className="title">Timeline of Indian Constitution</h1>
+      <h1 className="title">{t("ok")}</h1>
       <VerticalTimeline>
         {constitutional_events.map((element) => {
           return (
             <VerticalTimelineElement
               key={element.key}
-              date={element.date}
+              date={t("i" + element.id +"dat")}
               dateClassName="date"
             >
               <div className="timeline-content">
@@ -35,9 +36,9 @@ const ConstitutionTimeline = () => {
                   <div className="right-content">
                     <div className="timeline-text">
                       <h3 className="vertical-timeline-element-title">
-                        {element.title}
+                        {t("i" + element.id +"t")}
                       </h3>
-                      <p id="description">{element.description}</p>
+                      <p id="description">{t("i" + element.id +"des")}</p>
                     </div>
                   </div>
                 </div>

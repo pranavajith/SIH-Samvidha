@@ -1,6 +1,10 @@
 import "./../../../styles/HomePageAnimation.css";
-
+import { useTranslation } from "react-i18next";
+// can add icons to timeline
+// can add learn more button at end
+import "./../../../utils/i18n";
 const HomePageAnimation = () => {
+  const {t} = useTranslation();
   return (
     <div className="homepage-animation-text-container">
       <div className="homepage-animation-container">
@@ -31,10 +35,11 @@ const HomePageAnimation = () => {
           autoplay
         ></dotlottie-player>
       </div>
+      
       <div className="text-container">
-        <span className="large">The Power of the Constitution</span>
-        <span className="medium">at the</span>
-        <span className="large">Tip of your Fingers!</span>
+        <span className="large">{t("pc")}</span>
+        <span className="medium">{t("at")}</span>
+        <span className="large">{t("tip")}</span>
       </div>
     </div>
   );
