@@ -1,0 +1,22 @@
+.right-side-display {
+    display: flex;
+    flex-direction: column; /* Stack the components vertically */
+    justify-content: flex-start; /* Align items from the top */
+    align-items: center; /* Center-align items horizontally */
+    /* height: 100vh;  */
+    border-radius: 10%;
+  }
+  
+  .right-side-display > * {
+    width: 100%; /* Ensure both elements take full width */
+    flex: 1; /* Let both ParallaxScreen and UserGameplay take equal space */
+  }
+  
+  .parallax-screen {
+    flex-grow: 2; /* Make ParallaxScreen take more space than UserGameplay */
+  }
+  
+  .user-gameplay {
+    flex-grow: 1; /* Let UserGameplay take less space than ParallaxScreen */
+  }
+  

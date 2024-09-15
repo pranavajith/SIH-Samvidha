@@ -63,7 +63,11 @@ const UserGameplay = () => {
           handleIncompleteReturn={handleIncompleteReturn}
         />
       ) : (
-        <LevelMap levels={levels} onLevelClick={handleLevelClick} />
+        <LevelMap
+          levels={levels}
+          onLevelClick={handleLevelClick}
+          levelText={"Preamble"}
+        />
       )}
     </div>
   );

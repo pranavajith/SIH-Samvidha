@@ -4,9 +4,29 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   width: 80%;
 }
+
+.level-text {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  padding: 0.8rem 1rem;
+  background-color: #06d6a0;
+  color: white;
+  text-decoration: none;
+  font-family: "Happy Monkey", system-ui;
+  font-weight: 400;
+  height: 75px;
+  margin-right: 50px;
+  font-style: normal;
+  font-size: 1.5rem;
+  border-radius: 25px; /* Rounded edges */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Smooth shadow for depth */
+}
+
 
 .level-container {
   margin:0;
@@ -30,7 +50,7 @@
 }
 
 .level-connector {
-  width: 300px;             /* Length of the line connecting the levels */
+  width: 250px;             /* Length of the line connecting the levels */
   height: 6px;              /* Thickness of the line */
   background-color: #06d6a0; /* Color of the line */
   /* margin-left: 10px;        
