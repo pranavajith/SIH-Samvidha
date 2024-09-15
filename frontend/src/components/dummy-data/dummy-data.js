@@ -461,6 +461,14 @@ const testimonials = [
     Date: "September 15, 2024",
   },
   {
+    name: "Soumya Srivastava",
+    image: "/testimonial-pics/soumya.png",
+    occupation: "Clinical Psychologist, IIT-BHU",
+    Testimonial:
+      "Everyday we see the need for citizens of our country to better understand the Constitution, and respect it. This website is definitely a step in the right direction to ensure the uplifting of the average person of our country.",
+    Date: "September 15, 2024",
+  },
+  {
     name: "Rajesh Gupta",
     image: "/testimonial-pics/rajesh.png",
     occupation: "IIT(BHU) Alumnus, Co-Founder @ DricPro",
@@ -473,7 +481,7 @@ const testimonials = [
     image: "/testimonial-pics/gayathry.jpg",
     occupation: "Chartered Accountant, Big 4",
     Testimonial:
-      "This platform merges professional and civic knowledge, making constitutional concepts easy to grasp. Its fun approach is ideal for anyone navigating governance in a business context.",
+      "Informative, Educational, Apt. Very much in need in today's generation.",
     Date: "September 14, 2024",
   },
   {
