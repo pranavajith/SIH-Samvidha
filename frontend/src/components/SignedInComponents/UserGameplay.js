@@ -3,7 +3,7 @@ import "./../../styles/UserGameplay.css";
 import LevelMap from "../GameComponents/LevelMap";
 import TaskScreen from "../GameComponents/TaskScreen";
 
-const UserGameplay = ({ inputLevels }) => {
+const UserGameplay = ({ inputLevels, levelText }) => {
   const [levels, setLevels] = useState(inputLevels);
 
   const [currentLevel, setCurrentLevel] = useState(null);
@@ -39,7 +39,7 @@ const UserGameplay = ({ inputLevels }) => {
         <LevelMap
           levels={levels}
           onLevelClick={handleLevelClick}
-          levelText={"Preamble"}
+          levelText={levelText}
         />
       )}
     </div>
