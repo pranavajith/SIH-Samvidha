@@ -35,7 +35,12 @@ const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
         setCurrentKeyWord(keyword);
       } else {
         setTimeout(() => {
-          setDisplayText((prev) => prev + (prev.endsWith(" ") ? "" : " ") + wordsArray[currentWordIndex]);
+          setDisplayText(
+            (prev) =>
+              prev +
+              (prev.endsWith(" ") ? "" : " ") +
+              wordsArray[currentWordIndex]
+          );
           setCurrentWordIndex((prev) => prev + 1);
         }, 100);
       }
@@ -43,7 +48,7 @@ const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
       setIsComplete(true);
       setTimeout(() => {
         onComplete();
-      },1500);
+      }, 1500);
     }
   }, [currentWordIndex, isInputMode, wordsArray, keywords, onComplete]);
 

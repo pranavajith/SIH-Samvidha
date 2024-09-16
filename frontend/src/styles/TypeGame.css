@@ -66,6 +66,7 @@
   .feedback {
     margin-top: 1.5rem;
     font-size: 1rem;
+    /* width: 100px; */
   }
   
   .correct-feedback {

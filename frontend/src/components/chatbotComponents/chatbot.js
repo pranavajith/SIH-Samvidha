@@ -128,7 +128,7 @@ const ChatBot = () => {
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Explain the overall stucture of the Indian..."
         />
-        <button onClick={sendMessage} disabled={loading}>
+        <button className="button-ai" onClick={sendMessage} disabled={loading}>
           Send
         </button>
       </div>
