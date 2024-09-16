@@ -362,6 +362,7 @@ const constitutional_events = [
     date: "15 August 1947",
     image:
       "https://www.rammadhav.in/wp-content/uploads/2022/08/Independence-Day-India-Getty.jpg",
+      link: "https://en.wikipedia.org/wiki/Independence_Day_(India)"
   },
   {
     id: 2,
@@ -372,6 +373,7 @@ const constitutional_events = [
     date: "26 November 1949",
     image:
       "https://img1.wsimg.com/isteam/ip/63b04b47-d65a-4207-a58c-3e58f38419ef/op.jpg",
+      link: "https://en.wikipedia.org/wiki/Constitution_of_India"
   },
   {
     id: 3,
@@ -381,6 +383,7 @@ const constitutional_events = [
       "The Constitution of India came into effect on 26th January 1950, transforming India from a British Dominion into a republic. This day, known as Republic Day, is celebrated to honor the adoption of the Constitution and India's democratic heritage.",
     date: "26 January 1950",
     image: "https://www.fairobserver.com/wp-content/uploads/2020/09/India.jpg",
+    link: "https://en.wikipedia.org/wiki/Republic_Day_(India)"
   },
   {
     id: 4,
@@ -390,6 +393,7 @@ const constitutional_events = [
       "The First Amendment Act of 1951 was enacted to address issues related to freedom of speech, property rights, and other fundamental rights, aiming to balance individual rights with national security and public order.",
     date: "18 June 1951",
     image: "https://pbs.twimg.com/media/GCgCRGPbMAA9JOa.jpg",
+    link : "https://en.wikipedia.org/wiki/First_Amendment_of_the_Constitution_of_India"
   },
   {
     id: 5,
@@ -400,6 +404,7 @@ const constitutional_events = [
     date: "1 November 1956",
     image:
       "https://st.adda247.com/https://www.studyiq.com/articles/wp-content/uploads/2023/01/13144953/Reorganisation-of-States.jpg",
+      link: "https://en.wikipedia.org/wiki/States_Reorganisation_Act,_1956"
   },
   {
     id: 6,
@@ -410,6 +415,7 @@ const constitutional_events = [
     date: "18 December 1976",
     image:
       "https://unfoldlaw.in/wp-content/uploads/2023/12/42nd-Amendment.webp",
+      link : "https://en.wikipedia.org/wiki/Forty-second_Amendment_of_the_Constitution_of_India"
   },
   {
     id: 7,
@@ -420,6 +426,7 @@ const constitutional_events = [
     date: "16 December 1992",
     image:
       "https://media.geeksforgeeks.org/wp-content/uploads/20240213124445/73rd-Amendment-act-2024-copy.webp",
+      link: "https://secforuts.org/73amendment#:~:text=73rd%20Amendment%20of%20Panchayati%20Raj%20in%20India&text=The%2073rd%20Amendment%201992%20added,the%20functions%20of%20the%20Panchayats."
   },
   {
     id: 8,
@@ -430,6 +437,7 @@ const constitutional_events = [
     date: "1 June 1993",
     image:
       "https://images.squarespace-cdn.com/content/v1/5718b643e707eb46ff2abc3c/1622554692009-ZUYACVXLMZ1SN6TZAANB/9.png",
+      link: "https://mohua.gov.in/cms/The-Constitution.php#:~:text=Constitution%20(74th%20Amendment)%20Act%201992,and%20urban%20management%20in%20India."
   },
   {
     id: 9,
@@ -440,6 +448,7 @@ const constitutional_events = [
     date: "15 January 2002",
     image:
       "https://st.adda247.com/https://www.studyiq.com/articles/wp-content/uploads/2023/02/08124400/Right-to-Education-Article-21-A.jpg",
+      link: "https://en.wikipedia.org/wiki/Eighty-sixth_Amendment_of_the_Constitution_of_India"
   },
   {
     id: 10,
@@ -450,6 +459,7 @@ const constitutional_events = [
     date: "11 December 2019",
     image:
       "https://plutusias.com/wp-content/uploads/2022/11/103-Amendment-of-Indian-Constitution.png",
+      link: "https://en.wikipedia.org/wiki/One_Hundred_and_Third_Amendment_of_the_Constitution_of_India"
   },
 ];
 

@@ -21,15 +21,15 @@ const ConstitutionTimeline = () => {
         {constitutional_events.map((element) => {
           return (
             <VerticalTimelineElement
-              key={element.key}
+              key={element.id}  // Changed from element.key to element.id
               date={t("i" + element.id + "dat")}
               dateClassName="date"
-              icon={<FontAwesomeIcon icon={faBuildingColumns} />} // Using the building columns icon
+              icon={<FontAwesomeIcon icon={faBuildingColumns} />}
               iconStyle={{ 
-                background: "#fff",    // Dark blue background
-                color: "#001f3f",            // White icon color
-                fontSize: "1.5rem"        // Adjust the size of the icon (1.5rem as an example)
-              }}  
+                background: "#fff", 
+                color: "#001f3f", 
+                fontSize: "1.5rem" 
+              }}
             >
               <div className="timeline-content">
                 <div className="container">
@@ -37,7 +37,7 @@ const ConstitutionTimeline = () => {
                     <img
                       src={element.image}
                       className="timeline-image"
-                      alt={element.imageExplanation}
+                      alt={element.title} // Using title for alt text
                     />
                   </div>
                   <div className="right-content">
@@ -46,6 +46,13 @@ const ConstitutionTimeline = () => {
                         {t("i" + element.id + "t")}
                       </h3>
                       <p id="description">{t("i" + element.id + "des")}</p>
+                      {element.link && (
+                        <a href={element.link} target="_blank" rel="noopener noreferrer">
+                          <button className="learn-more-btn">
+                            {t("Learn More")}
+                          </button>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -57,5 +64,6 @@ const ConstitutionTimeline = () => {
     </div>
   );
 };
+
 
 export { ConstitutionTimeline };
