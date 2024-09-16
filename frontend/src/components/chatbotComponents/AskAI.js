@@ -1,6 +1,6 @@
 import React from "react";
 import ChatBot from "./chatbot"; // Ensure this path is correct
-import "./AskAI.css"; // Ensure the CSS file is correctly linked
+import "./../../styles/AskAI.css"; // Ensure the CSS file is correctly linked
 
 const AskAI = () => {
   return (
@@ -12,9 +12,14 @@ const AskAI = () => {
       <footer className="footer">
         <p>
           This service is powered by Google Gemini. Please refer to the
-          <a href="https://cloud.google.com/terms" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://cloud.google.com/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Google Cloud Terms of Service
-          </a> for more information.
+          </a>{" "}
+          for more information.
         </p>
       </footer>
     </div>

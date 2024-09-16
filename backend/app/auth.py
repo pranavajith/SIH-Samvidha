@@ -6,10 +6,11 @@ from pydantic import BaseModel
 
 __UAUTH_KEY__ = "5b22b7$=1e6864e4617b"
 __TOKEN_KEY__ = "f92dddf0e41db3034cac3ff632ad18f2bb82603331220e73097ffa47"
-__TOKEN_EXPIRE_MINUTES__ = 30
 
 class AuthHelper:
-    """Basic user management"""
+    """
+    Class for User Validation, and ID Generation
+    """
 
     def __new__(cls, *args, **kwargs):
         raise RuntimeError('%s should not be instantiated' % cls)
@@ -40,38 +41,44 @@ class AuthHelper:
         
 
 class JWTHelper:
-    """Basic Session management"""
+    """
+    Session management with JSON Web Tokens
+    Reset timer/token for every valid request
+    """
 
     def __new__(cls, *args, **kwargs):
         raise RuntimeError('%s should not be instantiated' % cls)
 
     @staticmethod
-    def make_token(userid):
+    def make_token(userid, expire=10):
         # Generate JWT Token
-        expire = datetime.utcnow() + timedelta(minutes=__TOKEN_EXPIRE_MINUTES__)
+        expire = datetime.utcnow() + timedelta(minutes=expire)
         payload = {
             "userid": userid,
-            "access": int(datetime.timestamp(expire)),
+            "expiry": int(datetime.timestamp(expire)),
         }
         token = jwt.encode(payload, __TOKEN_KEY__, algorithm="HS256")
         return token
 
     @staticmethod
-    def check_token(userid, token):
-        # Decode payload & check validity
+    def from_token(token):
+        # Returns userid on valid token
+        # Return values: 
+        #   valid:   -> 200: OK
+        #   invalid: -> 403: Forbidden
+        #   expired: -> 401: Unauthorized
         try:
             payload = jwt.decode(token, __TOKEN_KEY__, algorithms=["HS256"])
             val1 = int(datetime.timestamp(datetime.utcnow()))
-            val2 = int(datetime.timestamp(payload['userid']))
-
-            if (payload['userid'] != userid or val1 != val2):
-                raise JWTError
+            val2 = payload['expiry']
+            # If now is bigger than time of expiry
+            if (val1 >= val2):
+                return [401, "Session Timeout"]
             else:
-                return True
+                return [200, payload['userid']]
 
         except JWTError:
-            # either decode error or invalidity
-            return False
+            return [403, "Malformed Request"]
 
 
 

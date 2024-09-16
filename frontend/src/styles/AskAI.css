@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #333;
   color: #fff;
   position: relative;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 2rem;
 }
 
 .askai-container {
@@ -16,14 +15,19 @@
 
 
 .animation-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-55%, 12%);
   width: 80%;
   max-width: 400px;
   height: auto;
 }
+
 
 .welcome-message {
   white-space: nowrap;
@@ -65,7 +69,7 @@ input[type="text"] {
   margin-right: 10px;
 }
 
-button {
+button-ai {
   width: 70px;
   padding: 0.5rem;
   border: none;
@@ -77,4 +81,30 @@ button {
 
 button:hover {
   background-color: #04b89f;
+}
+
+/* Styling for the Ask AI footer */
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #222; /* Dark background to separate footer */
+  border-top: 1px solid #444;
+}
+
+.footer p {
+  color: #bbb; /* Light grey color for readability */
+  font-size: 0.9rem; /* Slightly smaller font */
+  line-height: 1.5;
+}
+
+.footer a {
+  color: #06d6a0; /* Match link color with theme */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Make the link bold */
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Add underline on hover */
+  color: #04b89f; /* Slight color change on hover */
 }

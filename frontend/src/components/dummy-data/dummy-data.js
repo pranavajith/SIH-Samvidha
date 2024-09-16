@@ -74,24 +74,26 @@ const constitutional_questions = {
         { value: "Fraternity", correctStatus: false },
       ],
     },
-    // { "question": "According to the Preamble, which type of equality is guaranteed to Indian citizens?",
-    //     "Options": [
-    //         { "value": "Social", "correctStatus": false },
-    //         { "value": "Economic", "correctStatus": false },
-    //         { "value": "Political", "correctStatus": false },
-    //         { "value": "Status and Opportunity", "correctStatus": true }
-    //     ]
-    // },
     {
       question:
-        "Which word was added to the Preamble of the Indian Constitution by the 42nd Amendment in 1976?",
+        "According to the Preamble, which type of equality is guaranteed to Indian citizens?",
       Options: [
-        { value: "Secular", correctStatus: false },
-        { value: "Socialist", correctStatus: false },
-        { value: "Both Secular and Socialist", correctStatus: true },
-        { value: "Republic", correctStatus: false },
+        { value: "Social", correctStatus: false },
+        { value: "Economic", correctStatus: false },
+        { value: "Political", correctStatus: false },
+        { value: "Status and Opportunity", correctStatus: true },
       ],
     },
+    // {
+    //   question:
+    //     "Which word was added to the Preamble of the Indian Constitution by the 42nd Amendment in 1976?",
+    //   Options: [
+    //     { value: "Secular", correctStatus: false },
+    //     { value: "Socialist", correctStatus: false },
+    //     { value: "Both Secular and Socialist", correctStatus: true },
+    //     { value: "Republic", correctStatus: false },
+    //   ],
+    // },
     // { "question": "Which value in the Preamble promotes a sense of brotherhood among all citizens?",
     //     "Options": [
     //         { "value": "Liberty", "correctStatus": false },
@@ -135,8 +137,8 @@ const constitutional_questions = {
     {
       question: "What is the maximum term of the Lok Sabha?",
       Options: [
-        { value: "5 years", correctStatus: true },
         { value: "4 years", correctStatus: false },
+        { value: "5 years", correctStatus: true },
         { value: "6 years", correctStatus: false },
         { value: "7 years", correctStatus: false },
       ],
@@ -145,10 +147,10 @@ const constitutional_questions = {
       question:
         "Which house of the Indian Parliament is known as the ‘House of the People’?",
       Options: [
-        { value: "Lok Sabha", correctStatus: true },
         { value: "Rajya Sabha", correctStatus: false },
         { value: "Vidhan Sabha", correctStatus: false },
         { value: "Legislative Assembly", correctStatus: false },
+        { value: "Lok Sabha", correctStatus: true },
       ],
     },
     {
@@ -165,11 +167,11 @@ const constitutional_questions = {
       question:
         "The concept of 'Bicameralism' in Indian Parliament refers to which of the following?",
       Options: [
+        { value: "Having only one house", correctStatus: false },
         {
           value: "Having two houses: Lok Sabha and Rajya Sabha",
           correctStatus: true,
         },
-        { value: "Having only one house", correctStatus: false },
         {
           value: "Division between central and state legislatures",
           correctStatus: false,
@@ -184,9 +186,9 @@ const constitutional_questions = {
       question:
         "Who can preside over the joint session of both houses of Parliament?",
       Options: [
-        { value: "Speaker of Lok Sabha", correctStatus: true },
         { value: "President", correctStatus: false },
         { value: "Prime Minister", correctStatus: false },
+        { value: "Speaker of Lok Sabha", correctStatus: true },
         { value: "Chief Justice of India", correctStatus: false },
       ],
     },
@@ -195,10 +197,10 @@ const constitutional_questions = {
     {
       question: "Who is the head of the Union Executive in India?",
       Options: [
-        { value: "President", correctStatus: true },
         { value: "Prime Minister", correctStatus: false },
         { value: "Vice-President", correctStatus: false },
         { value: "Chief Justice of India", correctStatus: false },
+        { value: "President", correctStatus: true },
       ],
     },
     {
@@ -214,10 +216,10 @@ const constitutional_questions = {
       question:
         "Which of the following appointments is made by the President of India?",
       Options: [
-        { value: "Chief Justice of India", correctStatus: true },
         { value: "Speaker of Lok Sabha", correctStatus: false },
         { value: "Governor of RBI", correctStatus: false },
         { value: "Chief Minister", correctStatus: false },
+        { value: "Chief Justice of India", correctStatus: true },
       ],
     },
     {
@@ -236,8 +238,8 @@ const constitutional_questions = {
     {
       question: "Who chairs the meetings of the Union Cabinet?",
       Options: [
-        { value: "Prime Minister", correctStatus: true },
         { value: "President", correctStatus: false },
+        { value: "Prime Minister", correctStatus: true },
         { value: "Vice President", correctStatus: false },
         { value: "Speaker of Lok Sabha", correctStatus: false },
       ],
@@ -257,9 +259,9 @@ const constitutional_questions = {
       question:
         "What is the retirement age of a judge of the Supreme Court of India?",
       Options: [
-        { value: "65 years", correctStatus: true },
         { value: "62 years", correctStatus: false },
         { value: "60 years", correctStatus: false },
+        { value: "65 years", correctStatus: true },
         { value: "70 years", correctStatus: false },
       ],
     },
@@ -276,22 +278,22 @@ const constitutional_questions = {
     {
       question: "Who can remove a Supreme Court judge?",
       Options: [
+        { value: "Prime Minister", correctStatus: false },
+        { value: "Chief Justice of India", correctStatus: false },
+        { value: "Law Minister", correctStatus: false },
         {
           value: "President after a Parliamentary process",
           correctStatus: true,
         },
-        { value: "Prime Minister", correctStatus: false },
-        { value: "Chief Justice of India", correctStatus: false },
-        { value: "Law Minister", correctStatus: false },
       ],
     },
     {
       question:
         "Which of the following writs is NOT issued by the Supreme Court?",
       Options: [
-        { value: "Injunction", correctStatus: true },
         { value: "Habeas Corpus", correctStatus: false },
         { value: "Mandamus", correctStatus: false },
+        { value: "Injunction", correctStatus: true },
         { value: "Prohibition", correctStatus: false },
       ],
     },
@@ -459,6 +461,14 @@ const testimonials = [
     Testimonial:
       "The platform simplifies constitutional literacy with engaging tools. It’s invaluable for understanding institutional functions, which is crucial for corporate governance and business leaders like me.",
     Date: "September 15, 2024",
+  },
+  {
+    name: "Ajith Prasad KS",
+    image: "/testimonial-pics/ajith.png",
+    occupation: "Executive Manager, Private Firm",
+    Testimonial:
+      "Being a resident of Kerala, I know many of my elder relatives and friends who find English government websites very hard to navigate. Having the language feature is very inclusive and gives a regional touch to the website.",
+    Date: "September 16, 2024",
   },
   {
     name: "Soumya Srivastava",
