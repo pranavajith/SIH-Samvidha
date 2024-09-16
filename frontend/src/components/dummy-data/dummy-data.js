@@ -314,15 +314,15 @@ const TypeGameData = {
       { word: "Sovereign", choices: ["Sovereign", "Socialist", "Republic"] },
       { word: "Republic", choices: ["Democratic", "Republic", "Secular"] },
       { word: "People", choices: ["People", "Humans", "Citizens"] },
-      { word: "Justice", choices: ["Equality", "Justice", "Freedom"] },
+      // { word: "Justice", choices: ["Equality", "Justice", "Freedom"] },
       // { word: "Liberty", choices: ["Faith", "Liberty", "Rights"] },
       { word: "Fraternity", choices: ["Diversity", "Fraternity", "Unity"] },
-      {
-        word: "Constitution",
-        choices: ["Constitution", "Declaration", "Bill"],
-      },
+      // {
+      //   word: "Constitution",
+      //   choices: ["Constitution", "Declaration", "Bill"],
+      // },
       // { word: "Equality", choices: ["Freedom", "Rights", "Equality"] },
-      // { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
+      { word: "Assembly", choices: ["Parliament", "Assembly", "Council"] },
       { word: "Dignity", choices: ["Unity", "Dignity", "Respect"] },
     ],
   },
@@ -339,16 +339,16 @@ const preambleLevels = [
   {
     number: 2,
     status: "unlocked",
-    videoUrl: urlList.CheckpointGifUrl,
-    questionType: "flashcard",
-    questionData: constitutional_questions.preamble_questions,
-  },
-  {
-    number: 3,
-    status: "unlocked",
     videoUrl: urlList.TrophyGifUrl,
     questionType: "TypeGame",
     questionData: TypeGameData.preamble,
+  },
+  {
+    number: 3,
+    status: "locked",
+    videoUrl: urlList.CheckpointGifUrl,
+    questionType: "flashcard",
+    questionData: constitutional_questions.preamble_questions,
   },
 ];
 
@@ -455,20 +455,12 @@ const constitutional_events = [
 
 const testimonials = [
   {
-    name: "USS Uppuluri",
-    image: "/testimonial-pics/uss.jpg",
-    occupation: "Entrepreneur, CMD of Edvenswa Enterprises Limited",
+    name: "Sreedevi Moham",
+    image: "/testimonial-pics/sridevi.jpg",
+    occupation: "LLB, Kerala High Court",
     Testimonial:
-      "The platform simplifies constitutional literacy with engaging tools. It’s invaluable for understanding institutional functions, which is crucial for corporate governance and business leaders like me.",
-    Date: "September 15, 2024",
-  },
-  {
-    name: "Ajith Prasad KS",
-    image: "/testimonial-pics/ajith.png",
-    occupation: "Executive Manager, Private Firm",
-    Testimonial:
-      "Being a resident of Kerala, I know many of my elder relatives and friends who find English government websites very hard to navigate. Having the language feature is very inclusive and gives a regional touch to the website.",
-    Date: "September 16, 2024",
+      "80% of civil cases happen because people weren't aware of their duties and rights. This is much needed for many people. Highly recommend!",
+    Date: "September 11, 2024",
   },
   {
     name: "Soumya Srivastava",
@@ -477,6 +469,22 @@ const testimonials = [
     Testimonial:
       "Everyday we see the need for citizens of our country to better understand the Constitution, and respect it. This website is definitely a step in the right direction to ensure the uplifting of the average person of our country.",
     Date: "September 15, 2024",
+  },
+  {
+    name: "USS Uppuluri",
+    image: "/testimonial-pics/uss.jpg",
+    occupation: "Entrepreneur, CMD of Edvenswa Enterprises Limited",
+    Testimonial:
+      "The platform simplifies constitutional literacy with engaging tools. It’s invaluable for understanding institutional functions, which is crucial for corporate governance and business leaders like me.",
+    Date: "September 15, 2024",
+  },
+  {
+    name: "Ajith Prasad",
+    image: "/testimonial-pics/ajith.png",
+    occupation: "Executive Manager, Private Firm",
+    Testimonial:
+      "Being a resident of Kerala, I know many of my elder relatives and friends who find English government websites very hard to navigate. Having the language feature is very inclusive and gives a regional touch to the website.",
+    Date: "September 16, 2024",
   },
   {
     name: "Rajesh Gupta",

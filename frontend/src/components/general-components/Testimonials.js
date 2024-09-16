@@ -24,27 +24,27 @@ const Testimonials = ({ testimonials }) => {
     setIsPaused(true); // Pause auto-play on manual button press
   };
 
-  // Automatically move to the next testimonial every 3 seconds if not paused
-  useEffect(() => {
-    const autoPlay = setInterval(() => {
-      if (!isPaused) {
-        nextTestimonial();
-      }
-    }, 2000); // 3000ms = 3 seconds
+  // // Automatically move to the next testimonial every 3 seconds if not paused
+  // useEffect(() => {
+  //   const autoPlay = setInterval(() => {
+  //     if (!isPaused) {
+  //       nextTestimonial();
+  //     }
+  //   }, 2000); // 3000ms = 3 seconds
 
-    return () => clearInterval(autoPlay); // Cleanup interval on component unmount
-  }, [currentIndex, isPaused]); // Re-run effect when currentIndex or isPaused changes
+  //   return () => clearInterval(autoPlay); // Cleanup interval on component unmount
+  // }, [currentIndex, isPaused]); // Re-run effect when currentIndex or isPaused changes
 
-  // Reset pause state after a certain period of inactivity (5 seconds in this case)
-  useEffect(() => {
-    if (isPaused) {
-      const resetPause = setTimeout(() => {
-        setIsPaused(false);
-      }, 2000); // Reset pause after 5 seconds of inactivity
+  // // Reset pause state after a certain period of inactivity (5 seconds in this case)
+  // useEffect(() => {
+  //   if (isPaused) {
+  //     const resetPause = setTimeout(() => {
+  //       setIsPaused(false);
+  //     }, 2000); // Reset pause after 5 seconds of inactivity
 
-      return () => clearTimeout(resetPause); // Cleanup timeout on state change
-    }
-  }, [isPaused]);
+  //     return () => clearTimeout(resetPause); // Cleanup timeout on state change
+  //   }
+  // }, [isPaused]);
 
   return (
     <div className="testimonials-container">
