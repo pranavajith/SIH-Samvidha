@@ -12,6 +12,7 @@ i18n
     resources: {
       en: {
         translation: {
+          username: "Username",
           wlcm: "Welcome Back!",
           Samvidhan: "Samvidhan",
           Sam: "Sam",
@@ -28,7 +29,7 @@ i18n
           passh: "Please enter your password!",
           toggle: "Toggle Language",
           login: "Login",
-          accna: "Don't have an account?",
+          accna: "Don't have an account? ",
           testimonial: "Here are some expert testimonials!",
           vidhan: "vidhan",
           proud:
@@ -109,6 +110,7 @@ i18n
       },
       hi: {
         translation: {
+          username: "उपयोक्तानाम",
           wlcm: "हमारे एप्लिकेशन में आपका स्वागत है",
           SIH: "स्मार्ट इंडिया हैकाथॉन",
           Samvidhan: "संविधान",
@@ -206,6 +208,7 @@ i18n
       },
       te: {
         translation: {
+          username: "వినియోగదారు పేరు",
           wlcm: "స్వాగతం!",
           Samvidhan: "రాజ్యాంగం",
           Sam: "రా",
@@ -301,6 +304,7 @@ i18n
       },
       ma: {
         translation: {
+          username: "ഉപയോക്തൃനാമം",
           wlcm: "തീരിച്ചു വരവേൽപ്പു!",
           Samvidhan: "ഭരണഘടന",
           Sam: "ഭരണ",

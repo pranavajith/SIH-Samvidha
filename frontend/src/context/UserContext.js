@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { UserData } from "../components/dummy-data/dummy-data";
+// import { UserData } from "../components/dummy-data/dummy-data";
 
 export const UserContext = createContext();
 
@@ -14,10 +14,10 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   // Function to update user data
-  const login = () => {
-    setUser(UserData);
+  const login = ({ userData }) => {
+    setUser(userData);
     //   setUser(userData);
-    localStorage.setItem("user", JSON.stringify(UserData)); // Save to localStorage
+    localStorage.setItem("user", JSON.stringify(userData)); // Save to localStorage
   };
 
   // Function to log out the user

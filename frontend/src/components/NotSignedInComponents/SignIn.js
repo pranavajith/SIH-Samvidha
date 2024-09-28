@@ -5,13 +5,16 @@ import { UserContext } from "../../context/UserContext";
 import Banner from "../general-components/Banner";
 import "./../../utils/i18n";
 import { useTranslation } from "react-i18next";
+import axios from "axios"; // Import axios
+
 const SignIn = () => {
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
   const location = useLocation();
   const bannerMessage = location.state?.message;
+
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -23,15 +26,30 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    login();
-    navigate("/user");
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent form from submitting the default way
 
-    // Add form validation and submission logic
-    console.log("Login form submitted:", formData);
+    try {
+      // Make a POST request to the backend to authenticate the user
+      const response = await axios.post(
+        "http://localhost:3000/user/login",
+        formData
+      );
+
+      // Assuming the backend returns the user data on successful authentication
+      if (response.data) {
+        login({ userData: response.data }); // Update the context with the user data
+        navigate("/user"); // Redirect to the user page
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle error (e.g., show a message to the user)
+      alert("Login failed. Please check your username and password.");
+    }
   };
-  const {t} = useTranslation();
+
+  const { t } = useTranslation();
+
   return (
     <>
       {bannerMessage && <Banner message={bannerMessage} />}
@@ -39,19 +57,19 @@ const SignIn = () => {
         <h1 className="signin-title">{t("wlcm")}</h1>
         <form className="signin-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">
-              <span role="img" aria-label="email">
-                📧
+            <label htmlFor="username">
+              <span role="img" aria-label="username">
+                👤
               </span>{" "}
-              {t("email")}
+              {t("username")}
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
-              placeholder={t("emailh")}
+              placeholder={t("username")}
               required
             />
           </div>
@@ -81,7 +99,8 @@ const SignIn = () => {
         </form>
         <div className="signin-footer">
           <p>
-            {t("accna")}<Link to="/signup">{t("sup")}</Link>
+            {t("accna")}
+            <Link to="/signup">{t("sup")}</Link>
           </p>
         </div>
       </div>

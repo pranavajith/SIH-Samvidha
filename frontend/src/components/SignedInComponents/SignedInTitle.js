@@ -44,7 +44,7 @@ const SignedInTitle = () => {
         <li className="navbar-item">
           <Link to="/user/profile" className="navbar-profile">
             <img
-              src={user.userProfileImage.path} // Ensure the image path is correct
+              // src={user.userProfileImage.path}
               alt={`${user.firstName} ${user.lastName}`}
               className="navbar-profile-image"
             />
