@@ -35,6 +35,7 @@ type User struct {
 	DOB             time.Time        `json:"dob"`
 	CompletedLevels []CompletedLevel `json:"completedLevels"`
 	HighScore       int              `json:"highScore"`
+	ImageUrl        string           `json:"imageUrl"`
 	PasswordHash    string           `json:"-"` // Do not expose password hash in JSON responses
 }
 
