@@ -1,13 +1,18 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"sync"
+
+	// "sync"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,22 +44,34 @@ type User struct {
 	PasswordHash    string           `json:"-"` // Do not expose password hash in JSON responses
 }
 
-type LevelInfo struct {
-}
-
 type Server struct {
-	serverAddress string
-	users         []User
-	levelInfoList []LevelInfo
-	serverMutex   sync.Mutex
+	serverAddress   string
+	mongoClient     *mongo.Client
+	usersCollection *mongo.Collection
 }
 
-func NewServer(ServerAddress string) *Server {
+func NewServer(serverAddress string) *Server {
 	return &Server{
-		serverAddress: ServerAddress,
-		users:         []User{},
-		levelInfoList: []LevelInfo{},
+		serverAddress: serverAddress,
 	}
+}
+
+func (s *Server) ConnectMongoDB() error {
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		return err
+	}
+
+	// Check the connection
+	err = client.Ping(context.TODO(), nil)
+	if err != nil {
+		return err
+	}
+
+	s.mongoClient = client
+	s.usersCollection = client.Database("game").Collection("users")
+	return nil
 }
 
 func (s *Server) Run() {
@@ -99,34 +116,24 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.serverMutex.Lock()
-	defer s.serverMutex.Unlock()
-	a, _ := HashPassword(requestData.Password)
-	fmt.Println("Temphash2: ", a, " and the pwd is '", requestData.Password, "'")
-	// fmt.Println("The request username is ", requestData.Username, " and the request password is ", requestData.Password, " the hash of which is ", a)
-	for _, user := range s.users {
-		fmt.Println("Checking for user: ", user.FirstName, ". Their username is ", user.Username, ", and their hashed password is ", user.PasswordHash)
-		if user.Username == requestData.Username && CheckPasswordHash(requestData.Password, user.PasswordHash) {
-			// Return user data (excluding password hash)
-			userData := User{
-				FirstName:       user.FirstName,
-				LastName:        user.LastName,
-				Username:        user.Username,
-				Email:           user.Email,
-				DOB:             user.DOB,
-				CompletedLevels: user.CompletedLevels,
-				HighScore:       user.HighScore,
-			}
-			userJSON, _ := json.Marshal(userData)
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			w.Write(userJSON)
-			return
-		}
+	var user User
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": requestData.Username}).Decode(&user)
+	if err != nil {
+		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
+		return
 	}
 
-	// If no user was found or password didn't match
-	http.Error(w, "Invalid username or password zzz", http.StatusUnauthorized)
+	if !CheckPasswordHash(requestData.Password, user.PasswordHash) {
+		http.Error(w, "Invalid username or password", http.StatusUnauthorized)
+		return
+	}
+
+	// Return user data (excluding password hash)
+	user.PasswordHash = "" // Remove password hash from response
+	userJSON, _ := json.Marshal(user)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(userJSON)
 }
 
 func (s *Server) usersHandler(w http.ResponseWriter, r *http.Request) {
@@ -139,10 +146,20 @@ func (s *Server) usersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetUsers(w http.ResponseWriter) {
-	s.serverMutex.Lock()
-	defer s.serverMutex.Unlock()
+	cursor, err := s.usersCollection.Find(context.TODO(), bson.M{})
+	if err != nil {
+		http.Error(w, "Failed to retrieve users", http.StatusInternalServerError)
+		return
+	}
+	defer cursor.Close(context.TODO())
 
-	usersJSON, err := json.Marshal(s.users)
+	var users []User
+	if err = cursor.All(context.TODO(), &users); err != nil {
+		http.Error(w, "Failed to decode users list", http.StatusInternalServerError)
+		return
+	}
+
+	usersJSON, err := json.Marshal(users)
 	if err != nil {
 		http.Error(w, "Failed to marshal users list", http.StatusInternalServerError)
 		return
@@ -172,9 +189,6 @@ func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
-	s.serverMutex.Lock()
-	defer s.serverMutex.Unlock()
-
 	var requestData struct {
 		Username string `json:"username"`
 	}
@@ -184,21 +198,22 @@ func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, user := range s.users {
-		if user.Username == requestData.Username {
-			userData, err := json.Marshal(user)
-			if err != nil {
-				http.Error(w, "Failed to encode user data", http.StatusInternalServerError)
-				return
-			}
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			w.Write(userData)
-			return
-		}
+	var user User
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": requestData.Username}).Decode(&user)
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
 	}
 
-	http.Error(w, "User not found", http.StatusNotFound)
+	user.PasswordHash = "" // Remove password hash from response
+	userData, err := json.Marshal(user)
+	if err != nil {
+		http.Error(w, "Failed to encode user data", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(userData)
 }
 
 // HashPassword hashes the given password using bcrypt
@@ -209,14 +224,12 @@ func HashPassword(password string) (string, error) {
 
 // CheckPasswordHash compares the hashed password with the plain text password
 func CheckPasswordHash(password, hash string) bool {
-	// fmt.Println("Here is password", password)
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
 // Handle adding a new user
 func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
-	// Parse the request body into UserRequest struct
 	var newUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&newUserReq); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
@@ -224,11 +237,14 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Validate that the username is unique
-	for _, user := range s.users {
-		if user.Username == newUserReq.Username {
-			http.Error(w, "Username already exists", http.StatusConflict)
-			return
-		}
+	count, err := s.usersCollection.CountDocuments(context.TODO(), bson.M{"username": newUserReq.Username})
+	if err != nil {
+		http.Error(w, "Error checking username uniqueness", http.StatusInternalServerError)
+		return
+	}
+	if count > 0 {
+		http.Error(w, "Username already exists", http.StatusConflict)
+		return
 	}
 
 	// Parse DOB from string to time.Time
@@ -240,7 +256,6 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 
 	// Hash the password before storing
 	passwordHash, err := HashPassword(newUserReq.Password)
-	fmt.Println("Temphash1: ", passwordHash, " and the pwd is '", newUserReq.Password, "'")
 	if err != nil {
 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
 		return
@@ -258,10 +273,12 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		PasswordHash:    passwordHash, // Store hashed password
 	}
 
-	// Add new user to the server's user list (thread-safe)
-	s.serverMutex.Lock()
-	s.users = append(s.users, newUser)
-	s.serverMutex.Unlock()
+	// Add new user to the MongoDB
+	_, err = s.usersCollection.InsertOne(context.TODO(), newUser)
+	if err != nil {
+		http.Error(w, "Failed to add user", http.StatusInternalServerError)
+		return
+	}
 
 	// Respond with success message
 	w.WriteHeader(http.StatusCreated)
@@ -270,39 +287,29 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 
 // Handle modifying an existing user
 func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
-	// Parse the request body into UserRequest struct
 	var modifyUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
 
-	s.serverMutex.Lock()
-	defer s.serverMutex.Unlock()
-
 	// Search for the user to modify by username
-	var foundUser *User
-	for i, user := range s.users {
-		if user.Username == modifyUserReq.Username {
-			foundUser = &s.users[i]
-			break
-		}
-	}
-
-	if foundUser == nil {
+	var user User
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": modifyUserReq.Username}).Decode(&user)
+	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}
 
 	// Update fields if provided
 	if modifyUserReq.FirstName != "" {
-		foundUser.FirstName = modifyUserReq.FirstName
+		user.FirstName = modifyUserReq.FirstName
 	}
 	if modifyUserReq.LastName != "" {
-		foundUser.LastName = modifyUserReq.LastName
+		user.LastName = modifyUserReq.LastName
 	}
 	if modifyUserReq.Email != "" {
-		foundUser.Email = modifyUserReq.Email
+		user.Email = modifyUserReq.Email
 	}
 	if modifyUserReq.DOB != "" {
 		// Parse DOB from string to time.Time
@@ -311,13 +318,13 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Invalid DOB format, should be YYYY-MM-DD", http.StatusBadRequest)
 			return
 		}
-		foundUser.DOB = dob
+		user.DOB = dob
 	}
 	if len(modifyUserReq.CompletedLevels) > 0 {
-		foundUser.CompletedLevels = modifyUserReq.CompletedLevels
+		user.CompletedLevels = modifyUserReq.CompletedLevels
 	}
 	if modifyUserReq.HighScore > 0 {
-		foundUser.HighScore = modifyUserReq.HighScore
+		user.HighScore = modifyUserReq.HighScore
 	}
 	// If a new password is provided, hash it before updating
 	if modifyUserReq.Password != "" {
@@ -326,7 +333,14 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Failed to hash password", http.StatusInternalServerError)
 			return
 		}
-		foundUser.PasswordHash = passwordHash
+		user.PasswordHash = passwordHash
+	}
+
+	// Update the user in the MongoDB
+	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": modifyUserReq.Username}, bson.M{"$set": user})
+	if err != nil {
+		http.Error(w, "Failed to update user", http.StatusInternalServerError)
+		return
 	}
 
 	// Respond with success message
