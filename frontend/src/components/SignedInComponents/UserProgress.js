@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./../../styles/UserProgress.css";
 import { UserContext } from "../../context/UserContext";
-import PieChart from "./../general-components/PieChart"; // Import the reusable PieChart component
 import { UserProgressAnimationDisplay } from "./UserProgressAnimationDisplay";
 
 const UserProgress = () => {
@@ -31,16 +30,6 @@ const UserProgress = () => {
       <div className="progress-header">
         <h3>Progress Tracker</h3>
       </div>
-
-      {/* Pass labels, values, and colors as props to PieChart */}
-      {/* <div className="progress-chart">
-        <PieChart
-          labels={["Completed", "Remaining"]}
-          values={[completedPercentage, remainingPercentage]}
-          backgroundColors={["#06d6a0", "#cccccc"]}
-          hoverBackgroundColors={["#04b88e", "#aaaaaa"]}
-        />
-      </div> */}
 
       <UserProgressAnimationDisplay percentage={completedPercentage} />
 
