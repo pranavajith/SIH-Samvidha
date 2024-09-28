@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./../../styles/SignUp.css";
 import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
+import { urlList } from "../../urls";
+import axios from "axios"; // Import Axios
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -44,25 +46,29 @@ const SignUp = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/user/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await axios.post(
+        `http://localhost:${urlList.backendDatabase}/user/add`,
+        userData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (response.ok) {
+      if (response.status === 201) {
         console.log("User added successfully");
         navigate("/signin"); // Redirect to sign-in page on success
-      } else {
-        const errorData = await response.json();
-        console.error("Error:", errorData);
-        alert("Error signing up: " + errorData.message);
       }
     } catch (error) {
-      console.error("Error:", error.message);
-      alert("Error signing up: " + error.message);
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+      alert(
+        "Error signing up: " +
+          (error.response ? error.response.data.message : error.message)
+      );
     }
   };
 
