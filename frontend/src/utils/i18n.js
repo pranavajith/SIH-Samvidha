@@ -28,7 +28,7 @@ i18n
           passh: "Please enter your password!",
           toggle: "Toggle Language",
           login: "Login",
-          accna: "Don't have an account?",
+          accna: "Don't have an account? ",
           testimonial: "Here are some expert testimonials!",
           vidhan: "vidhan",
           proud:

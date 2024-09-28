@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import "./../../styles/SignUp.css";
-import { Link, Navigate } from "react-router-dom"; // Import Link for navigation
+import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    dob: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,10 +23,46 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add form validation and submission logic
-    console.log("Form submitted:", formData);
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Create the user data object to be sent to the backend
+    const userData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      username: formData.username,
+      email: formData.email,
+      dob: formData.dob, // Add Date of Birth field
+      completedLevels: [],
+      highScore: 0, // Default high score for new users
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/user/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        console.log("User added successfully");
+        navigate("/signin"); // Redirect to sign-in page on success
+      } else {
+        const errorData = await response.json();
+        console.error("Error:", errorData);
+        alert("Error signing up: " + errorData.message);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert("Error signing up: " + error.message);
+    }
   };
 
   return (
@@ -29,12 +70,31 @@ const SignUp = () => {
       <h1 className="signup-title">Create an Account</h1>
       <form className="signup-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">
-            <span role="img" aria-label="user">
-              👤
-            </span>{" "}
-            Username
-          </label>
+          <label htmlFor="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
@@ -46,12 +106,7 @@ const SignUp = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">
-            <span role="img" aria-label="email">
-              📧
-            </span>{" "}
-            Email
-          </label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
@@ -63,12 +118,19 @@ const SignUp = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">
-            <span role="img" aria-label="lock">
-              🔒
-            </span>{" "}
-            Password
-          </label>
+          <label htmlFor="dob">Date of Birth</label>
+          <input
+            type="date"
+            id="dob"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+            placeholder="Enter your date of birth"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -80,12 +142,7 @@ const SignUp = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">
-            <span role="img" aria-label="lock">
-              🔑
-            </span>{" "}
-            Confirm Password
-          </label>
+          <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
             id="confirmPassword"
@@ -97,9 +154,6 @@ const SignUp = () => {
           />
         </div>
         <button type="submit" className="signup-button">
-          <span role="img" aria-label="rocket">
-            🚀
-          </span>{" "}
           Sign Up
         </button>
       </form>
