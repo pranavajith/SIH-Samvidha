@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"sync"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRequest struct {
@@ -17,6 +19,7 @@ type UserRequest struct {
 	DOB             string           `json:"dob"`             // Expecting DOB as a string in JSON
 	CompletedLevels []CompletedLevel `json:"completedLevels"` // List of completed levels
 	HighScore       int              `json:"highScore"`
+	Password        string           `json:"password"` // Plain text password in the request
 }
 
 type CompletedLevel struct {
@@ -32,6 +35,7 @@ type User struct {
 	DOB             time.Time        `json:"dob"`
 	CompletedLevels []CompletedLevel `json:"completedLevels"`
 	HighScore       int              `json:"highScore"`
+	PasswordHash    string           `json:"-"` // Do not expose password hash in JSON responses
 }
 
 type LevelInfo struct {
@@ -53,6 +57,7 @@ func NewServer(ServerAddress string) *Server {
 }
 
 func (s *Server) Run() {
+	http.HandleFunc("/user/login", s.corsMiddleware(s.userLoginHandler))
 	http.HandleFunc("/users", s.corsMiddleware(s.usersHandler))
 	http.HandleFunc("/user/", s.corsMiddleware(s.userHandler))
 
@@ -74,6 +79,53 @@ func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		next(w, r)
 	}
+}
+
+func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var requestData struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	// Decode request body
+	if err := json.NewDecoder(r.Body).Decode(&requestData); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	s.serverMutex.Lock()
+	defer s.serverMutex.Unlock()
+	a, _ := HashPassword(requestData.Password)
+	fmt.Println("Temphash2: ", a, " and the pwd is '", requestData.Password, "'")
+	// fmt.Println("The request username is ", requestData.Username, " and the request password is ", requestData.Password, " the hash of which is ", a)
+	for _, user := range s.users {
+		fmt.Println("Checking for user: ", user.FirstName, ". Their username is ", user.Username, ", and their hashed password is ", user.PasswordHash)
+		if user.Username == requestData.Username && CheckPasswordHash(requestData.Password, user.PasswordHash) {
+			// Return user data (excluding password hash)
+			userData := User{
+				FirstName:       user.FirstName,
+				LastName:        user.LastName,
+				Username:        user.Username,
+				Email:           user.Email,
+				DOB:             user.DOB,
+				CompletedLevels: user.CompletedLevels,
+				HighScore:       user.HighScore,
+			}
+			userJSON, _ := json.Marshal(userData)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(userJSON)
+			return
+		}
+	}
+
+	// If no user was found or password didn't match
+	http.Error(w, "Invalid username or password zzz", http.StatusUnauthorized)
 }
 
 func (s *Server) usersHandler(w http.ResponseWriter, r *http.Request) {
@@ -148,6 +200,19 @@ func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "User not found", http.StatusNotFound)
 }
 
+// HashPassword hashes the given password using bcrypt
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(bytes), err
+}
+
+// CheckPasswordHash compares the hashed password with the plain text password
+func CheckPasswordHash(password, hash string) bool {
+	// fmt.Println("Here is password", password)
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
+}
+
 // Handle adding a new user
 func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body into UserRequest struct
@@ -172,6 +237,14 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Hash the password before storing
+	passwordHash, err := HashPassword(newUserReq.Password)
+	fmt.Println("Temphash1: ", passwordHash, " and the pwd is '", newUserReq.Password, "'")
+	if err != nil {
+		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+		return
+	}
+
 	// Create a new User instance
 	newUser := User{
 		FirstName:       newUserReq.FirstName,
@@ -181,6 +254,7 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		DOB:             dob,
 		CompletedLevels: newUserReq.CompletedLevels,
 		HighScore:       newUserReq.HighScore,
+		PasswordHash:    passwordHash, // Store hashed password
 	}
 
 	// Add new user to the server's user list (thread-safe)
@@ -244,6 +318,16 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if modifyUserReq.HighScore > 0 {
 		foundUser.HighScore = modifyUserReq.HighScore
 	}
+	// If a new password is provided, hash it before updating
+	if modifyUserReq.Password != "" {
+		passwordHash, err := HashPassword(modifyUserReq.Password)
+		if err != nil {
+			http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+			return
+		}
+		foundUser.PasswordHash = passwordHash
+	}
+
 	// Respond with success message
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("User modified successfully"))

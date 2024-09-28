@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import Banner from "../general-components/Banner";
 import "./../../utils/i18n";
 import { useTranslation } from "react-i18next";
+import axios from "axios"; // Import axios
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const SignIn = () => {
   const location = useLocation();
   const bannerMessage = location.state?.message;
 
-  // Changed `email` to `username`
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -26,13 +26,26 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    login();
-    navigate("/user");
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent form from submitting the default way
 
-    // Add form validation and submission logic
-    console.log("Login form submitted:", formData);
+    try {
+      // Make a POST request to the backend to authenticate the user
+      const response = await axios.post(
+        "http://localhost:3000/user/login",
+        formData
+      );
+
+      // Assuming the backend returns the user data on successful authentication
+      if (response.data) {
+        login({ userData: response.data }); // Update the context with the user data
+        navigate("/user"); // Redirect to the user page
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle error (e.g., show a message to the user)
+      alert("Login failed. Please check your username and password.");
+    }
   };
 
   const { t } = useTranslation();

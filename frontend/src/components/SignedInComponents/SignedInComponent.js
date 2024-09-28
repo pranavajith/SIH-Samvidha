@@ -22,7 +22,7 @@ const SignedInComponent = () => {
       <ProtectedRoute>
         <SignedInTitle />
       </ProtectedRoute>
-      <Routes>
+      {/* <Routes>
         <Route
           path="/user/profile"
           element={
@@ -55,7 +55,7 @@ const SignedInComponent = () => {
             </ProtectedRoute>
           }
         />
-      </Routes>
+      </Routes> */}
     </>
   );
 };

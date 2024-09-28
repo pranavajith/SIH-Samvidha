@@ -40,6 +40,7 @@ const SignUp = () => {
       dob: formData.dob, // Add Date of Birth field
       completedLevels: [],
       highScore: 0, // Default high score for new users
+      password: formData.password,
     };
 
     try {
