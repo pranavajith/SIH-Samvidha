@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./../../styles/SignUp.css";
 import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
+import { urlList } from "../../urls";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -44,13 +45,16 @@ const SignUp = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/user/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        `http://localhost:${urlList.backendDatabase}/user/add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       if (response.ok) {
         console.log("User added successfully");
