@@ -1,32 +1,15 @@
 version: '3.8'
 
 services:
-  frontend:
-    container_name: samvidhan_frontend
-    restart: always
+  app:
     build:
       context: ..
-      dockerfile: docker/frontend.Dockerfile
+      dockerfile: docker/Dockerfile
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - REACT_BACKEND_URL=http://backend:8000
-
-  backend:
-    container_name: samvidhan_backend
-    restart: always
-    build:
-      context: ..
-      dockerfile: docker/backend.Dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - ../pydata:/data
-    environment:
-      - CORS_ALLOWED_HOST=http://frontend:3000
+      - "8080:8080"
+      - "27017:27017"
 
 # docker-compose up --build
 # docker-compose down -v
-# tree -a -I ".git|team-photo"
+# tree -a -I ".git|team-photo|testimonial-pics"
