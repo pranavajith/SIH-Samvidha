@@ -17,6 +17,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// mongodb+srv://samvidhanUser:samvidhan123@samvidhancluster.3vucs.mongodb.net/
+
 type UserRequest struct {
 	FirstName       string           `json:"firstName"`
 	LastName        string           `json:"lastName"`
@@ -60,9 +62,11 @@ func NewServer(serverAddress string) *Server {
 func (s *Server) ConnectMongoDB() error {
 	mongoURI := os.Getenv("MONGO_URI")
 	if mongoURI == "" {
-		mongoURI = "mongodb://localhost:27017"
+		mongoURI = "mongodb+srv://samvidhanUser:samvidhan123@samvidhancluster.3vucs.mongodb.net/?retryWrites=true&w=majority&appName=SamvidhanCluster"
+		// mongoURI = "mongodb://localhost:27017"
 	}
-	clientOptions := options.Client().ApplyURI(mongoURI)
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	clientOptions := options.Client().ApplyURI(mongoURI).SetServerAPIOptions(serverAPI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		return err
