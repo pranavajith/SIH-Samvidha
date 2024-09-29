@@ -1,0 +1,7 @@
+authlib
+bcrypt
+fastapi[all]
+pydantic
+python-jose
+sqlalchemy
+uvicorn
