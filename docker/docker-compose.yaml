@@ -2,14 +2,31 @@ version: '3.8'
 
 services:
   app:
+    container_name: samvidhan_site
     build:
       context: ..
       dockerfile: docker/Dockerfile
     ports:
       - "3000:3000"
       - "8080:8080"
+    networks:
+      - sam_network
+    environment:
+      MONGO_URI: "mongodb://samvidhan_data:27017"
+
+  mongodb:
+    container_name: samvidhan_data
+    image: mongo:7.0
+    ports:
       - "27017:27017"
+    networks:
+      - sam_network
+
+networks:
+  sam_network:
+    driver: bridge
 
 # docker-compose up --build
 # docker-compose down -v
 # tree -a -I ".git|team-photo|testimonial-pics"
+# docker run --name mongodb -p 27017:27017 -d mongo:7.0
