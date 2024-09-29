@@ -7,7 +7,7 @@ import (
 
 // Main function
 func main() {
-	server := NewServer(":3000")
+	server := NewServer(":8080")
 
 	if err := server.ConnectMongoDB(); err != nil {
 		log.Fatal(err)
