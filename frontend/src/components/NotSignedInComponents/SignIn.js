@@ -31,7 +31,7 @@ const SignIn = () => {
     // Add form validation and submission logic
     console.log("Login form submitted:", formData);
   };
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <>
       {bannerMessage && <Banner message={bannerMessage} />}
@@ -81,7 +81,8 @@ const SignIn = () => {
         </form>
         <div className="signin-footer">
           <p>
-            {t("accna")}<Link to="/signup">{t("sup")}</Link>
+            {t("accna")}
+            <Link to="/signup">{t("sup")}</Link>
           </p>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { UserData } from "../components/dummy-data/dummy-data";
+import { UserData } from "../components/dummy-data/dummy-data";
 
 export const UserContext = createContext();
 
