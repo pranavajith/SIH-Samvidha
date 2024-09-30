@@ -14,6 +14,7 @@ const SignedInTitle = () => {
 
   console.log("SignedInTitle Rendered");
   console.log("User:", user);
+  // console.log("Here!!", user.userProfileImage.path);
 
   return (
     <nav className="navbar">
