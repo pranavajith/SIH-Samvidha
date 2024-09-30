@@ -29,3 +29,5 @@ Alternative: Open Cmd at Project base and run 'cd backend && go mod tidy && go r
 3. Run npm start
 
 Alternative: Open Cmd at Project base and run 'cd frontend && npm install && npm start'
+
+All the best!
