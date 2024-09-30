@@ -46,7 +46,7 @@ const SignIn = () => {
               {t("email")}
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               value={formData.email}
