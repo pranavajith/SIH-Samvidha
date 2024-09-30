@@ -22,10 +22,11 @@
 
 Alternative: Open Cmd at Project base and run 'cd backend && go mod tidy && go run main.go server.go'
 
-# To Setup and Run the Project - Backend
+# To Setup and Run the Project - Frontend
 
 1. Go to frontend folder (cd frontend)
 2. Run npm install
 3. Run npm start
 
 Alternative: Open Cmd at Project base and run 'cd frontend && npm install && npm start'
+Important information: Before signing in ensure the backend is up and running.
