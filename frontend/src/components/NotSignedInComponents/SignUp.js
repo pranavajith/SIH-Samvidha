@@ -47,7 +47,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:${urlList.backendDatabase}/user/add`,
+        `${urlList.backendDatabase}/user/add`,
         userData,
         {
           headers: {

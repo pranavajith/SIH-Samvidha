@@ -33,7 +33,7 @@ const SignIn = () => {
     try {
       // Make a POST request to the backend to authenticate the user
       const response = await axios.post(
-        `http://localhost:${urlList.backendDatabase}/user/login`,
+        `${urlList.backendDatabase}/user/login`,
         formData
       );
 
