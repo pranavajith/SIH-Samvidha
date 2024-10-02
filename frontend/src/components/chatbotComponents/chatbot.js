@@ -4,7 +4,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatbotAnimation from "./ChatbotAnimation";
 
 // Initialize the GoogleGenerativeAI Client
-const genAI = new GoogleGenerativeAI(process.env.REACT_APP_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
+console.log("Here it is!: ", process.env.REACT_APP_GEMINI_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" }); // Adjust based on your desired model
 
 const ChatBot = () => {

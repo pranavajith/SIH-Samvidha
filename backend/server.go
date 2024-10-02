@@ -58,12 +58,12 @@ func NewServer(serverAddress string) *Server {
 }
 
 func (s *Server) ConnectMongoDB() error {
-	mongoURI := os.Getenv("MONGO_URI")
-	if mongoURI == "" {
-		mongoURI = "mongodb+srv://samvidhanUser:samvidhan123@samvidhancluster.3vucs.mongodb.net/?retryWrites=true&w=majority&appName=SamvidhanCluster"
+	mongo_URI := os.Getenv("MONGO_URI")
+	if mongo_URI == "" {
+		mongo_URI = os.Getenv("MONGO_URI_LOCAL")
 	}
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().ApplyURI(mongoURI).SetServerAPIOptions(serverAPI)
+	clientOptions := options.Client().ApplyURI(mongo_URI).SetServerAPIOptions(serverAPI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		return err
