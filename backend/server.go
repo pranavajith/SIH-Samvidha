@@ -7,8 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	// "sync"
+	"sync"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,17 +16,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// mongodb+srv://samvidhanUser:samvidhan123@samvidhancluster.3vucs.mongodb.net/
-
 type UserRequest struct {
 	FirstName       string           `json:"firstName"`
 	LastName        string           `json:"lastName"`
 	Username        string           `json:"username"`
 	Email           string           `json:"email"`
-	DOB             string           `json:"dob"`             // Expecting DOB as a string in JSON
-	CompletedLevels []CompletedLevel `json:"completedLevels"` // List of completed levels
+	DOB             string           `json:"dob"`
+	CompletedLevels []CompletedLevel `json:"completedLevels"`
 	HighScore       int              `json:"highScore"`
-	Password        string           `json:"password"` // Plain text password in the request
+	Password        string           `json:"password"`
 }
 
 type CompletedLevel struct {
@@ -44,13 +41,14 @@ type User struct {
 	CompletedLevels []CompletedLevel `json:"completedLevels"`
 	HighScore       int              `json:"highScore"`
 	ImageUrl        string           `json:"imageUrl"`
-	PasswordHash    string           `json:"-"` // Do not expose password hash in JSON responses
+	PasswordHash    string           `json:"-"`
 }
 
 type Server struct {
 	serverAddress   string
 	mongoClient     *mongo.Client
 	usersCollection *mongo.Collection
+	mutex           sync.Mutex // Add a mutex to the server
 }
 
 func NewServer(serverAddress string) *Server {
@@ -60,19 +58,17 @@ func NewServer(serverAddress string) *Server {
 }
 
 func (s *Server) ConnectMongoDB() error {
-	mongoURI := os.Getenv("MONGO_URI")
-	if mongoURI == "" {
-		mongoURI = "mongodb+srv://samvidhanUser:samvidhan123@samvidhancluster.3vucs.mongodb.net/?retryWrites=true&w=majority&appName=SamvidhanCluster"
-		// mongoURI = "mongodb://localhost:27017"
+	mongo_URI := os.Getenv("MONGO_URI")
+	if mongo_URI == "" {
+		mongo_URI = os.Getenv("MONGO_URI_LOCAL")
 	}
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().ApplyURI(mongoURI).SetServerAPIOptions(serverAPI)
+	clientOptions := options.Client().ApplyURI(mongo_URI).SetServerAPIOptions(serverAPI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		return err
 	}
 
-	// Check the connection
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
 		return err
@@ -92,10 +88,9 @@ func (s *Server) Run() {
 	log.Fatal(http.ListenAndServe(s.serverAddress, nil))
 }
 
-// corsMiddleware adds CORS headers to responses
 func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*") // Allow all origins
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
@@ -119,11 +114,13 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
-	// Decode request body
 	if err := json.NewDecoder(r.Body).Decode(&requestData); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
+
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
 	var user User
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": requestData.Username}).Decode(&user)
@@ -137,8 +134,7 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Return user data (excluding password hash)
-	user.PasswordHash = "" // Remove password hash from response
+	user.PasswordHash = ""
 	userJSON, _ := json.Marshal(user)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -155,6 +151,9 @@ func (s *Server) usersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetUsers(w http.ResponseWriter) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
 	cursor, err := s.usersCollection.Find(context.TODO(), bson.M{})
 	if err != nil {
 		http.Error(w, "Failed to retrieve users", http.StatusInternalServerError)
@@ -207,6 +206,9 @@ func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
 	var user User
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": requestData.Username}).Decode(&user)
 	if err != nil {
@@ -214,7 +216,7 @@ func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user.PasswordHash = "" // Remove password hash from response
+	user.PasswordHash = ""
 	userData, err := json.Marshal(user)
 	if err != nil {
 		http.Error(w, "Failed to encode user data", http.StatusInternalServerError)
@@ -225,19 +227,16 @@ func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(userData)
 }
 
-// HashPassword hashes the given password using bcrypt
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(bytes), err
 }
 
-// CheckPasswordHash compares the hashed password with the plain text password
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
-// Handle adding a new user
 func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	var newUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&newUserReq); err != nil {
@@ -245,7 +244,9 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate that the username is unique
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
 	count, err := s.usersCollection.CountDocuments(context.TODO(), bson.M{"username": newUserReq.Username})
 	if err != nil {
 		http.Error(w, "Error checking username uniqueness", http.StatusInternalServerError)
@@ -256,21 +257,18 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Parse DOB from string to time.Time
-	dob, err := time.Parse("2006-01-02", newUserReq.DOB) // Assuming DOB is in YYYY-MM-DD format
+	dob, err := time.Parse("2006-01-02", newUserReq.DOB)
 	if err != nil {
 		http.Error(w, "Invalid DOB format, should be YYYY-MM-DD", http.StatusBadRequest)
 		return
 	}
 
-	// Hash the password before storing
 	passwordHash, err := HashPassword(newUserReq.Password)
 	if err != nil {
 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
 		return
 	}
 
-	// Create a new User instance
 	newUser := User{
 		FirstName:       newUserReq.FirstName,
 		LastName:        newUserReq.LastName,
@@ -279,22 +277,19 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		DOB:             dob,
 		CompletedLevels: newUserReq.CompletedLevels,
 		HighScore:       newUserReq.HighScore,
-		PasswordHash:    passwordHash, // Store hashed password
+		PasswordHash:    passwordHash,
 	}
 
-	// Add new user to the MongoDB
 	_, err = s.usersCollection.InsertOne(context.TODO(), newUser)
 	if err != nil {
 		http.Error(w, "Failed to add user", http.StatusInternalServerError)
 		return
 	}
 
-	// Respond with success message
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("User added successfully"))
 }
 
-// Handle modifying an existing user
 func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	var modifyUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
@@ -302,7 +297,9 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Search for the user to modify by username
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
 	var user User
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": modifyUserReq.Username}).Decode(&user)
 	if err != nil {
@@ -310,7 +307,6 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Update fields if provided
 	if modifyUserReq.FirstName != "" {
 		user.FirstName = modifyUserReq.FirstName
 	}
@@ -321,8 +317,7 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		user.Email = modifyUserReq.Email
 	}
 	if modifyUserReq.DOB != "" {
-		// Parse DOB from string to time.Time
-		dob, err := time.Parse("2006-01-02", modifyUserReq.DOB) // Expecting YYYY-MM-DD format
+		dob, err := time.Parse("2006-01-02", modifyUserReq.DOB)
 		if err != nil {
 			http.Error(w, "Invalid DOB format, should be YYYY-MM-DD", http.StatusBadRequest)
 			return
@@ -335,7 +330,6 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if modifyUserReq.HighScore > 0 {
 		user.HighScore = modifyUserReq.HighScore
 	}
-	// If a new password is provided, hash it before updating
 	if modifyUserReq.Password != "" {
 		passwordHash, err := HashPassword(modifyUserReq.Password)
 		if err != nil {
@@ -345,14 +339,12 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		user.PasswordHash = passwordHash
 	}
 
-	// Update the user in the MongoDB
 	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": modifyUserReq.Username}, bson.M{"$set": user})
 	if err != nil {
 		http.Error(w, "Failed to update user", http.StatusInternalServerError)
 		return
 	}
 
-	// Respond with success message
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("User modified successfully"))
 }
