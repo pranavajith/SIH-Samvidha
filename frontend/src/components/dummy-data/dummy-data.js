@@ -517,15 +517,14 @@ const UserData = {
   lastName: "Ajith",
   username: "Pranav Ajith",
   email: "pranav.ajith.cse21@itbhu.ac.in",
+  DOB: "0000-00-00",
   userProfileImage: {
-    type: "url",
+    format: "url",
     path: urlList.GenericKidImageUrl,
   },
-  password: "fakePassword",
-  gameProgress: {
-    levelsComplete: [1, 2],
-    totalLevels: 3,
-  },
+  passwordHash: "fakePassword",
+  completedLevels: [],
+  multiPlayerScore: 0,
   streakData: {
     latestPlayed: "2024-09-14",
     latestStreakStartDate: "2024-08-01",

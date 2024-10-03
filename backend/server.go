@@ -16,39 +16,58 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type UserRequest struct {
-	FirstName       string           `json:"firstName"`
-	LastName        string           `json:"lastName"`
-	Username        string           `json:"username"`
-	Email           string           `json:"email"`
-	DOB             string           `json:"dob"`
-	CompletedLevels []CompletedLevel `json:"completedLevels"`
-	HighScore       int              `json:"highScore"`
-	Password        string           `json:"password"`
+// Define types for the User and UserRequest structures
+type CompletedLevel struct {
+	LevelID int `json:"levelId"`
+	Score   int `json:"score"`
 }
 
-type CompletedLevel struct {
-	LevelID int
-	Score   int
+type ProfileImage struct {
+	Format string `json:"format"`
+	Path   string `json:"path"`
+}
+
+type StreakDataType struct {
+	LatestPlayed          time.Time `json:"latestPlayed"`
+	LatestStreakStartDate time.Time `json:"latestStreakStartDate"`
+}
+
+type StreakDataRequestType struct {
+	LatestPlayed          string `json:"latestPlayed"`
+	LatestStreakStartDate string `json:"latestStreakStartDate"`
+}
+
+type UserRequest struct {
+	FirstName        string                `json:"firstName"`
+	LastName         string                `json:"lastName"`
+	Username         string                `json:"username"`
+	Email            string                `json:"email"`
+	DOB              string                `json:"dob"`
+	CompletedLevels  []CompletedLevel      `json:"completedLevels"`
+	MultiPlayerScore int                   `json:"multiPlayerScore"`
+	Password         string                `json:"password"`
+	StreakData       StreakDataRequestType `json:"streakData"`
+	UserProfileImage ProfileImage          `json:"userProfileImage"`
 }
 
 type User struct {
-	FirstName       string           `json:"firstName"`
-	LastName        string           `json:"lastName"`
-	Username        string           `json:"username"`
-	Email           string           `json:"email"`
-	DOB             time.Time        `json:"dob"`
-	CompletedLevels []CompletedLevel `json:"completedLevels"`
-	HighScore       int              `json:"highScore"`
-	ImageUrl        string           `json:"imageUrl"`
-	PasswordHash    string           `json:"-"`
+	FirstName        string           `json:"firstName"`
+	LastName         string           `json:"lastName"`
+	Username         string           `json:"username"`
+	Email            string           `json:"email"`
+	DOB              time.Time        `json:"dob"`
+	CompletedLevels  []CompletedLevel `json:"completedLevels"`
+	MultiPlayerScore int              `json:"multiPlayerScore"`
+	PasswordHash     string           `json:"-"` // password is excluded from JSON
+	StreakData       StreakDataType   `json:"streakData"`
+	UserProfileImage ProfileImage     `json:"userProfileImage"`
 }
 
 type Server struct {
 	serverAddress   string
 	mongoClient     *mongo.Client
 	usersCollection *mongo.Collection
-	mutex           sync.Mutex // Add a mutex to the server
+	mutex           sync.Mutex // Add a mutex for concurrency safety
 }
 
 func NewServer(serverAddress string) *Server {
@@ -57,18 +76,21 @@ func NewServer(serverAddress string) *Server {
 	}
 }
 
+// MongoDB connection setup
 func (s *Server) ConnectMongoDB() error {
-	mongo_URI := os.Getenv("MONGO_URI")
-	if mongo_URI == "" {
-		mongo_URI = os.Getenv("MONGO_URI_LOCAL")
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		mongoURI = os.Getenv("MONGO_URI_LOCAL")
 	}
+
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().ApplyURI(mongo_URI).SetServerAPIOptions(serverAPI)
+	clientOptions := options.Client().ApplyURI(mongoURI).SetServerAPIOptions(serverAPI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		return err
 	}
 
+	// Test the connection
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
 		return err
@@ -79,15 +101,17 @@ func (s *Server) ConnectMongoDB() error {
 	return nil
 }
 
+// Start the server
 func (s *Server) Run() {
 	http.HandleFunc("/user/login", s.corsMiddleware(s.userLoginHandler))
 	http.HandleFunc("/users", s.corsMiddleware(s.usersHandler))
 	http.HandleFunc("/user/", s.corsMiddleware(s.userHandler))
 
-	fmt.Println("Server running at localhost", s.serverAddress)
+	fmt.Println("Server running at", s.serverAddress)
 	log.Fatal(http.ListenAndServe(s.serverAddress, nil))
 }
 
+// CORS middleware
 func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -103,6 +127,7 @@ func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+// Handle user login
 func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -134,6 +159,7 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Remove password hash before sending user info
 	user.PasswordHash = ""
 	userJSON, _ := json.Marshal(user)
 	w.Header().Set("Content-Type", "application/json")
@@ -141,15 +167,17 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(userJSON)
 }
 
+// Handle getting and adding users
 func (s *Server) usersHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		s.handleGetUsers(w)
 	default:
-		http.Error(w, "Method not catered to", http.StatusMethodNotAllowed)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
+// Retrieve all users
 func (s *Server) handleGetUsers(w http.ResponseWriter) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -177,6 +205,7 @@ func (s *Server) handleGetUsers(w http.ResponseWriter) {
 	w.Write(usersJSON)
 }
 
+// Handle specific user operations
 func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
@@ -189,13 +218,14 @@ func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
 		} else if path == "/user/modify" {
 			s.handleModifyUser(w, r)
 		} else {
-			http.Error(w, "Invalid POST path (Not Add or Modify)", http.StatusNotFound)
+			http.Error(w, "Invalid POST path", http.StatusNotFound)
 		}
 	default:
-		http.Error(w, "Method not catered to", http.StatusMethodNotAllowed)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
+// Retrieve a single user by username
 func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 	var requestData struct {
 		Username string `json:"username"`
@@ -227,16 +257,19 @@ func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(userData)
 }
 
+// Hash password for storage
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(bytes), err
 }
 
+// Check if a provided password matches the stored hash
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
+// Add a new user
 func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	var newUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&newUserReq); err != nil {
@@ -269,15 +302,24 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Parse streak data dates
+	latestPlayed, _ := time.Parse("2006-01-02", newUserReq.StreakData.LatestPlayed)
+	latestStreakStartDate, _ := time.Parse("2006-01-02", newUserReq.StreakData.LatestStreakStartDate)
+
 	newUser := User{
-		FirstName:       newUserReq.FirstName,
-		LastName:        newUserReq.LastName,
-		Username:        newUserReq.Username,
-		Email:           newUserReq.Email,
-		DOB:             dob,
-		CompletedLevels: newUserReq.CompletedLevels,
-		HighScore:       newUserReq.HighScore,
-		PasswordHash:    passwordHash,
+		FirstName:        newUserReq.FirstName,
+		LastName:         newUserReq.LastName,
+		Username:         newUserReq.Username,
+		Email:            newUserReq.Email,
+		DOB:              dob,
+		CompletedLevels:  newUserReq.CompletedLevels,
+		MultiPlayerScore: newUserReq.MultiPlayerScore,
+		PasswordHash:     passwordHash,
+		StreakData: StreakDataType{
+			LatestPlayed:          latestPlayed,
+			LatestStreakStartDate: latestStreakStartDate,
+		},
+		UserProfileImage: newUserReq.UserProfileImage,
 	}
 
 	_, err = s.usersCollection.InsertOne(context.TODO(), newUser)
@@ -290,6 +332,7 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("User added successfully"))
 }
 
+// Modify an existing user
 func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	var modifyUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
@@ -327,8 +370,8 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if len(modifyUserReq.CompletedLevels) > 0 {
 		user.CompletedLevels = modifyUserReq.CompletedLevels
 	}
-	if modifyUserReq.HighScore > 0 {
-		user.HighScore = modifyUserReq.HighScore
+	if modifyUserReq.MultiPlayerScore > 0 {
+		user.MultiPlayerScore = modifyUserReq.MultiPlayerScore
 	}
 	if modifyUserReq.Password != "" {
 		passwordHash, err := HashPassword(modifyUserReq.Password)
@@ -337,6 +380,16 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		user.PasswordHash = passwordHash
+	}
+
+	// Parse streak data
+	if modifyUserReq.StreakData.LatestPlayed != "" {
+		latestPlayed, _ := time.Parse("2006-01-02", modifyUserReq.StreakData.LatestPlayed)
+		user.StreakData.LatestPlayed = latestPlayed
+	}
+	if modifyUserReq.StreakData.LatestStreakStartDate != "" {
+		latestStreakStartDate, _ := time.Parse("2006-01-02", modifyUserReq.StreakData.LatestStreakStartDate)
+		user.StreakData.LatestStreakStartDate = latestStreakStartDate
 	}
 
 	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": modifyUserReq.Username}, bson.M{"$set": user})
