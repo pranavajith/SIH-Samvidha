@@ -338,17 +338,17 @@ const preambleLevels = [
   },
   {
     number: 2,
-    status: "unlocked",
-    videoUrl: urlList.TrophyGifUrl,
-    questionType: "TypeGame",
-    questionData: TypeGameData.preamble,
-  },
-  {
-    number: 3,
     status: "locked",
     videoUrl: urlList.CheckpointGifUrl,
     questionType: "flashcard",
     questionData: constitutional_questions.preamble_questions,
+  },
+  {
+    number: 3,
+    status: "locked",
+    videoUrl: urlList.TrophyGifUrl,
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
   },
 ];
 
