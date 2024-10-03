@@ -159,9 +159,43 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Create a response struct with formatted DOB
+	type UserResponse struct {
+		FirstName        string           `json:"firstName"`
+		LastName         string           `json:"lastName"`
+		Username         string           `json:"username"`
+		Email            string           `json:"email"`
+		DOB              string           `json:"dob"` // Change here to string
+		CompletedLevels  []CompletedLevel `json:"completedLevels"`
+		MultiPlayerScore int              `json:"multiPlayerScore"`
+		StreakData       StreakDataType   `json:"streakData"`
+		UserProfileImage ProfileImage     `json:"userProfileImage"`
+	}
+
 	// Remove password hash before sending user info
 	user.PasswordHash = ""
-	userJSON, _ := json.Marshal(user)
+
+	// Format DOB to yyyy-mm-dd
+	formattedDOB := user.DOB.Format("2006-01-02")
+
+	userResponse := UserResponse{
+		FirstName:        user.FirstName,
+		LastName:         user.LastName,
+		Username:         user.Username,
+		Email:            user.Email,
+		DOB:              formattedDOB, // Use the formatted DOB here
+		CompletedLevels:  user.CompletedLevels,
+		MultiPlayerScore: user.MultiPlayerScore,
+		StreakData:       user.StreakData,
+		UserProfileImage: user.UserProfileImage,
+	}
+
+	userJSON, err := json.Marshal(userResponse)
+	if err != nil {
+		http.Error(w, "Failed to encode user data", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(userJSON)
@@ -205,18 +239,22 @@ func (s *Server) handleGetUsers(w http.ResponseWriter) {
 	w.Write(usersJSON)
 }
 
-// Handle specific user operations
+// Update the main route handler to include password change
 func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
+	// fmt.Println("Reached!")
 	switch r.Method {
 	case "GET":
 		s.handleGetUser(w, r)
 	case "POST":
 		path := r.URL.Path
-
+		fmt.Println(path)
 		if path == "/user/add" {
 			s.handleAddUser(w, r)
 		} else if path == "/user/modify" {
+			fmt.Println("Reached!")
 			s.handleModifyUser(w, r)
+		} else if path == "/user/change-password" {
+			s.handleChangePassword(w, r)
 		} else {
 			http.Error(w, "Invalid POST path", http.StatusNotFound)
 		}
@@ -332,24 +370,31 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("User added successfully"))
 }
 
-// Modify an existing user
+// Modify an existing user (for general updates without password change)
 func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Reached Here too!")
 	var modifyUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
 
+	fmt.Println("Here 1")
+
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	var user User
+	fmt.Println(modifyUserReq.Username)
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": modifyUserReq.Username}).Decode(&user)
 	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}
 
+	fmt.Println("Here 2")
+
+	// Update the profile fields (excluding password)
 	if modifyUserReq.FirstName != "" {
 		user.FirstName = modifyUserReq.FirstName
 	}
@@ -359,12 +404,15 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if modifyUserReq.Email != "" {
 		user.Email = modifyUserReq.Email
 	}
+	fmt.Println(modifyUserReq.DOB)
 	if modifyUserReq.DOB != "" {
 		dob, err := time.Parse("2006-01-02", modifyUserReq.DOB)
 		if err != nil {
 			http.Error(w, "Invalid DOB format, should be YYYY-MM-DD", http.StatusBadRequest)
 			return
 		}
+
+		fmt.Println("Here 3")
 		user.DOB = dob
 	}
 	if len(modifyUserReq.CompletedLevels) > 0 {
@@ -372,14 +420,6 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	}
 	if modifyUserReq.MultiPlayerScore > 0 {
 		user.MultiPlayerScore = modifyUserReq.MultiPlayerScore
-	}
-	if modifyUserReq.Password != "" {
-		passwordHash, err := HashPassword(modifyUserReq.Password)
-		if err != nil {
-			http.Error(w, "Failed to hash password", http.StatusInternalServerError)
-			return
-		}
-		user.PasswordHash = passwordHash
 	}
 
 	// Parse streak data
@@ -392,12 +432,62 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		user.StreakData.LatestStreakStartDate = latestStreakStartDate
 	}
 
+	// Update the user document in the database
 	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": modifyUserReq.Username}, bson.M{"$set": user})
 	if err != nil {
 		http.Error(w, "Failed to update user", http.StatusInternalServerError)
 		return
 	}
 
+	fmt.Println("Here 4")
+
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("User modified successfully"))
+}
+
+// Change password handler
+func (s *Server) handleChangePassword(w http.ResponseWriter, r *http.Request) {
+	var passwordChangeReq struct {
+		Username        string `json:"username"`
+		CurrentPassword string `json:"currentPassword"`
+		NewPassword     string `json:"newPassword"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&passwordChangeReq); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	var user User
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": passwordChangeReq.Username}).Decode(&user)
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+
+	// Check if the current password is correct
+	if !CheckPasswordHash(passwordChangeReq.CurrentPassword, user.PasswordHash) {
+		http.Error(w, "Current password is incorrect", http.StatusUnauthorized)
+		return
+	}
+
+	// Hash the new password
+	newPasswordHash, err := HashPassword(passwordChangeReq.NewPassword)
+	if err != nil {
+		http.Error(w, "Failed to hash new password", http.StatusInternalServerError)
+		return
+	}
+
+	// Update the password in the database
+	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": passwordChangeReq.Username}, bson.M{"$set": bson.M{"passwordHash": newPasswordHash}})
+	if err != nil {
+		http.Error(w, "Failed to update password", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Password changed successfully"))
 }

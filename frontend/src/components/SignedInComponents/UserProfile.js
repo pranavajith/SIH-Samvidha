@@ -2,14 +2,22 @@ import { useContext, useState } from "react";
 import "./../../styles/UserProfile.css";
 import { UserContext } from "../../context/UserContext";
 import { format, differenceInCalendarDays } from "date-fns"; // date-fns for better date manipulation
+import axios from "axios"; // to handle API calls
+import { urlList } from "../../urls"; // assume URLs are in a separate file
 
 const UserProfile = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext); // Context for user data and updating it
   const [editing, setEditing] = useState(false);
+  console.log(user);
   const [updatedDetails, setUpdatedDetails] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
-    userName: user.userName,
+    email: user.email,
+    dob: user.dob,
+    userProfileImage: user.userProfileImage,
+    currentPassword: "", // field to validate password change
+    newPassword: "", // field for new password
+    confirmPassword: "", // confirmation for new password
   });
 
   const handleChange = (e) => {
@@ -19,10 +27,63 @@ const UserProfile = () => {
     });
   };
 
-  const handleSave = () => {
-    // Call function to update user details, if needed
-    // updateUser(updatedDetails);
-    setEditing(false);
+  const handleSave = async () => {
+    // If the user is trying to change the password, ensure validation
+    if (updatedDetails.newPassword || updatedDetails.confirmPassword) {
+      if (updatedDetails.newPassword !== updatedDetails.confirmPassword) {
+        alert("New passwords do not match.");
+        return;
+      }
+
+      try {
+        // Make an API call to validate and change the password
+        const response = await axios.post(
+          `${urlList.backendDatabase}/user/change-password`,
+          {
+            username: user.username,
+            currentPassword: updatedDetails.currentPassword,
+            newPassword: updatedDetails.newPassword,
+          }
+        );
+
+        if (response.status === 200) {
+          alert("Password changed successfully!");
+        }
+      } catch (error) {
+        alert(
+          "Error: " +
+            (error.response ? error.response.data.message : error.message)
+        );
+        return;
+      }
+    }
+
+    // Save other profile details like First Name, Last Name, Email, DOB, Profile Image
+    try {
+      console.log("Username:", user.username);
+      const updatedUserResponse = await axios.post(
+        `${urlList.backendDatabase}/user/modify`,
+        {
+          username: user.username,
+          firstName: updatedDetails.firstName,
+          lastName: updatedDetails.lastName,
+          email: updatedDetails.email,
+          dob: updatedDetails.dob,
+          userProfileImage: updatedDetails.userProfileImage,
+        }
+      );
+
+      if (updatedUserResponse.status === 200) {
+        alert("Profile updated successfully! Please Re-login to see changes!");
+
+        setEditing(false);
+      }
+    } catch (error) {
+      alert(
+        "Error: " +
+          (error.response ? error.response.data.message : error.message)
+      );
+    }
   };
 
   // Helper function to check if a date is today
@@ -54,11 +115,6 @@ const UserProfile = () => {
       differenceInCalendarDays(latestPlayedDate, streakStartDate) + 1;
   }
 
-  // Calculate game progress as the ratio of levels complete to total levels
-  const gameProgressPercentage =
-    (user.gameProgress.levelsComplete.length / user.gameProgress.totalLevels) *
-    100;
-
   return (
     <div className="profile-container">
       <h1 className="profile-title">User Profile</h1>
@@ -66,19 +122,20 @@ const UserProfile = () => {
         {/* Profile Image */}
         <div className="profile-image-section">
           <img
-            src={user.userProfileImage.path}
-            alt={`${user.firstName[0]} ${user.lastName[0]}`}
+            src={updatedDetails.userProfileImage.path}
+            alt={`${updatedDetails.firstName[0]} ${updatedDetails.lastName[0]}`}
             className="profile-image"
           />
           <p className="profile-name">
-            {user.firstName} {user.lastName}
+            {updatedDetails.firstName} {updatedDetails.lastName}
           </p>
-          <p className="profile-username">{user.userName}</p>
+          <p className="profile-username">{updatedDetails.username}</p>
         </div>
 
         {/* User Details */}
         <div className="profile-details-section">
           <h2 className="section-title">Account Details</h2>
+
           <div className="detail-item">
             <label className="detail-label">First Name:</label>
             {editing ? (
@@ -90,9 +147,10 @@ const UserProfile = () => {
                 className="detail-input"
               />
             ) : (
-              <span className="detail-value">{user.firstName}</span>
+              <span className="detail-value">{updatedDetails.firstName}</span>
             )}
           </div>
+
           <div className="detail-item">
             <label className="detail-label">Last Name:</label>
             {editing ? (
@@ -104,36 +162,55 @@ const UserProfile = () => {
                 className="detail-input"
               />
             ) : (
-              <span className="detail-value">{user.lastName}</span>
+              <span className="detail-value">{updatedDetails.lastName}</span>
             )}
           </div>
+
           <div className="detail-item">
-            <label className="detail-label">Username:</label>
+            <label className="detail-label">Email:</label>
             {editing ? (
               <input
-                type="text"
-                name="userName"
-                value={updatedDetails.userName}
+                type="email"
+                name="email"
+                value={updatedDetails.email}
                 onChange={handleChange}
                 className="detail-input"
               />
             ) : (
-              <span className="detail-value">{user.userName}</span>
+              <span className="detail-value">{updatedDetails.email}</span>
             )}
           </div>
 
-          {/* Performance Section */}
-          <h2 className="section-title">Performance</h2>
           <div className="detail-item">
-            <label className="detail-label">Game Progress:</label>
+            <label className="detail-label">Date of Birth:</label>
+            {editing ? (
+              <input
+                type="date"
+                name="dob"
+                value={updatedDetails.dob}
+                onChange={handleChange}
+                className="detail-input"
+              />
+            ) : (
+              <span className="detail-value">
+                {updatedDetails.dob
+                  ? new Date(updatedDetails.dob).toDateString()
+                  : "N/A"}
+              </span>
+            )}
+          </div>
+
+          <div className="detail-item">
+            <label className="detail-label">Multiplayer Score:</label>
             <span className="detail-value">
-              {gameProgressPercentage.toFixed(1)}%
+              {updatedDetails.multiPlayerScore}
             </span>
           </div>
+
           <div className="detail-item">
             <label className="detail-label">Streak Start Date:</label>
             <span className="detail-value">
-              {user.streakData.latestStreakStartDate}
+              {streakStartDate.toDateString()}
             </span>
           </div>
           <div className="detail-item">
@@ -147,6 +224,43 @@ const UserProfile = () => {
             <span className="detail-value">{currentStreak} days</span>
           </div>
         </div>
+
+        {/* Password Section */}
+        {editing && (
+          <div className="profile-password-section">
+            <h2 className="section-title">Change Password</h2>
+            <div className="detail-item">
+              <label className="detail-label">Current Password:</label>
+              <input
+                type="password"
+                name="currentPassword"
+                value={updatedDetails.currentPassword}
+                onChange={handleChange}
+                className="detail-input"
+              />
+            </div>
+            <div className="detail-item">
+              <label className="detail-label">New Password:</label>
+              <input
+                type="password"
+                name="newPassword"
+                value={updatedDetails.newPassword}
+                onChange={handleChange}
+                className="detail-input"
+              />
+            </div>
+            <div className="detail-item">
+              <label className="detail-label">Confirm New Password:</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={updatedDetails.confirmPassword}
+                onChange={handleChange}
+                className="detail-input"
+              />
+            </div>
+          </div>
+        )}
 
         {/* Edit/Save Buttons */}
         <div className="profile-actions">
