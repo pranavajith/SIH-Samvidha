@@ -40,8 +40,16 @@ const SignUp = () => {
       username: formData.username,
       email: formData.email,
       dob: formData.dob, // Add Date of Birth field
-      completedLevels: [],
-      highScore: 0, // Default high score for new users
+      completedLevels: [], // Default empty array
+      multiPlayerScore: 0, // Default multiplayer score
+      streakData: {
+        latestPlayed: "0000-00-00", // Dummy value for streak data
+        latestStreakStartDate: "0000-00-00", // Dummy value for streak start date
+      },
+      userProfileImage: {
+        format: "url",
+        path: "https://png.pngtree.com/background/20230528/original/pngtree-photo-of-a-girl-in-sunglasses-picture-image_2778708.jpg", // Default image
+      },
       password: formData.password,
     };
 

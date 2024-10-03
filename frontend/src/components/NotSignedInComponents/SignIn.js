@@ -37,6 +37,8 @@ const SignIn = () => {
         formData
       );
 
+      console.log(response.data);
+
       // Assuming the backend returns the user data on successful authentication
       if (response.data) {
         login({ userData: response.data }); // Update the context with the user data
