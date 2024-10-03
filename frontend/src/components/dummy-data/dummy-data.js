@@ -12,46 +12,46 @@ const constitutional_questions = {
         { value: "Mahatma Gandhi", correctStatus: false },
       ],
     },
-    {
-      question:
-        "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
-      Options: [
-        { value: "15th August 1947", correctStatus: false },
-        { value: "26th November 1949", correctStatus: false },
-        { value: "26th January 1950", correctStatus: true },
-        { value: "1st January 1950", correctStatus: false },
-      ],
-    },
-    {
-      question:
-        "Who was the first President of India, who took office on the same day the Constitution came into force?",
-      Options: [
-        { value: "Dr. Rajendra Prasad", correctStatus: true },
-        { value: "C. Rajagopalachari", correctStatus: false },
-        { value: "Sarvepalli Radhakrishnan", correctStatus: false },
-        { value: "Jawaharlal Nehru", correctStatus: false },
-      ],
-    },
-    {
-      question:
-        "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
-      Options: [
-        { value: "395", correctStatus: true },
-        { value: "448", correctStatus: false },
-        { value: "368", correctStatus: false },
-        { value: "280", correctStatus: false },
-      ],
-    },
-    {
-      question:
-        "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
-      Options: [
-        { value: "United States", correctStatus: false },
-        { value: "United Kingdom", correctStatus: false },
-        { value: "Ireland", correctStatus: true },
-        { value: "France", correctStatus: false },
-      ],
-    },
+    // {
+    //   question:
+    //     "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
+    //   Options: [
+    //     { value: "15th August 1947", correctStatus: false },
+    //     { value: "26th November 1949", correctStatus: false },
+    //     { value: "26th January 1950", correctStatus: true },
+    //     { value: "1st January 1950", correctStatus: false },
+    //   ],
+    // },
+    // {
+    //   question:
+    //     "Who was the first President of India, who took office on the same day the Constitution came into force?",
+    //   Options: [
+    //     { value: "Dr. Rajendra Prasad", correctStatus: true },
+    //     { value: "C. Rajagopalachari", correctStatus: false },
+    //     { value: "Sarvepalli Radhakrishnan", correctStatus: false },
+    //     { value: "Jawaharlal Nehru", correctStatus: false },
+    //   ],
+    // },
+    // {
+    //   question:
+    //     "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
+    //   Options: [
+    //     { value: "395", correctStatus: true },
+    //     { value: "448", correctStatus: false },
+    //     { value: "368", correctStatus: false },
+    //     { value: "280", correctStatus: false },
+    //   ],
+    // },
+    // {
+    //   question:
+    //     "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
+    //   Options: [
+    //     { value: "United States", correctStatus: false },
+    //     { value: "United Kingdom", correctStatus: false },
+    //     { value: "Ireland", correctStatus: true },
+    //     { value: "France", correctStatus: false },
+    //   ],
+    // },
   ],
   preamble_questions: [
     {
@@ -330,64 +330,29 @@ const TypeGameData = {
 
 const gameLevels = [
   {
-    levelId: 1,
-    levelDescription: "Preamble Questions",
-    levelDetails: {
-      videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
-      questionType: "flashcard",
-      questionData: [
-        {
-          question:
-            "Who was the Chairman of the Drafting Committee of the Indian Constitution?",
-          Options: [
-            { value: "Jawaharlal Nehru", correctStatus: false },
-            { value: "Dr. B.R. Ambedkar", correctStatus: true },
-            { value: "Sardar Vallabhbhai Patel", correctStatus: false },
-            { value: "Mahatma Gandhi", correctStatus: false },
-          ],
-        },
-        {
-          question:
-            "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
-          Options: [
-            { value: "15th August 1947", correctStatus: false },
-            { value: "26th November 1949", correctStatus: false },
-            { value: "26th January 1950", correctStatus: true },
-            { value: "1st January 1950", correctStatus: false },
-          ],
-        },
-        {
-          question:
-            "Who was the first President of India, who took office on the same day the Constitution came into force?",
-          Options: [
-            { value: "Dr. Rajendra Prasad", correctStatus: true },
-            { value: "C. Rajagopalachari", correctStatus: false },
-            { value: "Sarvepalli Radhakrishnan", correctStatus: false },
-            { value: "Jawaharlal Nehru", correctStatus: false },
-          ],
-        },
-        {
-          question:
-            "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
-          Options: [
-            { value: "395", correctStatus: true },
-            { value: "448", correctStatus: false },
-            { value: "368", correctStatus: false },
-            { value: "280", correctStatus: false },
-          ],
-        },
-        {
-          question:
-            "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
-          Options: [
-            { value: "United States", correctStatus: false },
-            { value: "United Kingdom", correctStatus: false },
-            { value: "Ireland", correctStatus: true },
-            { value: "France", correctStatus: false },
-          ],
-        },
-      ],
-    },
+    levelGroupId: 1,
+    levelDescription: "Preamble Levels",
+    levelText: "Preamble",
+    levels: [
+      {
+        number: 1.1,
+        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
+        questionType: "flashcard",
+        questionData: constitutional_questions.constitution_history_questions,
+      },
+      {
+        number: 1.2,
+        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
+        questionType: "flashcard",
+        questionData: constitutional_questions.preamble_questions,
+      },
+      {
+        number: 1.3,
+        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+        questionType: "TypeGame",
+        questionData: TypeGameData.preamble,
+      },
+    ],
   },
 ];
 
@@ -628,6 +593,7 @@ const leaderboardData = [
 ];
 
 export {
+  gameLevels,
   testimonials,
   preambleLevels,
   leaderboardData,

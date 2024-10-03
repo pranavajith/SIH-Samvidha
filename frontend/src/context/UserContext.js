@@ -13,6 +13,11 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (user) localStorage.setItem("user", JSON.stringify(user));
+    else localStorage.removeItem("user");
+  }, [user]);
+
   // Function to update user data
   const login = ({ userData }) => {
     if (!userData || user === undefined) {
@@ -21,18 +26,26 @@ export const UserProvider = ({ children }) => {
     }
     setUser(userData);
     //   setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData)); // Save to localStorage
+    // localStorage.setItem("user", JSON.stringify(userData)); // Save to localStorage
+  };
+
+  const storeToLocal = ({ user }) => {
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
+  const removeFromLocal = () => {
+    localStorage.removeItem("user");
   };
 
   // Function to log out the user
   const logout = () => {
     setUser(null);
     //   setUser(null);
-    localStorage.removeItem("user"); // Remove from localStorage
+    // localStorage.removeItem("user"); // Remove from localStorage
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, setUser }}>
       {children}
     </UserContext.Provider>
   );
