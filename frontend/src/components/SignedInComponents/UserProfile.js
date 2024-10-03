@@ -4,11 +4,13 @@ import { UserContext } from "../../context/UserContext";
 import { format, differenceInCalendarDays } from "date-fns"; // date-fns for better date manipulation
 import axios from "axios"; // to handle API calls
 import { urlList } from "../../urls"; // assume URLs are in a separate file
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
-  const { user } = useContext(UserContext); // Context for user data and updating it
+  const { user, logout } = useContext(UserContext); // Context for user data and updating it
   const [editing, setEditing] = useState(false);
   // console.log("here!", user);
+  const navigate = useNavigate();
   const [updatedDetails, setUpdatedDetails] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
@@ -76,6 +78,8 @@ const UserProfile = () => {
 
       if (updatedUserResponse.status === 200) {
         alert("Profile updated successfully! Please Re-login to see changes!");
+        logout();
+        navigate("/signin");
         setEditing(false);
       }
     } catch (error) {
