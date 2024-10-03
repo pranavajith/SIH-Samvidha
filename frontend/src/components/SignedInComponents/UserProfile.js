@@ -4,16 +4,19 @@ import { UserContext } from "../../context/UserContext";
 import { format, differenceInCalendarDays } from "date-fns"; // date-fns for better date manipulation
 import axios from "axios"; // to handle API calls
 import { urlList } from "../../urls"; // assume URLs are in a separate file
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
-  const { user } = useContext(UserContext); // Context for user data and updating it
+  const { user, logout } = useContext(UserContext); // Context for user data and updating it
   const [editing, setEditing] = useState(false);
-  console.log(user);
+  // console.log("here!", user);
+  const navigate = useNavigate();
   const [updatedDetails, setUpdatedDetails] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
     dob: user.dob,
+    multiPlayerScore: user.multiPlayerScore,
     userProfileImage: user.userProfileImage,
     currentPassword: "", // field to validate password change
     newPassword: "", // field for new password
@@ -69,13 +72,14 @@ const UserProfile = () => {
           lastName: updatedDetails.lastName,
           email: updatedDetails.email,
           dob: updatedDetails.dob,
-          userProfileImage: updatedDetails.userProfileImage,
+          userProfileImage: updatedDetails.userProfileImage, // Send updated profile image path
         }
       );
 
       if (updatedUserResponse.status === 200) {
         alert("Profile updated successfully! Please Re-login to see changes!");
-
+        logout();
+        navigate("/signin");
         setEditing(false);
       }
     } catch (error) {
@@ -205,6 +209,34 @@ const UserProfile = () => {
             <span className="detail-value">
               {updatedDetails.multiPlayerScore}
             </span>
+          </div>
+
+          <div className="detail-item">
+            <label className="detail-label">Profile URL:</label>
+            {editing ? (
+              <input
+                type="text"
+                name="userProfileImage"
+                value={updatedDetails.userProfileImage.path}
+                onChange={(e) =>
+                  setUpdatedDetails({
+                    ...updatedDetails,
+                    userProfileImage: {
+                      ...updatedDetails.userProfileImage,
+                      path: e.target.value, // Update only the path
+                    },
+                  })
+                }
+                className="detail-input"
+                placeholder="Enter new image URL"
+              />
+            ) : (
+              <span className="detail-value">
+                {updatedDetails.userProfileImage.path.length > 50
+                  ? updatedDetails.userProfileImage.path.slice(0, 50) + "..."
+                  : updatedDetails.userProfileImage.path}
+              </span>
+            )}
           </div>
 
           <div className="detail-item">
