@@ -241,17 +241,14 @@ func (s *Server) handleGetUsers(w http.ResponseWriter) {
 
 // Update the main route handler to include password change
 func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println("Reached!")
 	switch r.Method {
 	case "GET":
 		s.handleGetUser(w, r)
 	case "POST":
 		path := r.URL.Path
-		fmt.Println(path)
 		if path == "/user/add" {
 			s.handleAddUser(w, r)
 		} else if path == "/user/modify" {
-			fmt.Println("Reached!")
 			s.handleModifyUser(w, r)
 		} else if path == "/user/change-password" {
 			s.handleChangePassword(w, r)
@@ -372,27 +369,21 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 
 // Modify an existing user (for general updates without password change)
 func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Reached Here too!")
 	var modifyUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
 
-	fmt.Println("Here 1")
-
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	var user User
-	fmt.Println(modifyUserReq.Username)
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": modifyUserReq.Username}).Decode(&user)
 	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}
-
-	fmt.Println("Here 2")
 
 	// Update the profile fields (excluding password)
 	if modifyUserReq.FirstName != "" {
@@ -404,7 +395,6 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if modifyUserReq.Email != "" {
 		user.Email = modifyUserReq.Email
 	}
-	fmt.Println(modifyUserReq.DOB)
 	if modifyUserReq.DOB != "" {
 		dob, err := time.Parse("2006-01-02", modifyUserReq.DOB)
 		if err != nil {
@@ -412,7 +402,6 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		fmt.Println("Here 3")
 		user.DOB = dob
 	}
 	if len(modifyUserReq.CompletedLevels) > 0 {
@@ -432,14 +421,19 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		user.StreakData.LatestStreakStartDate = latestStreakStartDate
 	}
 
+	if modifyUserReq.UserProfileImage.Path != "" {
+		user.UserProfileImage.Path = modifyUserReq.UserProfileImage.Path
+	}
+	if modifyUserReq.UserProfileImage.Format != "" {
+		user.UserProfileImage.Format = modifyUserReq.UserProfileImage.Format
+	}
+
 	// Update the user document in the database
 	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": modifyUserReq.Username}, bson.M{"$set": user})
 	if err != nil {
 		http.Error(w, "Failed to update user", http.StatusInternalServerError)
 		return
 	}
-
-	fmt.Println("Here 4")
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("User modified successfully"))

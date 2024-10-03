@@ -15,6 +15,10 @@ export const UserProvider = ({ children }) => {
 
   // Function to update user data
   const login = ({ userData }) => {
+    if (!userData || user === undefined) {
+      console.log("User is not valid");
+      return;
+    }
     setUser(userData);
     //   setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData)); // Save to localStorage
