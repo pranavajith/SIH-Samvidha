@@ -18,8 +18,8 @@ import (
 
 // Define types for the User and UserRequest structures
 type CompletedLevel struct {
-	LevelID int `json:"levelId"`
-	Score   int `json:"score"`
+	LevelID float64 `json:"levelId"`
+	Score   int     `json:"score"`
 }
 
 type ProfileImage struct {
@@ -48,6 +48,7 @@ type UserRequest struct {
 	Password         string                `json:"password"`
 	StreakData       StreakDataRequestType `json:"streakData"`
 	UserProfileImage ProfileImage          `json:"userProfileImage"`
+	OngoingLevel     float64               `json:"ongoingLevel"`
 }
 
 type User struct {
@@ -57,6 +58,7 @@ type User struct {
 	Email            string           `json:"email"`
 	DOB              time.Time        `json:"dob"`
 	CompletedLevels  []CompletedLevel `json:"completedLevels"`
+	OngoingLevel     float64          `json:"ongoingLevel"`
 	MultiPlayerScore int              `json:"multiPlayerScore"`
 	PasswordHash     string           `json:"-"` // password is excluded from JSON
 	StreakData       StreakDataType   `json:"streakData"`
@@ -165,11 +167,12 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		LastName         string           `json:"lastName"`
 		Username         string           `json:"username"`
 		Email            string           `json:"email"`
-		DOB              string           `json:"dob"` // Change here to string
+		DOB              string           `json:"dob"`
 		CompletedLevels  []CompletedLevel `json:"completedLevels"`
 		MultiPlayerScore int              `json:"multiPlayerScore"`
 		StreakData       StreakDataType   `json:"streakData"`
 		UserProfileImage ProfileImage     `json:"userProfileImage"`
+		OngoingLevel     float64          `json:"ongoingLevel"`
 	}
 
 	// Remove password hash before sending user info
@@ -188,6 +191,7 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		MultiPlayerScore: user.MultiPlayerScore,
 		StreakData:       user.StreakData,
 		UserProfileImage: user.UserProfileImage,
+		OngoingLevel:     user.OngoingLevel,
 	}
 
 	userJSON, err := json.Marshal(userResponse)
@@ -249,6 +253,7 @@ func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
 		if path == "/user/add" {
 			s.handleAddUser(w, r)
 		} else if path == "/user/modify" {
+			fmt.Println("userHandler has been touched")
 			s.handleModifyUser(w, r)
 		} else if path == "/user/change-password" {
 			s.handleChangePassword(w, r)
@@ -355,6 +360,7 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 			LatestStreakStartDate: latestStreakStartDate,
 		},
 		UserProfileImage: newUserReq.UserProfileImage,
+		OngoingLevel:     newUserReq.OngoingLevel,
 	}
 
 	_, err = s.usersCollection.InsertOne(context.TODO(), newUser)
@@ -369,6 +375,7 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 
 // Modify an existing user (for general updates without password change)
 func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("handleModifyUser has been touched")
 	var modifyUserReq UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
@@ -379,12 +386,13 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	defer s.mutex.Unlock()
 
 	var user User
+	fmt.Println("searching for user")
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": modifyUserReq.Username}).Decode(&user)
 	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}
-
+	fmt.Println("user found")
 	// Update the profile fields (excluding password)
 	if modifyUserReq.FirstName != "" {
 		user.FirstName = modifyUserReq.FirstName
@@ -395,6 +403,9 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if modifyUserReq.Email != "" {
 		user.Email = modifyUserReq.Email
 	}
+	if modifyUserReq.OngoingLevel > user.OngoingLevel {
+		user.OngoingLevel = modifyUserReq.OngoingLevel
+	}
 	if modifyUserReq.DOB != "" {
 		dob, err := time.Parse("2006-01-02", modifyUserReq.DOB)
 		if err != nil {
@@ -404,6 +415,7 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 
 		user.DOB = dob
 	}
+	// fmt.Println("DOB issue")
 	if len(modifyUserReq.CompletedLevels) > 0 {
 		user.CompletedLevels = modifyUserReq.CompletedLevels
 	}
@@ -434,6 +446,8 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to update user", http.StatusInternalServerError)
 		return
 	}
+
+	// fmt.Println("Updation issue")
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("User modified successfully"))

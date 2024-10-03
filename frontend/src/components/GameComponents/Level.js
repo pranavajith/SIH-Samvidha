@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../styles/Level.css"; // Import the updated CSS
 import { urlList } from "../../urls";
+import { UserContext } from "../../context/UserContext";
 
 const Level = ({ level, onClick }) => {
+  const { user } = useContext(UserContext);
+  console.log(user.completedLevels);
+
+  // Define the check variable to determine if the level is unlocked
+  const check =
+    user.completedLevels.some(
+      (completedLevel) => completedLevel.levelId === level.number
+    ) || user.ongoingLevel === level.number;
+
   return (
     <div
-      className={`level ${level.status}`}
-      onClick={level.status === "unlocked" ? onClick : null}
+      className={`level ${check ? "unlocked" : "locked"}`}
+      onClick={check ? onClick : null}
     >
       <video autoPlay loop muted className="level-video">
         <source src={level.videoUrl} type="video/mp4" />
       </video>
-      {level.status === "locked" && (
+
+      {!check && (
         <div className="overlay-lock">
           <img src={urlList.WhiteLockUrl} alt="Locked" className="lock-icon" />
         </div>

@@ -8,8 +8,12 @@ const LevelMap = ({ levelText, levels, onLevelClick }) => {
       <div className="level-text">{levelText}</div>
       {levels.map((level, index) => (
         <div className="level-container" key={index}>
-          <Level level={level} onClick={() => onLevelClick(level)} />
-          {/* Add connector line for all levels except the last one */}
+          <Level
+            level={level}
+            onClick={() => {
+              onLevelClick(level);
+            }}
+          />
           {index < levels.length - 1 && <div className="level-connector"></div>}
         </div>
       ))}
