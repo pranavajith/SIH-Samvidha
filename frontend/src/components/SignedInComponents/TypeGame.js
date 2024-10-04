@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./../../styles/TypeGame.css";
-import { TypeGameData } from "../dummy-data/dummy-data";
 
 const tokenizeText = (inputText) => {
   const wordsArray = inputText.split(/(\s+|[.,;:])+/).filter(Boolean);
@@ -8,7 +7,6 @@ const tokenizeText = (inputText) => {
 };
 
 const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
-  console.log("Here is displayData: ", displayData);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isInputMode, setIsInputMode] = useState(false);
@@ -18,8 +16,6 @@ const TypeGame = ({ displayData, onComplete, handleIncompleteReturn }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   const { text: preambleText, keywords } = displayData;
-  console.log("PrambleText: ", preambleText);
-  console.log("KeyWords: ", keywords);
   const wordsArray = tokenizeText(preambleText);
 
   useEffect(() => {

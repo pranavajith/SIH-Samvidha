@@ -18,8 +18,8 @@ import (
 
 // Define types for the User and UserRequest structures
 type CompletedLevel struct {
-	LevelID float64 `json:"levelId"`
-	Score   int     `json:"score"`
+	LevelID int `json:"levelId"`
+	Score   int `json:"score"`
 }
 
 type ProfileImage struct {

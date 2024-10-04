@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import '../../styles/TaskScreen.css';
 import QuestionSlider from '../general-components/QuestionSlider';
 import TypeGame from '../SignedInComponents/TypeGame';
@@ -7,9 +7,7 @@ import axios from 'axios'; // Import axios
 import { urlList } from '../../urls';
 
 const TaskScreen = ({ level, handleReturn }) => {
-  const { user, setUser, login } = useContext(UserContext);
-
-  console.log("ivide und eda user", user)
+  const { user, setUser } = useContext(UserContext);
 
   const handleComplete = async () => {
     const newCompletedLevel = {
@@ -19,10 +17,10 @@ const TaskScreen = ({ level, handleReturn }) => {
 
     // Update completed levels
     let updatedCompletedLevels = user.completedLevels;
-    if (user.ongoingLevel == level.number) updatedCompletedLevels = [...user.completedLevels, newCompletedLevel];
+    if (user.ongoingLevel === level.number) updatedCompletedLevels = [...user.completedLevels, newCompletedLevel];
 
     // Update ongoing level
-    const updatedOngoingLevel = parseFloat((level.number + 0.1).toFixed(1));
+    const updatedOngoingLevel = level.number+1;
 
     // Prepare the request data
     const requestData = {

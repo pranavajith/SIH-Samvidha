@@ -12,9 +12,6 @@ const SignedInTitle = () => {
     navigate("/");
   };
 
-  console.log("SignedInTitle Rendered");
-  console.log("User:", user);
-
   return (
     <nav className="navbar">
       <Link to="/user">

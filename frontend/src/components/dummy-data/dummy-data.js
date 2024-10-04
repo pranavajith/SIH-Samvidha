@@ -12,46 +12,46 @@ const constitutional_questions = {
         { value: "Mahatma Gandhi", correctStatus: false },
       ],
     },
-    // {
-    //   question:
-    //     "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
-    //   Options: [
-    //     { value: "15th August 1947", correctStatus: false },
-    //     { value: "26th November 1949", correctStatus: false },
-    //     { value: "26th January 1950", correctStatus: true },
-    //     { value: "1st January 1950", correctStatus: false },
-    //   ],
-    // },
-    // {
-    //   question:
-    //     "Who was the first President of India, who took office on the same day the Constitution came into force?",
-    //   Options: [
-    //     { value: "Dr. Rajendra Prasad", correctStatus: true },
-    //     { value: "C. Rajagopalachari", correctStatus: false },
-    //     { value: "Sarvepalli Radhakrishnan", correctStatus: false },
-    //     { value: "Jawaharlal Nehru", correctStatus: false },
-    //   ],
-    // },
-    // {
-    //   question:
-    //     "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
-    //   Options: [
-    //     { value: "395", correctStatus: true },
-    //     { value: "448", correctStatus: false },
-    //     { value: "368", correctStatus: false },
-    //     { value: "280", correctStatus: false },
-    //   ],
-    // },
-    // {
-    //   question:
-    //     "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
-    //   Options: [
-    //     { value: "United States", correctStatus: false },
-    //     { value: "United Kingdom", correctStatus: false },
-    //     { value: "Ireland", correctStatus: true },
-    //     { value: "France", correctStatus: false },
-    //   ],
-    // },
+    {
+      question:
+        "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
+      Options: [
+        { value: "15th August 1947", correctStatus: false },
+        { value: "26th November 1949", correctStatus: false },
+        { value: "26th January 1950", correctStatus: true },
+        { value: "1st January 1950", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "Who was the first President of India, who took office on the same day the Constitution came into force?",
+      Options: [
+        { value: "Dr. Rajendra Prasad", correctStatus: true },
+        { value: "C. Rajagopalachari", correctStatus: false },
+        { value: "Sarvepalli Radhakrishnan", correctStatus: false },
+        { value: "Jawaharlal Nehru", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
+      Options: [
+        { value: "395", correctStatus: true },
+        { value: "448", correctStatus: false },
+        { value: "368", correctStatus: false },
+        { value: "280", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
+      Options: [
+        { value: "United States", correctStatus: false },
+        { value: "United Kingdom", correctStatus: false },
+        { value: "Ireland", correctStatus: true },
+        { value: "France", correctStatus: false },
+      ],
+    },
   ],
   preamble_questions: [
     {
@@ -328,53 +328,85 @@ const TypeGameData = {
   },
 };
 
-const gameLevels = [
-  {
-    levelGroupId: 1,
-    levelDescription: "Preamble Levels",
-    levelText: "Preamble",
-    levels: [
-      {
-        number: 1.1,
-        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
-        questionType: "flashcard",
-        questionData: constitutional_questions.constitution_history_questions,
-      },
-      {
-        number: 1.2,
-        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
-        questionType: "flashcard",
-        questionData: constitutional_questions.preamble_questions,
-      },
-      {
-        number: 1.3,
-        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
-        questionType: "TypeGame",
-        questionData: TypeGameData.preamble,
-      },
-    ],
-  },
-];
-
-const preambleLevels = [
+const gameLevelsModified = [
   {
     number: 1,
-    status: "unlocked",
-    videoUrl: urlList.CheckpointGifUrl,
+    levelName: "Constitutional History",
+    // levelGroupId: 1,
+    levelGroupText: "Preamble",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
     questionType: "flashcard",
     questionData: constitutional_questions.constitution_history_questions,
   },
   {
     number: 2,
-    status: "locked",
-    videoUrl: urlList.CheckpointGifUrl,
+    levelName: "Preamble Questions",
+    // levelGroupId: 1,
+    levelGroupText: "Preamble",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
     questionType: "flashcard",
     questionData: constitutional_questions.preamble_questions,
   },
   {
     number: 3,
-    status: "locked",
-    videoUrl: urlList.TrophyGifUrl,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Preamble",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+  {
+    number: 4,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+  {
+    number: 5,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+  {
+    number: 6,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+  {
+    number: 7,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+  {
+    number: 8,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
+  },
+  {
+    number: 9,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
     questionType: "TypeGame",
     questionData: TypeGameData.preamble,
   },
@@ -540,65 +572,10 @@ const testimonials = [
   },
 ];
 
-const UserData = {
-  firstName: "Pranav",
-  lastName: "Ajith",
-  username: "Pranav Ajith",
-  email: "pranav.ajith.cse21@itbhu.ac.in",
-  DOB: "0000-00-00",
-  userProfileImage: {
-    format: "url",
-    path: urlList.GenericKidImageUrl,
-  },
-  passwordHash: "fakePassword",
-  completedLevels: [],
-  multiPlayerScore: 0,
-  streakData: {
-    latestPlayed: "2024-09-14",
-    latestStreakStartDate: "2024-08-01",
-  },
-};
-
-const leaderboardData = [
-  {
-    username: "Pranav Ajith",
-    score: 500,
-    league: "Bronze",
-  },
-  {
-    username: "Aditya Abhiram",
-    score: 600,
-    league: "Silver",
-  },
-  {
-    username: "Anish Dixit",
-    score: 700,
-    league: "Gold",
-  },
-  {
-    username: "Kancharla Kiranmai",
-    score: 800,
-    league: "Platinum",
-  },
-  {
-    username: "Niranjan",
-    score: 900,
-    league: "Ruby",
-  },
-  {
-    username: "Ishika Saini",
-    score: 1000,
-    league: "Diamond",
-  },
-];
-
 export {
-  gameLevels,
+  gameLevelsModified,
   testimonials,
-  preambleLevels,
-  leaderboardData,
   constitutional_questions,
   constitutional_events,
-  UserData,
   TypeGameData,
 };

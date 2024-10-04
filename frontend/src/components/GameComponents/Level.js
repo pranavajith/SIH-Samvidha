@@ -5,9 +5,7 @@ import { UserContext } from "../../context/UserContext";
 
 const Level = ({ level, onClick }) => {
   const { user } = useContext(UserContext);
-  console.log(user.completedLevels);
 
-  // Define the check variable to determine if the level is unlocked
   const check =
     user.completedLevels.some(
       (completedLevel) => completedLevel.levelId === level.number

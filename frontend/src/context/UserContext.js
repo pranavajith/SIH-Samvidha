@@ -29,14 +29,6 @@ export const UserProvider = ({ children }) => {
     // localStorage.setItem("user", JSON.stringify(userData)); // Save to localStorage
   };
 
-  const storeToLocal = ({ user }) => {
-    localStorage.setItem("user", JSON.stringify(user));
-  };
-
-  const removeFromLocal = () => {
-    localStorage.removeItem("user");
-  };
-
   // Function to log out the user
   const logout = () => {
     setUser(null);
