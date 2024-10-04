@@ -1,6 +1,6 @@
 import UserGameplay from "./UserGameplay";
 import "./../../styles/UserDisplayWithGame.css";
-import { gameLevels, gameLevelsModified } from "../dummy-data/dummy-data";
+import { gameLevelsModified } from "../dummy-data/dummy-data";
 
 const UserDisplayWithGame = () => {
   const preambleGames = gameLevelsModified

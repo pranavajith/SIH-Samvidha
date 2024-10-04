@@ -328,14 +328,6 @@ const TypeGameData = {
   },
 };
 
-// const gameLevelGroupInfo = [
-//   {
-//     levelGroupId: 1,
-//     levelDescription: "Preamble Levels",
-//     levelText: "Preamble",
-//   },
-// ];
-
 const gameLevelsModified = [
   {
     number: 1,
@@ -391,58 +383,30 @@ const gameLevelsModified = [
     questionType: "TypeGame",
     questionData: TypeGameData.preamble,
   },
-];
-
-const gameLevels = [
   {
-    levelGroupId: 1,
-    levelDescription: "Preamble Levels",
-    levelText: "Preamble",
-    levels: [
-      {
-        number: 1,
-        levelName: "Constitutional History",
-        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
-        questionType: "flashcard",
-        questionData: constitutional_questions.constitution_history_questions,
-      },
-      {
-        number: 2,
-        levelName: "Preamble Questions",
-        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/6844/6844338.mp4",
-        questionType: "flashcard",
-        questionData: constitutional_questions.preamble_questions,
-      },
-      {
-        number: 3,
-        levelName: "Type the Preamble",
-        videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
-        questionType: "TypeGame",
-        questionData: TypeGameData.preamble,
-      },
-    ],
-  },
-];
-
-const preambleLevels = [
-  {
-    number: 1,
-    status: "unlocked",
-    videoUrl: urlList.CheckpointGifUrl,
-    questionType: "flashcard",
-    questionData: constitutional_questions.constitution_history_questions,
+    number: 7,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
   },
   {
-    number: 2,
-    status: "locked",
-    videoUrl: urlList.CheckpointGifUrl,
-    questionType: "flashcard",
-    questionData: constitutional_questions.preamble_questions,
+    number: 8,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
+    questionType: "TypeGame",
+    questionData: TypeGameData.preamble,
   },
   {
-    number: 3,
-    status: "locked",
-    videoUrl: urlList.TrophyGifUrl,
+    number: 9,
+    levelName: "Type the Preamble",
+    // levelGroupId: 1,
+    levelGroupText: "Rights",
+    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
     questionType: "TypeGame",
     questionData: TypeGameData.preamble,
   },
@@ -608,67 +572,10 @@ const testimonials = [
   },
 ];
 
-const UserData = {
-  firstName: "Pranav",
-  lastName: "Ajith",
-  username: "Pranav Ajith",
-  email: "pranav.ajith.cse21@itbhu.ac.in",
-  DOB: "0000-00-00",
-  userProfileImage: {
-    format: "url",
-    path: urlList.GenericKidImageUrl,
-  },
-  passwordHash: "fakePassword",
-  completedLevels: [],
-  multiPlayerScore: 0,
-  streakData: {
-    latestPlayed: "2024-09-14",
-    latestStreakStartDate: "2024-08-01",
-  },
-};
-
-const leaderboardData = [
-  {
-    username: "Pranav Ajith",
-    score: 500,
-    league: "Bronze",
-  },
-  {
-    username: "Aditya Abhiram",
-    score: 600,
-    league: "Silver",
-  },
-  {
-    username: "Anish Dixit",
-    score: 700,
-    league: "Gold",
-  },
-  {
-    username: "Kancharla Kiranmai",
-    score: 800,
-    league: "Platinum",
-  },
-  {
-    username: "Niranjan",
-    score: 900,
-    league: "Ruby",
-  },
-  {
-    username: "Ishika Saini",
-    score: 1000,
-    league: "Diamond",
-  },
-];
-
 export {
   gameLevelsModified,
-  // gameLevelGroupInfo,
-  gameLevels,
   testimonials,
-  preambleLevels,
-  leaderboardData,
   constitutional_questions,
   constitutional_events,
-  UserData,
   TypeGameData,
 };

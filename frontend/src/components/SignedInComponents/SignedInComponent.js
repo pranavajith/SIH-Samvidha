@@ -8,7 +8,6 @@ import { SplashScreen } from "../general-components/SplashScreen";
 import UserHomePage from "./UserHomepage"; // Ensure this path is correct
 import { Leaderboard } from "./Leaderboard";
 import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
-import { leaderboardData } from "../dummy-data/dummy-data"; // Ensure this path is correct
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -43,7 +42,7 @@ const SignedInComponent = () => {
           path="/user/leaderboard"
           element={
             <ProtectedRoute>
-              <Leaderboard data={leaderboardData} />
+              <Leaderboard />
             </ProtectedRoute>
           }
         />
