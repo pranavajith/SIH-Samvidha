@@ -401,15 +401,6 @@ const gameLevelsModified = [
     questionType: "TypeGame",
     questionData: TypeGameData.preamble,
   },
-  {
-    number: 9,
-    levelName: "Type the Preamble",
-    // levelGroupId: 1,
-    levelGroupText: "Rights",
-    videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
-    questionType: "TypeGame",
-    questionData: TypeGameData.preamble,
-  },
 ];
 
 const constitutional_events = [
