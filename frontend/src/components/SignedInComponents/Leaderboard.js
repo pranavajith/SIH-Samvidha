@@ -5,30 +5,22 @@ import "./../../styles/Leaderboard.css";
 import { urlList } from "../../urls";
 
 const Leaderboard = () => {
-  const { user } = useContext(UserContext); // Get the current user from the context
+  const { user } = useContext(UserContext);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // URL for the backend (you may adjust this depending on your server setup)
-  const backendURL = `${urlList.backendDatabase}/users`; // Make sure to replace this with the correct endpoint
+  const backendURL = `${urlList.backendDatabase}/users`;
 
-  // Fetch the leaderboard data from the server when the component mounts
   useEffect(() => {
     const fetchLeaderboardData = async () => {
       try {
-        // Make a GET request to fetch users data from the server
         const response = await axios.get(backendURL);
-        console.log("hey!");
-        // Assuming the server returns a list of users, each with a multiPlayerScore
         const usersData = response.data;
-
-        // Sort users based on multiPlayerScore in descending order
         const sortedData = usersData.sort(
           (a, b) => b.multiPlayerScore - a.multiPlayerScore
         );
 
-        // Set the leaderboard data in state
         setLeaderboardData(sortedData);
         setLoading(false);
       } catch (err) {
@@ -39,11 +31,8 @@ const Leaderboard = () => {
     };
 
     fetchLeaderboardData();
-  }, []);
+  }, [backendURL]);
 
-  console.log(leaderboardData);
-
-  // Render loading or error states
   if (loading) {
     return <div>Loading leaderboard...</div>;
   }
@@ -61,7 +50,6 @@ const Leaderboard = () => {
             <th>Rank</th>
             <th>Username</th>
             <th>Score</th>
-            {/* <th>League</th> */}
           </tr>
         </thead>
         <tbody>
@@ -75,8 +63,6 @@ const Leaderboard = () => {
               <td>{index + 1}</td>
               <td>{player.username}</td>
               <td>{player.multiPlayerScore}</td>
-              {/* <td>{player.league || "Unranked"}</td>{" "} */}
-              {/* Assuming the user has a league field */}
             </tr>
           ))}
         </tbody>

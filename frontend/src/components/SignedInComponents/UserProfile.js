@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
   const { user, logout } = useContext(UserContext); // Context for user data and updating it
   const [editing, setEditing] = useState(false);
-  // console.log("here!", user);
   const navigate = useNavigate();
   const [updatedDetails, setUpdatedDetails] = useState({
     firstName: user.firstName,
@@ -63,7 +62,6 @@ const UserProfile = () => {
 
     // Save other profile details like First Name, Last Name, Email, DOB, Profile Image
     try {
-      console.log("Username:", user.username);
       const updatedUserResponse = await axios.post(
         `${urlList.backendDatabase}/user/modify`,
         {
