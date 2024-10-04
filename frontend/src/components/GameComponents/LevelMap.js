@@ -15,9 +15,6 @@ const LevelMap = ({ levelText, levels, onLevelClick }) => {
                 onLevelClick(level);
               }}
             />
-            {/* {index < levels.length - 1 && (
-              <div className="level-connector"></div>
-            )} */}
           </div>
         ))}
       </div>

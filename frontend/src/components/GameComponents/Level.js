@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "../../styles/Level.css"; // Import the updated CSS
+import "../../styles/Level.css";
 import { urlList } from "../../urls";
 import { UserContext } from "../../context/UserContext";
 

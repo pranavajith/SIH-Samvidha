@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { UserProgress } from "./UserProgress";
-import "./../../styles/UserHomePage.css"; // Import the CSS file
-import UserGameplay from "./UserGameplay";
+import "./../../styles/UserHomePage.css";
 import { UserDisplayWithGame } from "./UserDisplayWithGame";
 
 export const UserHomePage = () => {
