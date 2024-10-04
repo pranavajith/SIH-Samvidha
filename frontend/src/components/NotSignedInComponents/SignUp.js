@@ -51,7 +51,7 @@ const SignUp = () => {
         path: "https://png.pngtree.com/background/20230528/original/pngtree-photo-of-a-girl-in-sunglasses-picture-image_2778708.jpg", // Default image
       },
       password: formData.password,
-      ongoingLevel: 1.1,
+      ongoingLevel: 1,
     };
 
     try {

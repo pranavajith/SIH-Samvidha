@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import "./../../styles/UserGameplay.css";
 import LevelMap from "../GameComponents/LevelMap";
 import TaskScreen from "../GameComponents/TaskScreen";
-import { UserContext } from "../../context/UserContext";
 
 const UserGameplay = ({ inputLevels }) => {
   const [currentLevel, setCurrentLevel] = useState(null);
@@ -21,9 +20,11 @@ const UserGameplay = ({ inputLevels }) => {
         <TaskScreen level={currentLevel} handleReturn={handleReturn} />
       ) : (
         <LevelMap
-          levels={inputLevels.levels}
+          levels={inputLevels}
           onLevelClick={handleLevelClick}
-          levelText={inputLevels.levelText}
+          levelText={
+            inputLevels.length > 0 ? inputLevels[0].levelGroupText : "Level"
+          }
         />
       )}
     </div>

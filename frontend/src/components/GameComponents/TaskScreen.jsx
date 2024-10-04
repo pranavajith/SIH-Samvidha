@@ -20,7 +20,7 @@ const TaskScreen = ({ level, handleReturn }) => {
     if (user.ongoingLevel === level.number) updatedCompletedLevels = [...user.completedLevels, newCompletedLevel];
 
     // Update ongoing level
-    const updatedOngoingLevel = parseFloat((level.number + 0.1).toFixed(1));
+    const updatedOngoingLevel = level.number+1;
 
     // Prepare the request data
     const requestData = {
