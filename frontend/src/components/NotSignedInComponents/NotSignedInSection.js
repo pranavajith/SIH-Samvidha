@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { TitleBar } from "./../general-components/Title";
 import { SplashScreen } from "../general-components/SplashScreen";
 import { HomePage } from "./HomePage/HomePage";
@@ -19,7 +19,7 @@ const NotSignedInSection = () => {
   // if (isUserRoute) {
   //   return <Navigate to="/signin" state={{ message: "Sign in to continue" }} />;
   // }
-const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <>
       <SplashScreen text1={t("Sam")} text2={t("vidhan")} />

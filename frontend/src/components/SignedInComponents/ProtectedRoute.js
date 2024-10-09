@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
     if (!user) {
       setShouldRedirect(true);
     }
-  }, []);
+  }, [user]);
   if (shouldRedirect) {
     return <Navigate to="/signin" state={{ message: "Sign In to Continue" }} />;
   }

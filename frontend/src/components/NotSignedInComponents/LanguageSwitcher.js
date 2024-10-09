@@ -14,7 +14,6 @@ function LanguageSwitcher() {
     localStorage.setItem("language", selectedLanguage);
     i18n.changeLanguage(selectedLanguage); // Use i18n to change the language
   };
-  const { t } = useTranslation();
   return (
     <div>
       {/* <label htmlFor="language">Choose Language: </label> */}

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./../../styles/SplashScreen.css";
 
 const SplashScreen = ({ text1, text2 }) => {
-  const [active, setActive] = useState(false); // Control 'active' class
-  const [fade, setFade] = useState(false); // Control 'fade' class
   const [hideIntro, setHideIntro] = useState(false); // Control hiding the intro
 
   useEffect(() => {

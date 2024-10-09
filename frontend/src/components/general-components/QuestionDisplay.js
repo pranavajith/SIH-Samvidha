@@ -36,18 +36,18 @@ const QuestionDisplay = () => {
 
   const handleQuizCompletion = () => {
     if (
-      questions == constitutional_questions.preamble_questions &&
-      completedNum == -1
+      questions === constitutional_questions.preamble_questions &&
+      completedNum === -1
     )
       setCompletedNum(0);
     if (
-      questions == constitutional_questions.legislature_questions &&
-      completedNum == 0
+      questions === constitutional_questions.legislature_questions &&
+      completedNum === 0
     )
       setCompletedNum(1);
     if (
-      questions == constitutional_questions.executive_questions &&
-      completedNum == 1
+      questions === constitutional_questions.executive_questions &&
+      completedNum === 1
     )
       setCompletedNum(2);
     setQuestions(null); // Set questions to null after 5 seconds

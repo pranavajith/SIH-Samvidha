@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../styles/Testimonials.css";
 import "./../../utils/i18n";
 import { useTranslation } from "react-i18next";
 
 const Testimonials = ({ testimonials }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false); // New state to handle pause functionality
   const { t } = useTranslation();
 
   // Move to the next testimonial
@@ -13,7 +12,6 @@ const Testimonials = ({ testimonials }) => {
     setCurrentIndex((prevIndex) =>
       prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
     );
-    setIsPaused(true); // Pause auto-play on manual button press
   };
 
   // Move to the previous testimonial
@@ -21,30 +19,7 @@ const Testimonials = ({ testimonials }) => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     );
-    setIsPaused(true); // Pause auto-play on manual button press
   };
-
-  // // Automatically move to the next testimonial every 3 seconds if not paused
-  // useEffect(() => {
-  //   const autoPlay = setInterval(() => {
-  //     if (!isPaused) {
-  //       nextTestimonial();
-  //     }
-  //   }, 2000); // 3000ms = 3 seconds
-
-  //   return () => clearInterval(autoPlay); // Cleanup interval on component unmount
-  // }, [currentIndex, isPaused]); // Re-run effect when currentIndex or isPaused changes
-
-  // // Reset pause state after a certain period of inactivity (5 seconds in this case)
-  // useEffect(() => {
-  //   if (isPaused) {
-  //     const resetPause = setTimeout(() => {
-  //       setIsPaused(false);
-  //     }, 2000); // Reset pause after 5 seconds of inactivity
-
-  //     return () => clearTimeout(resetPause); // Cleanup timeout on state change
-  //   }
-  // }, [isPaused]);
 
   return (
     <div className="testimonials-container">
@@ -53,7 +28,7 @@ const Testimonials = ({ testimonials }) => {
         <div className="testimonial-left">
           <img
             src={testimonials[currentIndex].image}
-            alt={`${testimonials[currentIndex].name}'s image`}
+            alt={`${testimonials[currentIndex].name}`}
             className="testimonial-image"
           />
           <div className="testimonial-info">
