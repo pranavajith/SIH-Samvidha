@@ -34,7 +34,7 @@ const Leaderboard = () => {
   }, [backendURL]);
 
   if (loading) {
-    return <div>Loading leaderboard...</div>;
+    return <div className="loading-leaderboard-text">Loading...</div>;
   }
 
   if (error) {
