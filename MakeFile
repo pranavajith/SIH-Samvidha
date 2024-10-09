@@ -23,8 +23,3 @@ run-frontend:
 run:
 	@echo "Starting both backend and frontend..."
 	@make -j2 run-backend run-frontend
-
-.PHONY: readme
-readme:
-	@echo "Updating README.md..."
-	@git commit -am "Update README.md" && git push origin main
