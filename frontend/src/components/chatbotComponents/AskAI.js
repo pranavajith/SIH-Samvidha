@@ -5,7 +5,7 @@ import "./../../styles/AskAI.css"; // Ensure the CSS file is correctly linked
 const AskAI = () => {
   return (
     <div className="askai-container">
-      <h2>Ask AI</h2>
+      <h2>AskAI</h2>
       <div className="chatbot">
         <ChatBot />
       </div>

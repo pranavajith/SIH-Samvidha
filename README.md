@@ -7,29 +7,42 @@
 5. Ishika Saini
 6. Aditya Abhiram Uppuluri
 
-# To Setup and Run the Project - Prerequisites
+# Prerequisites
 
-1. Go
-2. React
-3. Node Package Manager
+Before running the project, make sure the following are installed:
 
-# To Setup and Run the Project - Backend
+1. **Go** - For the backend
+2. **React** - For the frontend
+3. **Node Package Manager (npm)** - For managing React dependencies
 
-1. Clone the repo (git clone https://github.com/pranavajith/SIH-Samvidha)
-2. Go to backend folder (cd backend)
-3. Install Go dependencies (go mod tidy)
-4. Run Go Server (go run main.go server.go)
+# To Setup and Run the Project
 
-Alternative: Open Cmd at Project base and run 'cd backend && go mod tidy && go run main.go server.go'
+You have two options for running the project:
 
-# To Setup and Run the Project - Frontend
+## Option 1: Run Backend and Frontend Together (Locally)
 
-1. Go to frontend folder (cd frontend)
-2. Run npm install
-3. Run npm start
+Open Command Prompt / PowerShell and run:
 
-Alternative: Open Cmd at Project base and run 'cd frontend && npm install && npm start'
+```bash
+git clone https://github.com/pranavajith/SIH-Samvidha
+cd SIH-Samvidha
+make run
+```
 
-Important information: Before signing in ensure the backend is up and running.
+## Option 2: Run Backend and Frontend Independently (Locally) - {Ideal for Development}
 
-All the best!
+1. Clone the monorepo
+
+```bash
+git clone https://github.com/pranavajith/SIH-Samvidha
+```
+
+2. Create 2 Command Prompt / PowerShell instances. (Optional: Rename them to 'Backend Local Deployment' and 'Frontend Local Deployment' for reference) Run these independently in each.
+
+```bash
+make run-backend
+```
+
+```bash
+make run-frontend
+```

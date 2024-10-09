@@ -8,6 +8,19 @@
     margin: 29px auto;
 }
 
+.loading-leaderboard-text {
+    font-size: 2.5em; /* Big text size */
+    color: #ffffff; /* White text for visibility */
+    text-align: center; /* Center horizontally */
+    position: absolute; /* To center vertically and horizontally */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to be fully centered */
+    font-family: "Montserrat", sans-serif; /* Match the font of the leaderboard */
+    background-color: transparent; /* Ensure no background blocks the page */
+}
+
+
 .leaderboard-title {
     font-size: 3em;
     text-align: center;

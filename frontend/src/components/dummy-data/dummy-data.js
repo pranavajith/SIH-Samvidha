@@ -1,5 +1,3 @@
-import { urlList } from "../../urls";
-
 const constitutional_questions = {
   constitution_history_questions: [
     {
