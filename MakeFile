@@ -1,0 +1,30 @@
+# Variables
+FRONTEND_DIR := ./frontend
+BACKEND_DIR := ./backend
+
+# Define the default target
+.PHONY: all
+all: run
+
+# Backend target
+.PHONY: run-backend
+run-backend:
+	@echo "Running Go backend..."
+	@cd $(BACKEND_DIR) && go mod tidy && go run main.go types.go server.go userHandler.go
+
+# Frontend target
+.PHONY: run-frontend
+run-frontend:
+	@echo "Running React frontend..."
+	@cd $(FRONTEND_DIR) && npm install && npm start
+
+# Run both backend and frontend simultaneously
+.PHONY: run
+run:
+	@echo "Starting both backend and frontend..."
+	@make -j2 run-backend run-frontend
+
+.PHONY: readme
+readme:
+	@echo "Updating README.md..."
+	@git commit -am "Update README.md" && git push origin main
