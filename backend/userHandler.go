@@ -57,6 +57,8 @@ func (s *Server) userLoginHandler(w http.ResponseWriter, r *http.Request) {
 		StreakData:       user.StreakData,
 		UserProfileImage: user.UserProfileImage,
 		OngoingLevel:     user.OngoingLevel,
+		Badges:           user.Badges,
+		LongestStreak:    user.LongestStreak,
 	}
 
 	userJSON, err := json.Marshal(userResponse)
@@ -226,6 +228,8 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 		},
 		UserProfileImage: newUserReq.UserProfileImage,
 		OngoingLevel:     newUserReq.OngoingLevel,
+		Badges:           newUserReq.Badges,
+		LongestStreak:    newUserReq.LongestStreak,
 	}
 
 	_, err = s.usersCollection.InsertOne(context.TODO(), newUser)
@@ -286,6 +290,12 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	}
 	if modifyUserReq.MultiPlayerScore > 0 {
 		user.MultiPlayerScore = modifyUserReq.MultiPlayerScore
+	}
+	if modifyUserReq.Badges != nil {
+		user.Badges = modifyUserReq.Badges
+	}
+	if modifyUserReq.LongestStreak > user.LongestStreak {
+		user.LongestStreak = modifyUserReq.LongestStreak
 	}
 
 	// Parse streak data

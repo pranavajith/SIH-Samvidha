@@ -52,6 +52,8 @@ const SignUp = () => {
       },
       password: formData.password,
       ongoingLevel: 1,
+      badges: [],
+      longestStreak: 0,
     };
 
     try {

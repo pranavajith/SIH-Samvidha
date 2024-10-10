@@ -40,6 +40,8 @@ type UserRequest struct {
 	StreakData       StreakDataRequestType `json:"streakData"`
 	UserProfileImage ProfileImage          `json:"userProfileImage"`
 	OngoingLevel     float64               `json:"ongoingLevel"`
+	Badges           []Badge               `json:"badges"`
+	LongestStreak    int                   `json:"longestStreak"`
 }
 
 type User struct {
@@ -54,6 +56,15 @@ type User struct {
 	PasswordHash     string           `json:"-"` // password is excluded from JSON
 	StreakData       StreakDataType   `json:"streakData"`
 	UserProfileImage ProfileImage     `json:"userProfileImage"`
+	Badges           []Badge          `json:"badges"`
+	LongestStreak    int              `json:"longestStreak"`
+}
+
+type Badge struct {
+	BadgeID          int    `json:"badgeId"`
+	BadgeName        string `json:"badgeName"`
+	BadgeDescription string `json:"badgeDescription"`
+	BadgeImage       string `json:"badgeImage"`
 }
 
 type Server struct {
@@ -74,4 +85,6 @@ type UserResponse struct {
 	StreakData       StreakDataType   `json:"streakData"`
 	UserProfileImage ProfileImage     `json:"userProfileImage"`
 	OngoingLevel     float64          `json:"ongoingLevel"`
+	Badges           []Badge          `json:"badges"`
+	LongestStreak    int              `json:"longestStreak"`
 }
