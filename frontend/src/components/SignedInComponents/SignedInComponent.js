@@ -9,6 +9,7 @@ import { SoloGamePlay } from "./SoloGamePlay"; // Ensure this path is correct
 import { Leaderboard } from "./Leaderboard";
 import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
 import Dashboard from "./Dashboard";
+import MultiGamePlay from "./MultiGamePlay";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -44,6 +45,14 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <SoloGamePlay />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/multiplayer"
+          element={
+            <ProtectedRoute>
+              <MultiGamePlay />
             </ProtectedRoute>
           }
         />

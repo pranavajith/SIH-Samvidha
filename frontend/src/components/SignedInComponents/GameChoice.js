@@ -17,7 +17,7 @@ const GameChoice = () => {
       <button
         className="game-choice-button multi-player-button"
         onClick={() => {
-          /* Add your logic here */
+          navigate("/multiplayer");
         }}
       >
         Multi Player
