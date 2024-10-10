@@ -49,6 +49,14 @@ const SignedInComponent = () => {
           }
         />
         <Route
+          path="/makelobby"
+          element={<ProtectedRoute>{/* <MakeLobby /> */}</ProtectedRoute>}
+        />
+        <Route
+          path="/joinlobby"
+          element={<ProtectedRoute>{/* <JoinLobby /> */}</ProtectedRoute>}
+        />
+        <Route
           path="/multiplayer"
           element={
             <ProtectedRoute>

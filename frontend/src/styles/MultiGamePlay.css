@@ -5,7 +5,7 @@
     align-items: center;
     height: 89vh; /* Full screen height */
     gap: 2rem; /* Space between the buttons */
-    background-color: #333; /* Dark background like other sections */
+    /* background-color: #333; */
   }
   
   .create-lobby-button,
