@@ -20,7 +20,7 @@ const GameChoice = () => {
           /* Add your logic here */
         }}
       >
-        Multi-Player
+        Multi Player
       </button>
     </div>
   );
