@@ -6,7 +6,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
+	"github.com/gorilla/websocket"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -14,6 +16,7 @@ import (
 func NewServer(serverAddress string) *Server {
 	return &Server{
 		serverAddress: serverAddress,
+		lobbies:       make(map[string]Lobby),
 	}
 }
 
@@ -44,6 +47,9 @@ func (s *Server) ConnectMongoDB() error {
 
 // Start the server
 func (s *Server) Run() {
+	http.HandleFunc("/ws", s.handleWebSocketConnection)
+	// http.HandleFunc("/create", s.createLobbyHandler)
+	// http.HandleFunc("/join", s.joinLobbyHandler)
 	http.HandleFunc("/user/login", s.corsMiddleware(s.userLoginHandler))
 	http.HandleFunc("/users", s.corsMiddleware(s.usersHandler))
 	http.HandleFunc("/user/", s.corsMiddleware(s.userHandler))
@@ -65,5 +71,34 @@ func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		next(w, r)
+	}
+}
+
+// WebSocket upgrade and connection handling
+func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Request) {
+	// Upgrade the connection
+	conn, err := websocket.Upgrade(w, r, nil, 0, 0) // Use 0 for default buffer sizes
+	if err != nil {
+		log.Println("Failed to upgrade connection:", err)
+		return
+	}
+	defer conn.Close()
+
+	// This is just an example. You would want to implement a loop to read messages from the client.
+	for {
+		var msg struct {
+			LobbyID string `json:"lobbyId"`
+			UserID  string `json:"userId"`
+			Answer  string `json:"answer"`
+			Start   int64  `json:"start"` // Unix time of when the question was sent
+		}
+		if err := conn.ReadJSON(&msg); err != nil {
+			log.Println("Failed to read message:", err)
+			break
+		}
+
+		// Handle the answer
+		startTime := time.Unix(msg.Start, 0)
+		s.handleAnswer(msg.LobbyID, msg.UserID, msg.Answer, startTime)
 	}
 }
