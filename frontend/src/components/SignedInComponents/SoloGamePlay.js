@@ -3,7 +3,7 @@ import { UserProgress } from "./UserProgress";
 import "./../../styles/UserHomePage.css";
 import { UserDisplayWithGame } from "./UserDisplayWithGame";
 
-export const UserHomePage = () => {
+export const SoloGamePlay = () => {
   return (
     <div className="user-homepage-container">
       <UserProgress />
@@ -12,4 +12,4 @@ export const UserHomePage = () => {
   );
 };
 
-export default UserHomePage;
+export default SoloGamePlay;

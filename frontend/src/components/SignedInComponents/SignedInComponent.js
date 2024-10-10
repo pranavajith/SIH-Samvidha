@@ -5,9 +5,10 @@ import { SignedInTitle } from "./SignedInTitle";
 import { UserContext } from "../../context/UserContext";
 import { UserProfile } from "./UserProfile";
 import { SplashScreen } from "../general-components/SplashScreen";
-import UserHomePage from "./UserHomepage"; // Ensure this path is correct
+import { SoloGamePlay } from "./SoloGamePlay"; // Ensure this path is correct
 import { Leaderboard } from "./Leaderboard";
 import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
+import Dashboard from "./Dashboard";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -34,7 +35,15 @@ const SignedInComponent = () => {
           path="/user"
           element={
             <ProtectedRoute>
-              <UserHomePage />
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/singleplayer"
+          element={
+            <ProtectedRoute>
+              <SoloGamePlay />
             </ProtectedRoute>
           }
         />

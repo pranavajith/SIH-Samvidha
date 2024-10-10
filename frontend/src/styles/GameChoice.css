@@ -1,0 +1,44 @@
+/* Button wrapper that makes buttons fill the screen with margins */
+.button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px; /* Add margin around the buttons */
+    box-sizing: border-box;
+  }
+  
+  /* Shared button styles */
+  .game-choice-button {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    font-size: 1.5em;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Single Player button - Blue */
+  .single-player-button {
+    background-color: #007bff;
+  }
+  
+  .single-player-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Multi-Player button - Green */
+  .multi-player-button {
+    background-color: #28a745;
+  }
+  
+  .multi-player-button:hover {
+    background-color: #218838;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  
