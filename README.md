@@ -37,7 +37,7 @@ make run
 git clone https://github.com/pranavajith/SIH-Samvidha
 ```
 
-2. Create 2 Command Prompt / PowerShell instances. (Optional: Rename them to 'Backend Local Deployment' and 'Frontend Local Deployment' for reference) Run these independently in each.
+2. Create 2 Command Prompt / PowerShell instances inside 'SIH-Samvidha' folder. (Optional: Rename them to 'Backend Local Deployment' and 'Frontend Local Deployment' for reference) Run these independently in each.
 
 ```bash
 make run-backend
