@@ -10,6 +10,7 @@ import { Leaderboard } from "./Leaderboard";
 import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
 import Dashboard from "./Dashboard";
 import MultiGamePlay from "./MultiGamePlay";
+import CreateLobby from "./CreateLobby";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -50,7 +51,11 @@ const SignedInComponent = () => {
         />
         <Route
           path="/makelobby"
-          element={<ProtectedRoute>{/* <MakeLobby /> */}</ProtectedRoute>}
+          element={
+            <ProtectedRoute>
+              <CreateLobby />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/joinlobby"

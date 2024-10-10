@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
-	"net/http"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 // Generate a random lobby ID
@@ -15,75 +15,62 @@ func generateLobbyID() string {
 	return fmt.Sprintf("Lobby-%d", rand.Intn(1000000))
 }
 
-// HTTP handler for creating a lobby
-func (s *Server) createLobbyHandler(w http.ResponseWriter, r *http.Request) {
-	var lobbyReq struct {
-		UserID       string     `json:"userId"`
-		GameType     string     `json:"gameType"`
-		QuestionList []Question `json:"questionList"`
-	}
-
-	if err := json.NewDecoder(r.Body).Decode(&lobbyReq); err != nil {
-		http.Error(w, "Invalid request", http.StatusBadRequest)
-		return
-	}
-
+// CreateLobby creates a new lobby for the user
+func (s *Server) createLobby(username, gameType string, questionList []Question, conn *websocket.Conn) {
 	lobbyID := generateLobbyID()
 	newLobby := Lobby{
 		LobbyID:         lobbyID,
-		GameType:        lobbyReq.GameType,
-		CreatedUser:     lobbyReq.UserID,
+		GameType:        gameType,
+		CreatedUser:     username,
 		Status:          LobbyStatusSearching,
-		QuestionList:    lobbyReq.QuestionList,
+		QuestionList:    questionList,
 		PlayerScores:    make(map[string]int),
 		CurrentQuestion: 0,
 	}
 
 	// Add the creator to the players list
 	newLobby.Players = append(newLobby.Players, Player{
-		UserID:   lobbyReq.UserID,
-		Username: "CreatorName", // Fetch username from User object if needed
-		Score:    0,
+		Username:  username,
+		WebSocket: conn, // Assign WebSocket connection to the player
+		Score:     0,
 	})
 
 	s.mutex.Lock()
-	s.lobbies[newLobby.LobbyID] = newLobby
+	s.lobbies[lobbyID] = newLobby
 	s.mutex.Unlock()
 
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(newLobby)
+	// Send lobby information back to the client
+	conn.WriteJSON(newLobby)
+	fmt.Println("Created lobby with ID: ", lobbyID)
 }
 
-// HTTP handler for joining a lobby
-func (s *Server) joinLobbyHandler(w http.ResponseWriter, r *http.Request) {
-	var joinReq struct {
-		UserID  string `json:"userId"`
-		LobbyID string `json:"lobbyId"`
-	}
-
-	if err := json.NewDecoder(r.Body).Decode(&joinReq); err != nil {
-		http.Error(w, "Invalid request", http.StatusBadRequest)
-		return
-	}
-
+// JoinLobby allows a user to join an existing lobby
+func (s *Server) joinLobby(username, lobbyID string, conn *websocket.Conn) {
 	s.mutex.Lock()
-	lobby, exists := s.lobbies[joinReq.LobbyID]
+	lobby, exists := s.lobbies[lobbyID]
 	s.mutex.Unlock()
 
 	if !exists || lobby.Status != LobbyStatusSearching {
-		http.Error(w, "Lobby not found or not available", http.StatusNotFound)
+		conn.WriteMessage(websocket.TextMessage, []byte("Lobby not found or not available"))
 		return
 	}
 
 	// Add the user to the players list
 	lobby.Players = append(lobby.Players, Player{
-		UserID:   joinReq.UserID,
-		Username: "PlayerName", // Fetch username from User object if needed
-		Score:    0,
+		Username:  username,
+		WebSocket: conn, // Assign WebSocket connection to the player
+		Score:     0,
 	})
 
 	// Update the player scores mapping
-	lobby.PlayerScores[joinReq.UserID] = 0
+	lobby.PlayerScores[username] = 0
+	lobby.Status = LobbyStatusActive
+
+	s.mutex.Lock()
+	s.lobbies[lobbyID] = lobby
+	s.mutex.Unlock()
+
+	fmt.Println("User", username, " joined lobby ", lobbyID)
 
 	// Check if we can start the game
 	if len(lobby.Players) == 2 && lobby.GameType == "FlashCards" {
@@ -91,12 +78,7 @@ func (s *Server) joinLobbyHandler(w http.ResponseWriter, r *http.Request) {
 		s.startGame(&lobby) // Start the game
 	}
 
-	s.mutex.Lock()
-	s.lobbies[lobby.LobbyID] = lobby
-	s.mutex.Unlock()
-
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(lobby)
+	// conn.WriteJSON(lobby)
 }
 
 // Start the game and send the first question
@@ -120,25 +102,23 @@ func (s *Server) sendQuestionToPlayers(lobby *Lobby) {
 	}
 }
 
-// Handle the timing of questions and player responses
 func (s *Server) handleQuestions(lobby *Lobby) {
 	for {
-		time.Sleep(10 * time.Second) // Wait for 10 seconds for the next question
+		time.Sleep(10 * time.Second)
 
-		s.sendQuestionToPlayers(lobby) // Send the current question to all players
+		s.sendQuestionToPlayers(lobby)
 
 		lobby.CurrentQuestion++
 		if lobby.CurrentQuestion >= len(lobby.QuestionList) {
-			break // Exit the loop when there are no more questions
+			break
 		}
 	}
 
-	// Game is over, update scores and finish the lobby
 	s.endGame(lobby)
 }
 
 // Handle player answers
-func (s *Server) handleAnswer(lobbyID string, userID string, answer string, startTime time.Time) {
+func (s *Server) submitAnswer(lobbyID string, username string, answer string, startTime time.Time, conn *websocket.Conn) {
 	s.mutex.Lock()
 	lobby, exists := s.lobbies[lobbyID]
 	s.mutex.Unlock()
@@ -168,7 +148,7 @@ func (s *Server) handleAnswer(lobbyID string, userID string, answer string, star
 	}
 
 	// Update player score
-	lobby.PlayerScores[userID] += points
+	lobby.PlayerScores[username] += points
 
 	s.mutex.Lock()
 	s.lobbies[lobbyID] = lobby
@@ -176,18 +156,22 @@ func (s *Server) handleAnswer(lobbyID string, userID string, answer string, star
 
 	// Prepare score update message
 	scoreUpdate := map[string]interface{}{
-		"userId": userID,
-		"score":  lobby.PlayerScores[userID],
+		"username": username,
+		"score":    lobby.PlayerScores[username],
 	}
 
-	// Send updated score back to the player
-	for _, player := range lobby.Players {
-		if player.WebSocket != nil && player.UserID == userID {
-			if err := player.WebSocket.WriteJSON(scoreUpdate); err != nil {
-				log.Println("Error sending score update:", err)
-			}
-		}
+	if err := conn.WriteJSON(scoreUpdate); err != nil {
+		log.Println("Error sending score update:", err)
 	}
+
+	// // Send updated score back to the player
+	// for _, player := range lobby.Players {
+	// 	if player.WebSocket != nil && player.Username == username {
+	// 		if err := player.WebSocket.WriteJSON(scoreUpdate); err != nil {
+	// 			log.Println("Error sending score update:", err)
+	// 		}
+	// 	}
+	// }
 }
 
 // End the game and update scores

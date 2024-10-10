@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -48,8 +49,6 @@ func (s *Server) ConnectMongoDB() error {
 // Start the server
 func (s *Server) Run() {
 	http.HandleFunc("/ws", s.handleWebSocketConnection)
-	http.HandleFunc("/create", s.createLobbyHandler)
-	http.HandleFunc("/join", s.joinLobbyHandler)
 	http.HandleFunc("/user/login", s.corsMiddleware(s.userLoginHandler))
 	http.HandleFunc("/users", s.corsMiddleware(s.usersHandler))
 	http.HandleFunc("/user/", s.corsMiddleware(s.userHandler))
@@ -74,8 +73,12 @@ func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-// WebSocket upgrade and connection handling
 func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Request) {
+	username := r.URL.Query().Get("username")
+	if username == "" {
+		http.Error(w, "Username is required", http.StatusBadRequest)
+		return
+	}
 	// Upgrade the connection
 	conn, err := websocket.Upgrade(w, r, nil, 0, 0) // Use 0 for default buffer sizes
 	if err != nil {
@@ -84,21 +87,59 @@ func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Reques
 	}
 	defer conn.Close()
 
-	// This is just an example. You would want to implement a loop to read messages from the client.
+	fmt.Println("User", username, "connected to the server")
+
 	for {
-		var msg struct {
-			LobbyID string `json:"lobbyId"`
-			UserID  string `json:"userId"`
-			Answer  string `json:"answer"`
-			Start   int64  `json:"start"` // Unix time of when the question was sent
-		}
+		var msg SocketMessage
 		if err := conn.ReadJSON(&msg); err != nil {
 			log.Println("Failed to read message:", err)
 			break
 		}
 
-		// Handle the answer
-		startTime := time.Unix(msg.Start, 0)
-		s.handleAnswer(msg.LobbyID, msg.UserID, msg.Answer, startTime)
+		switch msg.MessageType {
+		case "CreateLobby":
+			var lobbyReq struct {
+				GameType     string     `json:"gameType"`
+				QuestionList []Question `json:"questionList"`
+			}
+			if err := json.Unmarshal(msg.MessageContent, &lobbyReq); err != nil {
+				log.Println("Failed to parse lobby creation message:", err)
+				break
+			}
+
+			// Call create lobby function
+			s.createLobby(username, lobbyReq.GameType, lobbyReq.QuestionList, conn)
+
+		case "JoinLobby":
+			var joinReq struct {
+				LobbyID string `json:"lobbyId"`
+			}
+			if err := json.Unmarshal(msg.MessageContent, &joinReq); err != nil {
+				log.Println("Failed to parse join lobby message:", err)
+				break
+			}
+
+			// Call join lobby function
+			s.joinLobby(username, joinReq.LobbyID, conn)
+
+		// Add more message types as needed
+		case "SubmitAnswer":
+			var answerReq struct {
+				LobbyID   string `json:"lobbyId"`
+				Answer    string `json:"answer"`
+				StartTime int64  `json:"startTime"`
+			}
+			if err := json.Unmarshal(msg.MessageContent, &answerReq); err != nil {
+				log.Println("Failed to parse submit answer message:", err)
+				break
+			}
+
+			// Convert StartTime from int64 to time.Time
+			startTime := time.Unix(answerReq.StartTime, 0)
+
+			// Call submit answer function
+			s.submitAnswer(username, answerReq.LobbyID, answerReq.Answer, startTime, conn)
+			log.Println("Unknown message type received:", msg.MessageType)
+		}
 	}
 }

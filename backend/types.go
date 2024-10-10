@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"sync"
 	"time"
 
@@ -114,10 +115,17 @@ type Option struct {
 
 // Represents a player participating in a lobby
 type Player struct {
-	UserID    string          `json:"userId"`   // Unique identifier for the player
 	Username  string          `json:"username"` // Username for display
 	Score     int             `json:"score"`    // Player's score in the game
 	WebSocket *websocket.Conn // WebSocket connection for real-time updates
+}
+
+// SocketMessage represents a WebSocket message with a type and associated data
+type SocketMessage struct {
+	MessageType    string          `json:"messageType"`
+	MessageContent json.RawMessage `json:"messageContent"`
+	LobbyID        string          `json:"lobbyId"`
+	Username       string          `json:"username"`
 }
 
 // Represents a game lobby
