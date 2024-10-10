@@ -48,8 +48,8 @@ func (s *Server) ConnectMongoDB() error {
 // Start the server
 func (s *Server) Run() {
 	http.HandleFunc("/ws", s.handleWebSocketConnection)
-	// http.HandleFunc("/create", s.createLobbyHandler)
-	// http.HandleFunc("/join", s.joinLobbyHandler)
+	http.HandleFunc("/create", s.createLobbyHandler)
+	http.HandleFunc("/join", s.joinLobbyHandler)
 	http.HandleFunc("/user/login", s.corsMiddleware(s.userLoginHandler))
 	http.HandleFunc("/users", s.corsMiddleware(s.usersHandler))
 	http.HandleFunc("/user/", s.corsMiddleware(s.userHandler))
