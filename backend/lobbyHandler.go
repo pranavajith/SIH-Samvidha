@@ -86,6 +86,7 @@ func (s *Server) ShowLobbies(conn *websocket.Conn) {
 		log.Println("Error sending lobby list update:", err)
 	}
 }
+
 func (s *Server) ShowLobbiesToAllClients() {
 	lobbies := make([]Lobby, 0)
 
