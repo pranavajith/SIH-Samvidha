@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
@@ -39,9 +40,79 @@ func (s *Server) createLobby(username, gameType string, questionList []Question,
 	s.lobbies[lobbyID] = newLobby
 	s.mutex.Unlock()
 
+	messageContent, err := json.Marshal(newLobby)
+	if err != nil {
+		log.Println("Error marshalling new lobby:", err)
+		return
+
+	}
+
 	// Send lobby information back to the client
-	conn.WriteJSON(newLobby)
+	socketMessage := SocketMessage{
+		MessageType:    "LobbyInfo",
+		MessageContent: messageContent,
+		LobbyID:        newLobby.LobbyID,
+		Username:       username,
+	}
+	if err := conn.WriteJSON(socketMessage); err != nil {
+		log.Println("Error sending lobby info:", err)
+	}
 	fmt.Println("Created lobby with ID: ", lobbyID)
+}
+
+func (s *Server) ShowLobbies(conn *websocket.Conn) {
+	lobbies := make([]Lobby, 0)
+
+	s.mutex.Lock()
+	for _, lobby := range s.lobbies {
+		if lobby.Status == LobbyStatusSearching {
+			lobbies = append(lobbies, lobby)
+		}
+	}
+	s.mutex.Unlock()
+
+	messageContent, err := json.Marshal(lobbies)
+	if err != nil {
+		log.Println("Error marshalling lobbies:", err)
+		return
+	}
+
+	socketMessage := SocketMessage{
+		MessageType:    "LobbyListUpdate",
+		MessageContent: messageContent,
+	}
+
+	if err := conn.WriteJSON(socketMessage); err != nil {
+		log.Println("Error sending lobby list update:", err)
+	}
+}
+func (s *Server) ShowLobbiesToAllClients() {
+	lobbies := make([]Lobby, 0)
+
+	s.mutex.Lock()
+	for _, lobby := range s.lobbies {
+		if lobby.Status == LobbyStatusSearching {
+			lobbies = append(lobbies, lobby)
+		}
+	}
+	s.mutex.Unlock()
+
+	messageContent, err := json.Marshal(lobbies)
+	if err != nil {
+		log.Println("Error marshalling lobbies:", err)
+		return
+	}
+
+	socketMessage := SocketMessage{
+		MessageType:    "LobbyListUpdate",
+		MessageContent: messageContent,
+	}
+
+	for conn := range s.activeConnections {
+		if err := conn.WriteJSON(socketMessage); err != nil {
+			log.Println("Error sending lobby list update to connection:", err)
+		}
+	}
 }
 
 // JoinLobby allows a user to join an existing lobby
@@ -94,9 +165,29 @@ func (s *Server) startGame(lobby *Lobby) {
 func (s *Server) sendQuestionToPlayers(lobby *Lobby) {
 	if lobby.CurrentQuestion < len(lobby.QuestionList) {
 		question := lobby.QuestionList[lobby.CurrentQuestion]
+
+		// Marshal the question into JSON bytes
+		questionJSON, err := json.Marshal(question)
+		if err != nil {
+			// Handle the error, perhaps log it or send an error response
+			log.Println("Error marshaling question:", err)
+			return
+		}
+
+		socketMessage := SocketMessage{
+			MessageType:    "QuestionUpdate",
+			MessageContent: json.RawMessage(questionJSON), // Now assign the marshaled question JSON
+			LobbyID:        lobby.LobbyID,
+		}
+
+		// Send the current question to all players in the lobby
 		for _, player := range lobby.Players {
 			if player.WebSocket != nil {
-				player.WebSocket.WriteJSON(question) // Send the current question
+				err := player.WebSocket.WriteJSON(socketMessage) // Send the current question
+				if err != nil {
+					// Handle any errors in sending the message
+					log.Println("Error sending question to player:", err)
+				}
 			}
 		}
 	}
@@ -160,18 +251,22 @@ func (s *Server) submitAnswer(lobbyID string, username string, answer string, st
 		"score":    lobby.PlayerScores[username],
 	}
 
-	if err := conn.WriteJSON(scoreUpdate); err != nil {
-		log.Println("Error sending score update:", err)
+	messageContent, err := json.Marshal(scoreUpdate)
+	if err != nil {
+		log.Println("Error marshalling score update:", err)
+		return
 	}
 
-	// // Send updated score back to the player
-	// for _, player := range lobby.Players {
-	// 	if player.WebSocket != nil && player.Username == username {
-	// 		if err := player.WebSocket.WriteJSON(scoreUpdate); err != nil {
-	// 			log.Println("Error sending score update:", err)
-	// 		}
-	// 	}
-	// }
+	socketMessage := SocketMessage{
+		MessageType:    "ScoreUpdate",
+		MessageContent: json.RawMessage(messageContent),
+		LobbyID:        lobbyID,
+		Username:       username,
+	}
+
+	if err := conn.WriteJSON(socketMessage); err != nil {
+		log.Println("Error sending score update:", err)
+	}
 }
 
 // End the game and update scores

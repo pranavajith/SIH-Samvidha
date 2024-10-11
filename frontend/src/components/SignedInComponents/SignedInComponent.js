@@ -51,7 +51,7 @@ const SignedInComponent = () => {
           }
         />
         <Route
-          path="/makelobby"
+          path="/createlobby"
           element={
             <ProtectedRoute>
               <CreateLobby />

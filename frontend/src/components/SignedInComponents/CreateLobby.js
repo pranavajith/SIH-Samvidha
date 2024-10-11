@@ -24,6 +24,7 @@ const CreateLobby = () => {
 
       socket.onmessage = (message) => {
         const messageData = JSON.parse(message.data);
+        if (messageData.messageType === "LobbyListUpdate") return;
         console.log("Message received in CreateLobby.js: ", messageData);
         navigate("/waitinglobby", { state: { messageData } });
       };

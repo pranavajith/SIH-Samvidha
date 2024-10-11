@@ -16,8 +16,9 @@ import (
 
 func NewServer(serverAddress string) *Server {
 	return &Server{
-		serverAddress: serverAddress,
-		lobbies:       make(map[string]Lobby),
+		serverAddress:     serverAddress,
+		lobbies:           make(map[string]Lobby),
+		activeConnections: make(map[*websocket.Conn]bool),
 	}
 }
 
@@ -87,6 +88,18 @@ func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Reques
 	}
 	defer conn.Close()
 
+	// Add the connection to the activeConnections map
+	s.mutex.Lock()
+	s.activeConnections[conn] = true
+	s.mutex.Unlock()
+
+	defer func() {
+		// Remove the connection from the activeConnections map
+		s.mutex.Lock()
+		delete(s.activeConnections, conn)
+		s.mutex.Unlock()
+	}()
+
 	fmt.Println("User", username, "connected to the server")
 
 	for {
@@ -122,6 +135,9 @@ func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Reques
 			// Call join lobby function
 			s.joinLobby(username, joinReq.LobbyID, conn)
 
+		case "ShowLobbies":
+			s.ShowLobbies(conn)
+
 		// Add more message types as needed
 		case "SubmitAnswer":
 			var answerReq struct {
@@ -141,7 +157,7 @@ func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Reques
 			s.submitAnswer(username, answerReq.LobbyID, answerReq.Answer, startTime, conn)
 			log.Println("Unknown message type received:", msg.MessageType)
 		case "Dummy":
-			conn.WriteJSON("lol")
+			// conn.WriteJSON("lol")
 			fmt.Println("Got Dummy.")
 		}
 	}

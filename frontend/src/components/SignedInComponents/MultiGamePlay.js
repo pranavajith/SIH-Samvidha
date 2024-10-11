@@ -9,7 +9,7 @@ export const MultiGamePlay = () => {
     <div className="lobby-button-container">
       <button
         className="create-lobby-button"
-        onClick={() => navigate("/makelobby")}
+        onClick={() => navigate("/createlobby")}
       >
         Create Lobby
       </button>

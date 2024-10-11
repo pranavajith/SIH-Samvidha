@@ -15,6 +15,7 @@ const WaitingLobby = () => {
     if (ws) {
       ws.onmessage = (message) => {
         const receivedMessage = JSON.parse(message.data);
+        if (receivedMessage.messageType === "LobbyListUpdate") return;
         setLobbyDetails(receivedMessage);
         setIsLoading(false);
         setTimeout(() => {
