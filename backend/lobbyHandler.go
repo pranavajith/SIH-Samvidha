@@ -10,6 +10,35 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+func (s *Server) ShowLobbiesToAllClients() {
+	lobbies := make([]Lobby, 0)
+
+	s.mutex.Lock()
+	for _, lobby := range s.lobbies {
+		if lobby.Status == LobbyStatusSearching {
+			lobbies = append(lobbies, lobby)
+		}
+	}
+	s.mutex.Unlock()
+
+	messageContent, err := json.Marshal(lobbies)
+	if err != nil {
+		log.Println("Error marshalling lobbies:", err)
+		return
+	}
+
+	socketMessage := SocketMessage{
+		MessageType:    "LobbyListUpdate",
+		MessageContent: messageContent,
+	}
+
+	for conn := range s.activeConnections {
+		if err := conn.WriteJSON(socketMessage); err != nil {
+			log.Println("Error sending lobby list update to connection:", err)
+		}
+	}
+}
+
 // Generate a random lobby ID
 func generateLobbyID() string {
 	rand.Seed(time.Now().UnixNano())
@@ -39,6 +68,8 @@ func (s *Server) createLobby(username, gameType string, questionList []Question,
 	s.mutex.Lock()
 	s.lobbies[lobbyID] = newLobby
 	s.mutex.Unlock()
+
+	s.ShowLobbiesToAllClients()
 
 	messageContent, err := json.Marshal(newLobby)
 	if err != nil {
@@ -87,35 +118,6 @@ func (s *Server) ShowLobbies(conn *websocket.Conn) {
 	}
 }
 
-func (s *Server) ShowLobbiesToAllClients() {
-	lobbies := make([]Lobby, 0)
-
-	s.mutex.Lock()
-	for _, lobby := range s.lobbies {
-		if lobby.Status == LobbyStatusSearching {
-			lobbies = append(lobbies, lobby)
-		}
-	}
-	s.mutex.Unlock()
-
-	messageContent, err := json.Marshal(lobbies)
-	if err != nil {
-		log.Println("Error marshalling lobbies:", err)
-		return
-	}
-
-	socketMessage := SocketMessage{
-		MessageType:    "LobbyListUpdate",
-		MessageContent: messageContent,
-	}
-
-	for conn := range s.activeConnections {
-		if err := conn.WriteJSON(socketMessage); err != nil {
-			log.Println("Error sending lobby list update to connection:", err)
-		}
-	}
-}
-
 // JoinLobby allows a user to join an existing lobby
 func (s *Server) joinLobby(username, lobbyID string, conn *websocket.Conn) {
 	s.mutex.Lock()
@@ -142,19 +144,42 @@ func (s *Server) joinLobby(username, lobbyID string, conn *websocket.Conn) {
 	s.lobbies[lobbyID] = lobby
 	s.mutex.Unlock()
 
+	s.ShowLobbiesToAllClients()
+
+	// send a message to the conn connection that they have been added to the lobby. the message content must be lobby details, and the message type must be LobbyJoined
+	messageContent, err := json.Marshal(lobby)
+	if err != nil {
+		log.Println("Error marshalling lobby details:", err)
+		return
+	}
+
+	socketMessage := SocketMessage{
+		MessageType:    "LobbyJoined",
+		MessageContent: messageContent,
+		LobbyID:        lobbyID,
+	}
+
+	for _, player := range lobby.Players {
+		if player.WebSocket != nil {
+			fmt.Println("Sending lobby joined message to player:", player.Username)
+			if err := player.WebSocket.WriteJSON(socketMessage); err != nil {
+				log.Println("Error sending lobby joined message to player:", err)
+			}
+		}
+	}
+
 	fmt.Println("User", username, " joined lobby ", lobbyID)
 
 	// Check if we can start the game
 	if len(lobby.Players) == 2 && lobby.GameType == "FlashCards" {
 		lobby.Status = LobbyStatusActive
-		s.startGame(&lobby) // Start the game
+		// s.startGame(&lobby) // Start the game
 	}
-
-	// conn.WriteJSON(lobby)
 }
 
 // Start the game and send the first question
 func (s *Server) startGame(lobby *Lobby) {
+	fmt.Println("Game associated with lobby", lobby.LobbyID, "has started")
 	// Notify all players of the first question
 	s.sendQuestionToPlayers(lobby)
 
@@ -164,6 +189,7 @@ func (s *Server) startGame(lobby *Lobby) {
 
 // Send the current question to all players
 func (s *Server) sendQuestionToPlayers(lobby *Lobby) {
+	fmt.Println("Handling question number: ", lobby.CurrentQuestion, " for lobby ", lobby.LobbyID)
 	if lobby.CurrentQuestion < len(lobby.QuestionList) {
 		question := lobby.QuestionList[lobby.CurrentQuestion]
 
@@ -268,6 +294,7 @@ func (s *Server) submitAnswer(lobbyID string, username string, answer string, st
 	if err := conn.WriteJSON(socketMessage); err != nil {
 		log.Println("Error sending score update:", err)
 	}
+	fmt.Println("User", username, "submitted answer:", answer, "for lobby", lobbyID)
 }
 
 // End the game and update scores

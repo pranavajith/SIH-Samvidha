@@ -8,28 +8,33 @@ import { useWebSocket } from "../../context/WebSocketContext";
 const CreateLobby = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const { connectWebSocket } = useWebSocket();
+  const { ws } = useWebSocket();
   const [gameType, setGameType] = useState("FlashCards");
   const [questionList, setQuestionList] = useState("Preamble");
-  const [ws, setWs] = useState(null);
+  const [ws1, setWs] = useState(null);
 
   useEffect(() => {
-    const socket = connectWebSocket();
-    setWs(socket);
+    // const socket = connectWebSocket();
+    setWs(ws);
 
-    if (socket) {
-      socket.onopen = () => {
-        console.log("WebSocket connection established in CreateLobby.js.");
-      };
+    const handleMessage = (message) => {
+      const messageData = JSON.parse(message.data);
+      const msgContent = messageData.messageContent;
+      console.log("Message received in CreateLobby.js: ", messageData);
+      if (messageData.messageType === "LobbyListUpdate") return;
 
-      socket.onmessage = (message) => {
-        const messageData = JSON.parse(message.data);
-        if (messageData.messageType === "LobbyListUpdate") return;
-        console.log("Message received in CreateLobby.js: ", messageData);
-        navigate("/waitinglobby", { state: { messageData } });
-      };
-    }
-  }, []);
+      // Navigate to waiting lobby when a valid message is received
+      navigate("/waitinglobby", { state: { msgContent } });
+    };
+
+    // Add event listener for incoming messages
+    ws.addEventListener("message", handleMessage);
+
+    // Cleanup function to remove event listener on unmount
+    return () => {
+      ws.removeEventListener("message", handleMessage);
+    };
+  }, [ws, navigate]);
 
   const handleCreateLobby = (e) => {
     e.preventDefault();
@@ -45,9 +50,9 @@ const CreateLobby = () => {
       username: user.username,
     };
 
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify(lobbyData));
-      console.log("Lobby creation request sent:", lobbyData);
+    if (ws1 && ws1.readyState === WebSocket.OPEN) {
+      ws1.send(JSON.stringify(lobbyData));
+      // console.log("Lobby creation request sent:", lobbyData);
     } else {
       console.error("WebSocket connection is not open.");
     }

@@ -1,8 +1,5 @@
-/* Container for the waiting lobby */
-.waiting-lobby-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Container for the join lobby */
+.join-lobby-container {
     padding: 2rem;
     max-width: 600px;
     margin: 50px auto;
@@ -16,21 +13,12 @@
 
 /* Styling for the lobby details */
 .lobby-details {
-    margin-bottom: 2rem; /* Ensure spacing below the details */
-    width: 100%;
+    margin-bottom: 2rem;
 }
 
 .lobby-details h2 {
     color: #06d6a0;
     font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.lobby-details p,
-.lobby-details ul {
-    font-size: 1.1rem;
-    text-align: left;
-    color: #ffffff;
     margin-bottom: 1rem;
 }
 
@@ -44,22 +32,30 @@
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    text-align: left;
+}
+
+.lobby-details button {
+    background-color: #06d6a0;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.lobby-details button:hover {
+    background-color: #05b59e;
 }
 
 /* Loading screen styling */
-.loading-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px; /* Space above loading screen */
-    visibility: visible; /* Initially visible */
-    transition: visibility 0.3s ease;
-}
-
-.loading-screen.hidden {
-    visibility: hidden; /* Hide when loading is done */
-}
+/* .loading-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+} */
 
 .loading-screen h2 {
     color: #06d6a0;
@@ -80,10 +76,6 @@
 
 /* Keyframes for spinner animation */
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

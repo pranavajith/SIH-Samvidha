@@ -6,26 +6,27 @@ import "./../../styles/WaitingLobby.css";
 const WaitingLobby = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { messageData } = location.state || {};
+  const { msgContent } = location.state || {};
   const { ws } = useWebSocket();
   const [isLoading, setIsLoading] = useState(true);
-  const [lobbyDetails, setLobbyDetails] = useState(messageData);
+  const [lobbyDetails, setLobbyDetails] = useState(msgContent);
 
   useEffect(() => {
     if (ws) {
       ws.onmessage = (message) => {
         const receivedMessage = JSON.parse(message.data);
         if (receivedMessage.messageType === "LobbyListUpdate") return;
-        setLobbyDetails(receivedMessage);
-        setIsLoading(false);
-        setTimeout(() => {
-          navigate("/gamelobby", { state: { receivedMessage } });
-        }, 5000);
+        setLobbyDetails(receivedMessage.messageContent);
+        console.log("Message received in WaitingLobby.js: ", receivedMessage);
+        // setIsLoading(false);
+        // setTimeout(() => {
+        //   navigate("/gamelobby", { state: { receivedMessage } });
+        // }, 5000);
       };
     }
   }, [ws]);
 
-  console.log("Here are the lobby details: ", lobbyDetails);
+  // console.log("Here are the lobby details: ", lobbyDetails);
 
   return (
     <div className="waiting-lobby-container">
@@ -76,6 +77,7 @@ const WaitingLobby = () => {
         </div>
       )}
     </div>
+    // <>hi</>
   );
 };
 
