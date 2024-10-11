@@ -11,6 +11,7 @@ import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
 import Dashboard from "./Dashboard";
 import MultiGamePlay from "./MultiGamePlay";
 import CreateLobby from "./CreateLobby";
+import { WaitingLobby } from "./WaitingLobby";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -54,6 +55,14 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <CreateLobby />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/waitinglobby"
+          element={
+            <ProtectedRoute>
+              <WaitingLobby />
             </ProtectedRoute>
           }
         />

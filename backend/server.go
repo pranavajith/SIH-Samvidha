@@ -140,6 +140,9 @@ func (s *Server) handleWebSocketConnection(w http.ResponseWriter, r *http.Reques
 			// Call submit answer function
 			s.submitAnswer(username, answerReq.LobbyID, answerReq.Answer, startTime, conn)
 			log.Println("Unknown message type received:", msg.MessageType)
+		case "Dummy":
+			conn.WriteJSON("lol")
+			fmt.Println("Got Dummy.")
 		}
 	}
 }

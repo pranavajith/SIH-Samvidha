@@ -2,48 +2,41 @@ import React, { useContext, useState, useEffect } from "react";
 import "./../../styles/CreateLobby.css";
 import { UserContext } from "../../context/UserContext";
 import { constitutional_questions } from "../dummy-data/dummy-data";
+import { useNavigate } from "react-router-dom";
+import { useWebSocket } from "../../context/WebSocketContext";
 
 const CreateLobby = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
+  const { connectWebSocket } = useWebSocket();
   const [gameType, setGameType] = useState("FlashCards");
   const [questionList, setQuestionList] = useState("Preamble");
-  const [ws, setWs] = useState(null); // WebSocket instance
+  const [ws, setWs] = useState(null);
 
   // Initialize WebSocket connection on component mount
   useEffect(() => {
-    const socket = new WebSocket(
-      `ws://localhost:8080/ws?username=${user.username}`
-    );
+    const socket = connectWebSocket();
+    setWs(socket); // Store the WebSocket instance in state
 
-    // Set up WebSocket event listeners
-    socket.onopen = () => {
-      console.log("WebSocket connection established.");
-    };
+    if (socket) {
+      socket.onopen = () => {
+        console.log("WebSocket connection established in CreateLobby.js.");
+      };
 
-    socket.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      console.log("Message received:", data);
-      // Handle incoming messages, e.g., lobby created, questions sent, etc.
-    };
+      socket.onmessage = (message) => {
+        const messageData = JSON.parse(message.data);
+        console.log("Message received in CreateLobby.js: ", messageData);
+        navigate("/waitinglobby", { state: { messageData } });
+      };
+    }
 
-    socket.onclose = () => {
-      console.log("WebSocket connection closed.");
-    };
-
-    socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    // Store WebSocket instance in state
-    setWs(socket);
-
-    // Clean up WebSocket on component unmount
-    return () => {
-      if (socket) {
-        socket.close();
-      }
-    };
-  }, [user.username]);
+    // Optional: Clean up the WebSocket when the component unmounts
+    // return () => {
+    //   if (socket) {
+    //     socket.close();
+    //   }
+    // };
+  }, []);
 
   const handleCreateLobby = (e) => {
     e.preventDefault();

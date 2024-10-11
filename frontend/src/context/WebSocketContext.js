@@ -1,42 +1,27 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 
 const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
   const [ws, setWs] = useState(null);
+  const { user } = useContext(UserContext);
 
-  const generateSocket = ({ username }) => {
-    const socket = new WebSocket(`ws://localhost:8080/ws?username=${username}`);
-
-    socket.onopen = () => {
-      console.log("WebSocket connection established.");
-    };
-
-    socket.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      console.log("Message received:", data);
-      // Handle incoming messages
-    };
-
-    socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    // Update the WebSocket state
+  const connectWebSocket = () => {
+    const socket = new WebSocket(
+      `ws://localhost:8080/ws?username=${user.username}`
+    );
     setWs(socket);
-
-    // Return the new WebSocket instance so it can be used immediately
-    return socket;
+    return socket; // Return the WebSocket instance
   };
 
   return (
-    <WebSocketContext.Provider value={{ ws, generateSocket }}>
+    <WebSocketContext.Provider value={{ ws, connectWebSocket }}>
       {children}
     </WebSocketContext.Provider>
   );
 };
 
-// Custom hook to use WebSocket context in any component
 export const useWebSocket = () => {
   return useContext(WebSocketContext);
 };

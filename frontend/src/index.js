@@ -7,12 +7,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 // can add icons to timeline
 // can add learn more button at end
 import "./utils/i18n";
+import { WebSocketProvider } from "./context/WebSocketContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   //<React.StrictMode>
   <Router>
     <UserProvider>
-      <App />
+      <WebSocketProvider>
+        <App />
+      </WebSocketProvider>
     </UserProvider>
   </Router>
   //</React.StrictMode>
