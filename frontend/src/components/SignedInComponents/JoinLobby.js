@@ -36,9 +36,9 @@ const JoinLobby = () => {
         setLobbies(msg.messageContent);
         setIsLoading(false);
       } else if (msg.messageType === "LobbyJoined") {
-        const msgContent = msg.messageContent;
+        console.log("Here is msg:", msg);
         navigate("/waitinglobby", {
-          state: { msgContent: msgContent },
+          state: { msgContent: msg.messageContent },
         });
       }
     };

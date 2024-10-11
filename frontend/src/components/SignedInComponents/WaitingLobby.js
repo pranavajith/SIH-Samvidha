@@ -19,14 +19,32 @@ const WaitingLobby = () => {
         setLobbyDetails(receivedMessage.messageContent);
         console.log("Message received in WaitingLobby.js: ", receivedMessage);
         // setIsLoading(false);
-        // setTimeout(() => {
-        //   navigate("/gamelobby", { state: { receivedMessage } });
-        // }, 5000);
+        // if (receivedMessage.messageType === "LobbyJoined") {
+        //   setTimeout(() => {
+        //     navigate("/gamelobby", { state: { receivedMessage } });
+        //   }, 5000);
+        // }
       };
     }
   }, [ws]);
 
   // console.log("Here are the lobby details: ", lobbyDetails);
+
+  useEffect(() => {
+    // Check if there are at least 2 players in the lobby
+    if (
+      lobbyDetails &&
+      lobbyDetails.players &&
+      lobbyDetails.players.length >= 2
+    ) {
+      const timer = setTimeout(() => {
+        navigate("/gamelobby", { state: { lobbyDetails } });
+      }, 5000); // Navigate after 5 seconds
+
+      // Cleanup function to clear the timeout on unmount or if dependencies change
+      return () => clearTimeout(timer);
+    }
+  }, [lobbyDetails, navigate]);
 
   return (
     <div className="waiting-lobby-container">
