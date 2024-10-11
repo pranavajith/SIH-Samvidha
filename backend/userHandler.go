@@ -242,15 +242,7 @@ func (s *Server) handleAddUser(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("User added successfully"))
 }
 
-// Modify an existing user (for general updates without password change)
-func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("handleModifyUser has been touched")
-	var modifyUserReq UserRequest
-	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
-		http.Error(w, "Invalid request payload", http.StatusBadRequest)
-		return
-	}
-
+func (s *Server) UserModifier(modifyUserReq UserRequest) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -258,7 +250,7 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("searching for user")
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": modifyUserReq.Username}).Decode(&user)
 	if err != nil {
-		http.Error(w, "User not found", http.StatusNotFound)
+		fmt.Println("user not found")
 		return
 	}
 	fmt.Println("user found")
@@ -278,7 +270,7 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	if modifyUserReq.DOB != "" {
 		dob, err := time.Parse("2006-01-02", modifyUserReq.DOB)
 		if err != nil {
-			http.Error(w, "Invalid DOB format, should be YYYY-MM-DD", http.StatusBadRequest)
+			fmt.Println("DOB issue. Wrong formatting")
 			return
 		}
 
@@ -318,7 +310,18 @@ func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
 	// Update the user document in the database
 	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": modifyUserReq.Username}, bson.M{"$set": user})
 	if err != nil {
-		http.Error(w, "Failed to update user", http.StatusInternalServerError)
+		fmt.Println("Falied to update user")
+		return
+	}
+
+}
+
+// Modify an existing user (for general updates without password change)
+func (s *Server) handleModifyUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("handleModifyUser has been touched")
+	var modifyUserReq UserRequest
+	if err := json.NewDecoder(r.Body).Decode(&modifyUserReq); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
 
@@ -373,4 +376,32 @@ func (s *Server) handleChangePassword(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Password changed successfully"))
+}
+
+func (s *Server) UserScoreUpdate(scoreUpdateReq ScoreUpdateData) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	var user User
+	fmt.Println("Searching for user to update score...")
+
+	// Find the user by username
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": scoreUpdateReq.Username}).Decode(&user)
+	if err != nil {
+		fmt.Println("User not found")
+		return
+	}
+	fmt.Println("User found, updating multiplayer score")
+
+	// Update the multiplayer score by adding the diff
+	user.MultiPlayerScore += scoreUpdateReq.Diff
+
+	// Store the updated user data in the database
+	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": scoreUpdateReq.Username}, bson.M{"$set": user})
+	if err != nil {
+		fmt.Println("Failed to update user's multiplayer score")
+		return
+	}
+
+	fmt.Printf("User %s's multiplayer score updated by %d, new score: %d\n", scoreUpdateReq.Username, scoreUpdateReq.Diff, user.MultiPlayerScore)
 }

@@ -172,8 +172,7 @@ func (s *Server) joinLobby(username, lobbyID string, conn *websocket.Conn) {
 
 	// Check if we can start the game
 	if len(lobby.Players) == 2 && lobby.GameType == "FlashCards" {
-		lobby.Status = LobbyStatusActive
-		// s.startGame(&lobby) // Start the game
+		s.startGame(&lobby) // Start the game
 	}
 }
 
@@ -181,7 +180,7 @@ func (s *Server) joinLobby(username, lobbyID string, conn *websocket.Conn) {
 func (s *Server) startGame(lobby *Lobby) {
 	fmt.Println("Game associated with lobby", lobby.LobbyID, "has started")
 	// Notify all players of the first question
-	s.sendQuestionToPlayers(lobby)
+	// s.sendQuestionToPlayers(lobby)
 
 	// Start a goroutine to handle the game questions
 	go s.handleQuestions(lobby)
@@ -226,11 +225,14 @@ func (s *Server) handleQuestions(lobby *Lobby) {
 
 		s.sendQuestionToPlayers(lobby)
 
+		s.lobbies[lobby.LobbyID] = *lobby
 		lobby.CurrentQuestion++
 		if lobby.CurrentQuestion >= len(lobby.QuestionList) {
 			break
 		}
 	}
+	// set a delay of 10 seconds before endgame is called
+	time.Sleep(10 * time.Second)
 
 	s.endGame(lobby)
 }
@@ -239,22 +241,33 @@ func (s *Server) handleQuestions(lobby *Lobby) {
 func (s *Server) submitAnswer(lobbyID string, username string, answer string, startTime time.Time, conn *websocket.Conn) {
 	s.mutex.Lock()
 	lobby, exists := s.lobbies[lobbyID]
+
 	s.mutex.Unlock()
+	// fmt.Println("Reached 1")
+	fmt.Println(lobbyID)
+
+	fmt.Println(exists)
+	fmt.Println(lobby.Status)
 
 	if !exists || lobby.Status != LobbyStatusActive {
 		return
 	}
+	// fmt.Println("Reached 2")
 
 	currentQuestion := lobby.QuestionList[lobby.CurrentQuestion]
+	fmt.Println(currentQuestion.Question)
+	fmt.Println(lobby.CurrentQuestion)
 	correctAnswer := false
 
 	// Check if the answer is correct
 	for _, option := range currentQuestion.Options {
+		// fmt.Println("Option value: ", option.Value, ", Value Status: ", option.CorrectStatus, ", Answer: ", answer)
 		if option.Value == answer && option.CorrectStatus {
 			correctAnswer = true
 			break
 		}
 	}
+	// fmt.Println("Reached 3")
 
 	// Calculate score
 	var points int
@@ -271,6 +284,7 @@ func (s *Server) submitAnswer(lobbyID string, username string, answer string, st
 	s.mutex.Lock()
 	s.lobbies[lobbyID] = lobby
 	s.mutex.Unlock()
+	// fmt.Println("Reached 4")
 
 	// Prepare score update message
 	scoreUpdate := map[string]interface{}{
@@ -283,6 +297,12 @@ func (s *Server) submitAnswer(lobbyID string, username string, answer string, st
 		log.Println("Error marshalling score update:", err)
 		return
 	}
+	// fmt.Println("Reached 5")
+	// Print in fmt the current score of all players in the lobby
+	for player, score := range lobby.PlayerScores {
+		fmt.Printf("Player: %s, Score: %d\n", player, score)
+	}
+	// fmt.Println("Reached 6")
 
 	socketMessage := SocketMessage{
 		MessageType:    "ScoreUpdate",
@@ -291,14 +311,33 @@ func (s *Server) submitAnswer(lobbyID string, username string, answer string, st
 		Username:       username,
 	}
 
-	if err := conn.WriteJSON(socketMessage); err != nil {
-		log.Println("Error sending score update:", err)
+	// send socketMessage to every player in the lobby
+	for _, player := range lobby.Players {
+		if player.WebSocket != nil {
+			if err := player.WebSocket.WriteJSON(socketMessage); err != nil {
+				log.Println("Error sending score update to player:", err)
+			}
+		}
 	}
+
 	fmt.Println("User", username, "submitted answer:", answer, "for lobby", lobbyID)
 }
 
 // End the game and update scores
 func (s *Server) endGame(lobby *Lobby) {
+
+	socketMessage := SocketMessage{
+		MessageType: "EndGame",
+	}
+
+	// send socketMessage to every player in the lobby
+	for _, player := range lobby.Players {
+		if player.WebSocket != nil {
+			if err := player.WebSocket.WriteJSON(socketMessage); err != nil {
+				log.Println("Error sending score update to player:", err)
+			}
+		}
+	}
 	// Award bonus points to the winner
 	var maxScore int
 	var winnerID string
@@ -318,10 +357,18 @@ func (s *Server) endGame(lobby *Lobby) {
 	// Update the lobby status
 	lobby.Status = LobbyStatusInactive
 
-	// Update user multiplayer scores in the database (if needed)
-	// UpdateUserMultiplayerScore(winnerID, lobby.PlayerScores[winnerID])
-	fmt.Println("Assume we changed the user's multiplayer score in the database")
+	for userID, score := range lobby.PlayerScores {
+		diff := score // The points to be added to the user's multiplayer score
 
+		// Prepare the score update data
+		scoreUpdateData := ScoreUpdateData{
+			Username: userID,
+			Diff:     diff,
+		}
+
+		// Update the user's multiplayer score in the database
+		s.UserScoreUpdate(scoreUpdateData)
+	}
 	s.mutex.Lock()
 	s.lobbies[lobby.LobbyID] = *lobby
 	s.mutex.Unlock()

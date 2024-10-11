@@ -13,6 +13,7 @@ import MultiGamePlay from "./MultiGamePlay";
 import CreateLobby from "./CreateLobby";
 import { WaitingLobby } from "./WaitingLobby";
 import JoinLobby from "./JoinLobby";
+import { GameLobby } from "./GameLobby";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -72,6 +73,14 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <JoinLobby />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gamelobby"
+          element={
+            <ProtectedRoute>
+              <GameLobby />
             </ProtectedRoute>
           }
         />

@@ -140,3 +140,8 @@ type Lobby struct {
 	PlayerScores    map[string]int `json:"playerScores"`    // Mapping from UserID to Score
 	CurrentQuestion int            `json:"currentQuestion"` // Index of the current question being asked
 }
+
+type ScoreUpdateData struct {
+	Username string
+	Diff     int // The difference to add to the multiplayer score
+}

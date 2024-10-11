@@ -1,0 +1,97 @@
+.game-lobby-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.player-scores-container {
+  background-color: #333;
+  padding: 1.5rem;
+  border-radius: 10px;
+  color: white;
+  max-width: 250px;
+  height: fit-content;
+  font-family: "Happy Monkey", system-ui;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.player-scores-container h2 {
+  text-align: center;
+  color: #06d6a0;
+  margin-bottom: 1rem;
+}
+
+.player-scores-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-score-item {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.gameplay-container-multi {
+  padding: 2rem;
+  background-color: #333;
+  width: 100%;
+  color: white;
+  max-width: 800px;
+  margin: 5% auto;
+  font-family: "Happy Monkey", system-ui;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-size: cover;
+}
+
+.display-text {
+  background-color: #e8e3cb;
+  padding: 1.5rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  white-space: pre-line;
+  color: black;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.option-button {
+  background-color: #555;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option-button.correct {
+  background-color: green;
+}
+
+.option-button.incorrect {
+  background-color: red;
+}
+
+.feedback {
+  margin-top: 1.5rem;
+}
+
+.correct-feedback {
+  color: #277f68;
+}
+
+.incorrect-feedback {
+  color: #ff2828;
+}

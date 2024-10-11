@@ -37,6 +37,7 @@ const WaitingLobby = () => {
       lobbyDetails.players &&
       lobbyDetails.players.length >= 2
     ) {
+      setIsLoading(false);
       const timer = setTimeout(() => {
         navigate("/gamelobby", { state: { lobbyDetails } });
       }, 5000); // Navigate after 5 seconds
