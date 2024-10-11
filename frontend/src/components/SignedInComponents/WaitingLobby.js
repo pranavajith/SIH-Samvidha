@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useWebSocket } from "../../context/WebSocketContext";
 import "./../../styles/WaitingLobby.css";
 
 const WaitingLobby = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { messageData } = location.state || {};
   const { ws } = useWebSocket();
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [lobbyDetails, setLobbyDetails] = useState(messageData);
 
   useEffect(() => {
     if (ws) {
       ws.onmessage = (message) => {
         const receivedMessage = JSON.parse(message.data);
-        if (receivedMessage.messageType === "PlayerJoined") {
-          setIsLoading(false); // Stop loading when another player joins
-        }
+        setLobbyDetails(receivedMessage);
+        setIsLoading(false);
+        setTimeout(() => {
+          navigate("/gamelobby", { state: { receivedMessage } });
+        }, 5000);
       };
     }
   }, [ws]);
 
-  const lobbyDetails = messageData;
   console.log("Here are the lobby details: ", lobbyDetails);
 
   return (
@@ -44,9 +47,7 @@ const WaitingLobby = () => {
         <h3>Players:</h3>
         <ul>
           {lobbyDetails.players.map((player, index) => (
-            <li key={index}>
-              {player.username} - Score: {player.score}
-            </li>
+            <li key={index}>{player.username}</li>
           ))}
         </ul>
 
