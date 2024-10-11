@@ -13,10 +13,9 @@ const CreateLobby = () => {
   const [questionList, setQuestionList] = useState("Preamble");
   const [ws, setWs] = useState(null);
 
-  // Initialize WebSocket connection on component mount
   useEffect(() => {
     const socket = connectWebSocket();
-    setWs(socket); // Store the WebSocket instance in state
+    setWs(socket);
 
     if (socket) {
       socket.onopen = () => {
@@ -29,19 +28,11 @@ const CreateLobby = () => {
         navigate("/waitinglobby", { state: { messageData } });
       };
     }
-
-    // Optional: Clean up the WebSocket when the component unmounts
-    // return () => {
-    //   if (socket) {
-    //     socket.close();
-    //   }
-    // };
   }, []);
 
   const handleCreateLobby = (e) => {
     e.preventDefault();
 
-    // Prepare data in the correct format to send over WebSocket
     const lobbyContent = {
       gameType: gameType,
       questionList: constitutional_questions.executive_questions,
@@ -49,12 +40,12 @@ const CreateLobby = () => {
 
     const lobbyData = {
       messageType: "CreateLobby",
-      messageContent: lobbyContent, // Directly assign the object here
-      username: user.username, // Include username
+      messageContent: lobbyContent,
+      username: user.username,
     };
 
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify(lobbyData)); // Send lobby creation data via WebSocket
+      ws.send(JSON.stringify(lobbyData));
       console.log("Lobby creation request sent:", lobbyData);
     } else {
       console.error("WebSocket connection is not open.");

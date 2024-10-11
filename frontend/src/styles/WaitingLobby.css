@@ -1,0 +1,83 @@
+/* Container for the waiting lobby */
+.waiting-lobby-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: "Happy Monkey", system-ui;
+}
+
+/* Styling for the lobby details */
+.lobby-details {
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.lobby-details h2 {
+    color: #06d6a0;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.lobby-details p, .lobby-details ul {
+    font-size: 1.1rem;
+    text-align: left;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.lobby-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lobby-details ul li {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Loading screen styling */
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: visible; /* Initially visible */
+    transition: visibility 0.3s ease;
+}
+
+.loading-screen.hidden {
+    visibility: hidden; /* Hide when loading is done */
+}
+
+.loading-screen h2 {
+    color: #06d6a0;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+/* Spinner styling */
+.loading-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #06d6a0;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
