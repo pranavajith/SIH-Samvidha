@@ -1,0 +1,49 @@
+.lobby-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 89vh; /* Full screen height */
+    gap: 2rem; /* Space between the buttons */
+    /* background-color: #333; */
+  }
+  
+  .create-lobby-button,
+  .join-lobby-button {
+    width: 80%; /* Large width to cover most of the screen */
+    max-width: 400px; /* Limit the max width */
+    padding: 2rem; /* Increase padding for larger buttons */
+    font-size: 1.5rem; /* Large text */
+    background-color: #06d6a0; /* Green color */
+    color: white;
+    border: none;
+    border-radius: 12px; /* Rounded edges */
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .create-lobby-button {
+    background-color: #06d6a0;
+  }
+  
+  .create-lobby-button:hover {
+    background-color: #05c08c;
+  }
+  
+  .join-lobby-button {
+    background-color: #f9c74f;
+    color: #333; /* Dark text color for better contrast */
+  }
+  
+  .join-lobby-button:hover {
+    background-color: #e0b445;
+  }
+  
+  @media (max-width: 768px) {
+    .create-lobby-button,
+    .join-lobby-button {
+      width: 90%; /* Increase width for smaller screens */
+    }
+  }
+  

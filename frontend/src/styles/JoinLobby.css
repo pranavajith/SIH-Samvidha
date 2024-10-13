@@ -1,0 +1,81 @@
+/* Container for the join lobby */
+.join-lobby-container {
+    padding: 2rem;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: "Happy Monkey", system-ui;
+}
+
+/* Styling for the lobby details */
+.lobby-details {
+    margin-bottom: 2rem;
+}
+
+.lobby-details h2 {
+    color: #06d6a0;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.lobby-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lobby-details ul li {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.lobby-details button {
+    background-color: #06d6a0;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.lobby-details button:hover {
+    background-color: #05b59e;
+}
+
+/* Loading screen styling */
+/* .loading-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+} */
+
+.loading-screen h2 {
+    color: #06d6a0;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+/* Spinner styling */
+.loading-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #06d6a0;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

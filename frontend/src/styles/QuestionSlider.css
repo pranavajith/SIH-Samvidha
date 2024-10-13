@@ -29,7 +29,7 @@
 .flashcard-face {
   /* position: absolute;
   width: 100%;
-  height: 100%; */
+  height: 100vh;
   backface-visibility: hidden; /* Hide the face when flipped */
   display: flex;
   flex-direction: column;
@@ -69,6 +69,13 @@
   flex-direction: column; /* Arrange children in a column */
   align-items: stretch; /* Stretch buttons to full width */
   width: 100%; /* Ensure it takes the full width */
+}
+
+.options {
+  display: flex;
+  flex-direction: column; /* Stack the options vertically */
+  gap: 10px; /* Add some space between the buttons */
+  width: 100%; /* Ensure the options fill the available width */
 }
 
 .back-option-button {

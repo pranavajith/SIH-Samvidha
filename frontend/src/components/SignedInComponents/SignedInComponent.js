@@ -10,6 +10,10 @@ import { Leaderboard } from "./Leaderboard";
 import AskAI from "../chatbotComponents/AskAI"; // Import AskAI component
 import Dashboard from "./Dashboard";
 import MultiGamePlay from "./MultiGamePlay";
+import CreateLobby from "./CreateLobby";
+import { WaitingLobby } from "./WaitingLobby";
+import JoinLobby from "./JoinLobby";
+import { GameLobby } from "./GameLobby";
 
 const SignedInComponent = () => {
   const { user } = useContext(UserContext);
@@ -45,6 +49,38 @@ const SignedInComponent = () => {
           element={
             <ProtectedRoute>
               <SoloGamePlay />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/createlobby"
+          element={
+            <ProtectedRoute>
+              <CreateLobby />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/waitinglobby"
+          element={
+            <ProtectedRoute>
+              <WaitingLobby />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/joinlobby"
+          element={
+            <ProtectedRoute>
+              <JoinLobby />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gamelobby"
+          element={
+            <ProtectedRoute>
+              <GameLobby />
             </ProtectedRoute>
           }
         />
