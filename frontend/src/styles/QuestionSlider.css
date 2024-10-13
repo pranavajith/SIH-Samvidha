@@ -27,7 +27,7 @@
 }
 
 .flashcard-face {
-  position: absolute;
+  /* position: absolute;
   width: 100%;
   height: 100vh;
   backface-visibility: hidden; /* Hide the face when flipped */
@@ -49,7 +49,7 @@
   background-color: #444;
   color: #fff;
   font-size: 18px;
-  padding: 10px;
+  padding: 20px;
 }
 
 .option-button {
@@ -64,9 +64,12 @@
   border: none;
 }
 
-/* .options {
-  height: 300px;
-} */
+.options {
+  display: flex; /* Make it a flex container */
+  flex-direction: column; /* Arrange children in a column */
+  align-items: stretch; /* Stretch buttons to full width */
+  width: 100%; /* Ensure it takes the full width */
+}
 
 .options {
   display: flex;
@@ -130,7 +133,6 @@
   font-weight: bold;
   /* padding-left: 20px; Adjust this value to move the heading to the right */
 }
-
 
 .completion-message p {
   font-size: 18px; /* Slightly smaller font for the paragraph */

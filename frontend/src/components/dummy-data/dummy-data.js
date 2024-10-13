@@ -296,6 +296,373 @@ const constitutional_questions = {
       ],
     },
   ],
+  ////////////////
+  rigths_to_freedom: [
+    {
+      question:
+        "Under Article 21A of the Indian Constitution, the Right to Education guarantees which of the following?",
+      Options: [
+        {
+          value:
+            "Free and compulsory education to all children between the ages of 6 to 18 years",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Free and compulsory education to all children of the age of 6 to 14 years",
+          correctStatus: true,
+        },
+        {
+          value:
+            "Free higher education for all students in government institutions",
+          correctStatus: false,
+        },
+        {
+          value: "Compulsory education for all children irrespective of age",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "Which of the following is not a protection provided under Article 20 of the Indian Constitution regarding conviction for offences?",
+      Options: [
+        {
+          value:
+            "No person shall be convicted for an act unless it was a violation of a law in force at the time of commission.",
+          correctStatus: false,
+        },
+        {
+          value:
+            "No person shall be prosecuted and punished for the same offence more than once.",
+          correctStatus: false,
+        },
+        {
+          value:
+            "No person accused of an offence shall be forced to testify against others involved in the same offence.",
+          correctStatus: true,
+        },
+        {
+          value:
+            "No person accused of an offence shall be compelled to be a witness against himself.",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "What is one of the exceptions that allows the State to impose reasonable restrictions on the right to practice any profession, occupation, trade, or business?",
+      Options: [
+        { value: "The individual's income level", correctStatus: false },
+        {
+          value:
+            "Technical qualifications necessary for practicing a profession",
+          correctStatus: true,
+        },
+        { value: "Age restrictions for business owners", correctStatus: false },
+        {
+          value: "The number of years a person has been in the profession",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A 15-year-old student, Priya, was caught stealing food from a local grocery store due to extreme hunger. When taken to the police station, she was not allowed to contact her parents or a lawyer. The police held her for several hours without informing her of the charges against her and did not provide her with any legal assistance. The next day, she was presented in front of a magistrate who ordered her release due to the unlawful detention.Which right of Priya was violated in this scenario?",
+      Options: [
+        { value: "Right to Legal Representation", correctStatus: false },
+        { value: "Right to Free Speech", correctStatus: false },
+        {
+          value: "Protection against Arrest and Detention in Certain Cases",
+          correctStatus: true,
+        },
+        { value: "Right to Assembly", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "Aisha Verma, a college student, was accused of participating in a protest that turned violent. During the protest, some individuals vandalized public property. Aisha was arrested a week later, and the police charged her under a new law that penalized participation in unlawful assemblies, which had been enacted just a few days before her arrest.Aisha claimed she was merely a bystander and had not engaged in any unlawful activities. Her lawyer argued that the new law should not apply to her case since the incident occurred before the law was enacted.During the trial, the judge had to consider Aisha's rights and whether the charges against her were valid under the current legal framework. In the context of Aisha's case, which of the following rights is most relevant to her defense against the charges imposed under the new law?",
+      Options: [
+        { value: "Right to Free Speech", correctStatus: false },
+        {
+          value: "Protection against Ex Post Facto Laws",
+          correctStatus: false,
+        },
+        {
+          value: "Protection in Respect of Conviction for Offences",
+          correctStatus: true,
+        },
+        { value: "Right to Privacy", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "Suresh was arrested for a minor traffic violation. The police detained him overnight without informing him of the reason for his arrest. He was also not allowed to contact anyone until the following morning.Which right of Suresh was violated in this scenario?",
+      Options: [
+        { value: "Right to Legal Representation", correctStatus: false },
+        { value: "Right to Free Speech", correctStatus: false },
+        {
+          value: "Protection against Arrest and Detention in Certain Cases",
+          correctStatus: true,
+        },
+        { value: "Right to Assembly", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "A local government school announced that it would no longer provide free textbooks to students from low-income families. This decision was made without any prior notice, affecting students’ ability to attend school regularly.Which right of the affected students was violated in this scenario?",
+      Options: [
+        { value: "Right to Quality Education", correctStatus: true },
+        { value: "Right to Privacy", correctStatus: false },
+        { value: "Freedom of Religion", correctStatus: false },
+        { value: "Right to Work", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "During a protest, Anjali was detained by the police without a warrant or any formal charges against her. She was kept in custody for several hours, during which she was not allowed to make a phone call or have access to a lawyer.Which right of Anjali was violated in this scenario?",
+      Options: [
+        { value: "Right to Education", correctStatus: false },
+        { value: "Freedom of Movement", correctStatus: false },
+        {
+          value: "Protection of Life and Personal Liberty",
+          correctStatus: true,
+        },
+        { value: "Right to Equality", correctStatus: false },
+      ],
+    },
+  ],
+  rights_to_eq: [
+    {
+      question:
+        "According to the provisions regarding laws inconsistent with or in derogation of the fundamental rights, which of the following statements is TRUE?",
+      Options: [
+        {
+          value:
+            "All laws in force before the Constitution is void regardless of consistency",
+          correctStatus: false,
+        },
+        {
+          value:
+            "The State can make laws that abridge the rights conferred by this Part",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Any law inconsistent with fundamental rights is void to the extent of such inconsistency",
+          correctStatus: true,
+        },
+        {
+          value:
+            "Customs and usages have no force of law in the territory of India",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "What does the principle of equality before law entail according to the Constitution?",
+      Options: [
+        {
+          value: "The State shall deny equality to certain individuals",
+          correctStatus: false,
+        },
+        {
+          value: "All persons are equal in the eyes of the law",
+          correctStatus: true,
+        },
+        {
+          value:
+            "Only certain classes of individuals receive equal protection under the law",
+          correctStatus: false,
+        },
+        {
+          value: "Equality before the law applies only to citizens of India",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "What does the prohibition of discrimination in the Indian Constitution entail?",
+      Options: [
+        {
+          value:
+            "The State can discriminate against citizens based on their religion",
+          correctStatus: false,
+        },
+        {
+          value:
+            "No citizen shall face discrimination on grounds of religion, race, caste, sex, or place of birth",
+          correctStatus: true,
+        },
+        {
+          value:
+            "Citizens can be denied access to public places based on caste",
+          correctStatus: false,
+        },
+        {
+          value: "Special provisions cannot be made for women and children",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "What does Article 16 of the Indian Constitution guarantee regarding public employment?",
+      Options: [
+        {
+          value:
+            "Equality of opportunity for all citizens in employment under the State",
+          correctStatus: true,
+        },
+        {
+          value:
+            "Citizens can be discriminated against based on their religion",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Only certain castes are eligible for employment under the State",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Employment opportunities are only for residents of a specific state",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "What does Article 17 of the Indian Constitution state regarding untouchability?",
+      Options: [
+        {
+          value: "Untouchability is permitted under certain conditions",
+          correctStatus: false,
+        },
+        {
+          value: "Untouchability is abolished and its practice is forbidden",
+          correctStatus: true,
+        },
+        {
+          value:
+            "The practice of untouchability is allowed if it is traditional",
+          correctStatus: false,
+        },
+        {
+          value: "Enforcement of untouchability is encouraged by law",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "In a recent case, a businessman claimed he was treated unfairly by the tax authorities, who imposed a hefty fine on him while letting others off with a warning. He argued that this was due to his social status. Which right is most relevant to his claim of unfair treatment?",
+      Options: [
+        {
+          value:
+            "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth",
+          correctStatus: false,
+        },
+        { value: "Equality before law", correctStatus: true },
+        { value: "Abolition of Untouchability", correctStatus: false },
+        { value: "Abolition of titles", correctStatus: false },
+      ],
+    },
+
+    {
+      question:
+        "During a cultural festival, a group of students was barred from participating because of their religion. They argued that this exclusion was unjust and violated their rights. Which constitutional provision protects them in this situation?",
+      Options: [
+        { value: "Abolition of Untouchability", correctStatus: false },
+        {
+          value: "Equality of opportunity in matters of public employment",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth",
+          correctStatus: true,
+        },
+        { value: "Abolition of titles", correctStatus: false },
+      ],
+    },
+    {
+      question:
+        "A qualified individual applied for a government job but was informed that they would not be considered because they lived outside the state where the job was located. They believed this to be discriminatory. Which right pertains to their situation?",
+      Options: [
+        { value: "Abolition of titles", correctStatus: false },
+        {
+          value:
+            "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth",
+          correctStatus: false,
+        },
+        { value: "Abolition of Untouchability", correctStatus: false },
+        {
+          value: "Equality of opportunity in matters of public employment",
+          correctStatus: true,
+        },
+      ],
+    },
+    {
+      question:
+        "In a village, a particular community is systematically excluded from using public facilities like wells and schools due to their caste. This exclusion is based on outdated social practices. Which constitutional right is being violated in this case?",
+      Options: [
+        {
+          value:
+            "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth",
+          correctStatus: false,
+        },
+        { value: "Abolition of titles", correctStatus: false },
+        {
+          value: "Equality of opportunity in matters of public employment",
+          correctStatus: false,
+        },
+        { value: "Abolition of Untouchability", correctStatus: true },
+      ],
+    },
+    {
+      question:
+        "An Indian citizen who has made significant contributions to art is offered a prestigious title by a foreign government. They wonder if accepting this title would conflict with any laws. Which provision in the Constitution addresses this concern?",
+      Options: [
+        { value: "Abolition of Untouchability", correctStatus: false },
+        { value: "Equality before law", correctStatus: false },
+        { value: "Abolition of titles", correctStatus: true },
+        {
+          value:
+            "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth",
+          correctStatus: false,
+        },
+      ],
+    },
+    {
+      question:
+        "In light of the provisions outlined in the Constitution, which of the following statements accurately reflects the rules regarding titles and honors in India?",
+      Options: [
+        {
+          value:
+            "Titles may be conferred by the State for notable achievements in any field",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Indian citizens are prohibited from accepting any title from a foreign State",
+          correctStatus: true,
+        },
+        {
+          value:
+            "Military and academic titles are exempt from restrictions placed on other titles",
+          correctStatus: false,
+        },
+        {
+          value:
+            "Acceptance of titles from foreign States is allowed if approved by the Prime Minister",
+          correctStatus: false,
+        },
+      ],
+    },
+  ],
 };
 
 const TypeGameData = {
@@ -356,12 +723,12 @@ const gameLevelsModified = [
   },
   {
     number: 4,
-    levelName: "Type the Preamble",
+    levelName: "Intro to rights",
     // levelGroupId: 1,
     levelGroupText: "Rights",
     videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
-    questionType: "TypeGame",
-    questionData: TypeGameData.preamble,
+    questionType: "flashcard",
+    questionData: constitutional_questions.rigths_to_freedom,
   },
   {
     number: 5,
@@ -369,8 +736,8 @@ const gameLevelsModified = [
     // levelGroupId: 1,
     levelGroupText: "Rights",
     videoUrl: "https://cdn-icons-mp4.flaticon.com/512/8617/8617218.mp4",
-    questionType: "TypeGame",
-    questionData: TypeGameData.preamble,
+    questionType: "flashcard",
+    questionData: constitutional_questions.rigths_to_eq,
   },
   {
     number: 6,
