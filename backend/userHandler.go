@@ -378,7 +378,7 @@ func (s *Server) handleChangePassword(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Password changed successfully"))
 }
 
-func (s *Server) UserScoreUpdate(scoreUpdateReq ScoreUpdateData) {
+func (s *Server) UserScoreUpdate(scoreUpdateReq ScoreUpdateData) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
@@ -389,7 +389,7 @@ func (s *Server) UserScoreUpdate(scoreUpdateReq ScoreUpdateData) {
 	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": scoreUpdateReq.Username}).Decode(&user)
 	if err != nil {
 		fmt.Println("User not found")
-		return
+		return err // Return the error
 	}
 	fmt.Println("User found, updating multiplayer score")
 
@@ -400,8 +400,9 @@ func (s *Server) UserScoreUpdate(scoreUpdateReq ScoreUpdateData) {
 	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": scoreUpdateReq.Username}, bson.M{"$set": user})
 	if err != nil {
 		fmt.Println("Failed to update user's multiplayer score")
-		return
+		return err // Return the error
 	}
 
 	fmt.Printf("User %s's multiplayer score updated by %d, new score: %d\n", scoreUpdateReq.Username, scoreUpdateReq.Diff, user.MultiPlayerScore)
+	return nil // Return nil if successful
 }

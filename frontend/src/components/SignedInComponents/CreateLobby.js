@@ -14,7 +14,10 @@ const CreateLobby = () => {
   const [ws1, setWs] = useState(null);
 
   useEffect(() => {
-    // const socket = connectWebSocket();
+    if (!ws) {
+      console.error("WebSocket is not available.");
+      return; // Exit early if ws is null
+    }
     setWs(ws);
 
     const handleMessage = (message) => {

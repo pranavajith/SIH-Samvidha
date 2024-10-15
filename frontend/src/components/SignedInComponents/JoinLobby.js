@@ -77,7 +77,7 @@ const JoinLobby = () => {
         <div className="lobby-details">
           <h2>Available Lobbies</h2>
 
-          {lobbies.length > 0 && (
+          {lobbies && lobbies.length > 0 && (
             <ul>
               {lobbies.map((lobby) => (
                 <li key={lobby.lobbyId}>
