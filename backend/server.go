@@ -16,9 +16,9 @@ import (
 
 func NewServer(serverAddress string) *Server {
 	return &Server{
-		serverAddress:     serverAddress,
-		lobbies:           make(map[string]Lobby),
-		activeConnections: make(map[*websocket.Conn]bool),
+		serverAddress: serverAddress,
+		// lobbies:           make(map[string]Lobby),
+		// activeConnections: make(map[*websocket.Conn]bool),
 	}
 }
 
@@ -44,6 +44,8 @@ func (s *Server) ConnectMongoDB() error {
 
 	s.mongoClient = client
 	s.usersCollection = client.Database("game").Collection("users")
+	s.lobbiesCollection = client.Database("game").Collection("lobbies")
+	s.connectionsCollection = client.Database("game").Collection("connections")
 	return nil
 }
 

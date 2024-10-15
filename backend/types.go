@@ -69,13 +69,22 @@ type Badge struct {
 	BadgeImage       string `json:"badgeImage"`
 }
 
+// type Server struct {
+// 	serverAddress     string
+// 	mongoClient       *mongo.Client
+// 	usersCollection   *mongo.Collection
+// 	lobbies           map[string]Lobby
+// 	activeConnections map[*websocket.Conn]bool // Map to keep track of active WebSocket connections
+// 	mutex             sync.Mutex               // Add a mutex for concurrency safety
+// }
+
 type Server struct {
-	serverAddress     string
-	mongoClient       *mongo.Client
-	usersCollection   *mongo.Collection
-	lobbies           map[string]Lobby
-	activeConnections map[*websocket.Conn]bool // Map to keep track of active WebSocket connections
-	mutex             sync.Mutex               // Add a mutex for concurrency safety
+	serverAddress         string
+	mongoClient           *mongo.Client
+	usersCollection       *mongo.Collection
+	lobbiesCollection     *mongo.Collection
+	connectionsCollection *mongo.Collection
+	mutex                 sync.Mutex // Add a mutex for concurrency safety
 }
 
 type UserResponse struct {
