@@ -6,6 +6,12 @@ BACKEND_DIR := ./backend
 .PHONY: all
 all: run
 
+# update all libraries
+.PHONY: update
+update:
+	@echo "Updating all libraries..."
+	@cd $(BACKEND_DIR) && go mod tidy && cd .. && cd $(FRONTEND_DIR) && npm install
+
 # Backend target
 .PHONY: run-backend
 run-backend:
