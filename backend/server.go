@@ -53,6 +53,7 @@ func (s *Server) Run() {
 	http.HandleFunc("/user/login", s.corsMiddleware(s.userLoginHandler))
 	http.HandleFunc("/users", s.corsMiddleware(s.usersHandler))
 	http.HandleFunc("/user/", s.corsMiddleware(s.userHandler))
+	http.HandleFunc("/user", s.corsMiddleware(s.userHandler))
 
 	fmt.Println("Server running at", s.serverAddress)
 	log.Fatal(http.ListenAndServe(s.serverAddress, nil))
@@ -61,15 +62,19 @@ func (s *Server) Run() {
 // CORS middleware
 func (s *Server) corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		// Set CORS headers
+		w.Header().Set("Access-Control-Allow-Origin", "*") // Change '*' to a specific origin if needed
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+		w.Header().Set("Access-Control-Max-Age", "86400") // Cache preflight response for 24 hours
 
-		if r.Method == "OPTIONS" {
+		// Handle preflight (OPTIONS) requests
+		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
 
+		// Call the next handler
 		next(w, r)
 	}
 }
