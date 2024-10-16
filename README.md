@@ -14,6 +14,7 @@ Before running the project, make sure the following are installed:
 1. **Go** - For the backend
 2. **React** - For the frontend
 3. **Node Package Manager (npm)** - For managing React dependencies
+4. **Make Command** (Optional) - Useful for running many executables in a single command
 
 # To Setup and Run the Project
 
@@ -45,4 +46,18 @@ make run-backend
 
 ```bash
 make run-frontend
+```
+
+## If 'make' commands are not working
+
+1. Open a Command Prompt instance at Project Root and run:
+
+```bash
+cd backend && go mod tidy && go run main.go types.go server.go userHandler.go lobbyHandler.go
+```
+
+2. Open another Command Prompt instance at Project Root and run:
+
+```bash
+cd frontend && npm install && npm start
 ```
