@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { UserProvider } from "./context/UserContext";
 import { BrowserRouter as Router } from "react-router-dom";
+import { NarrationProvider } from './context/NarrationContext';
 // import { useTranslation } from "react-i18next";
 // can add icons to timeline
 // can add learn more button at end
@@ -14,7 +15,9 @@ root.render(
   <Router>
     <UserProvider>
       <WebSocketProvider>
-        <App />
+        <NarrationProvider>
+          <App />
+        </NarrationProvider>
       </WebSocketProvider>
     </UserProvider>
   </Router>
