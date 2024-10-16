@@ -238,7 +238,7 @@ func (s *Server) handleQuestions(lobby *Lobby) {
 }
 
 // Handle player answers
-func (s *Server) submitAnswer(lobbyID string, username string, answer string, startTime time.Time, conn *websocket.Conn) {
+func (s *Server) submitAnswer(lobbyID string, username string, answer string, startTime time.Time) {
 	s.mutex.Lock()
 	lobby, exists := s.lobbies[lobbyID]
 

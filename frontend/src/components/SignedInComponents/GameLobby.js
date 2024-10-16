@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useWebSocket } from "../../context/WebSocketContext";
 import "./../../styles/GameLobby.css";
+import { UserContext } from "../../context/UserContext";
+import axios from "axios";
+import { urlList } from "../../urls";
 
 const GameLobby = () => {
   const location = useLocation();
@@ -14,6 +17,47 @@ const GameLobby = () => {
   const [startTime, setStartTime] = useState(null);
   const [playerScores, setPlayerScores] = useState(lobbyDetails.players); // Initialize with players
   const lobbyId = lobbyDetails.lobbyId;
+  const { user, setUser } = useContext(UserContext);
+
+  const handleUpdateStreak = async () => {
+    // Now send another request to update the streak
+    const streakUpdateResponse = await axios.post(
+      `${urlList.backendDatabase}/user/streak-update`,
+      {
+        username: user.username,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (streakUpdateResponse.status !== 200) {
+      throw new Error("Failed to update streak");
+    }
+
+    console.log("Streak updated successfully");
+    // Now send another request to update the streak
+    const newUser = await axios.get(
+      `${urlList.backendDatabase}/user?username=${user.username}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("User data retrieved successfully");
+    console.log(newUser.data);
+
+    if (newUser.data) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        streakData: newUser.data.streakData,
+      }));
+    }
+  };
 
   useEffect(() => {
     if (ws) {
@@ -40,6 +84,7 @@ const GameLobby = () => {
           );
         } else if (receivedMessage.messageType === "EndGame") {
           console.log("Game ended: ", receivedMessage);
+          handleUpdateStreak();
           navigate("/user");
         }
       };
