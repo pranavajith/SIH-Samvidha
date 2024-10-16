@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./../../styles/SignUp.css";
 import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
 import { urlList } from "../../urls";
+import { useNarration } from '../../context/NarrationContext';
+import { getNarrationText } from '../../utils/narrationData';
 import axios from "axios"; // Import Axios
 
 const SignUp = () => {
+  const { isNarrationActive, toggleNarration, narrate } = useNarration();
+
+  useEffect(() => {
+    if (isNarrationActive) {
+      narrate(getNarrationText("SignUp"));
+    }
+  }, [isNarrationActive, narrate]);
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

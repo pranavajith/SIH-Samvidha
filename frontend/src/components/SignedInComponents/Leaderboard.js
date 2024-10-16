@@ -3,8 +3,18 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import "./../../styles/Leaderboard.css";
 import { urlList } from "../../urls";
+import { useNarration } from '../../context/NarrationContext';
+import { getNarrationText } from '../../utils/narrationData';
 
 const Leaderboard = () => {
+  const { isNarrationActive, toggleNarration, narrate } = useNarration();
+  
+  useEffect(() => {
+    if (isNarrationActive) {
+      narrate(getNarrationText("LeaderMain"));
+    }
+  }, [isNarrationActive, narrate]);
+  
   const { user } = useContext(UserContext);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);

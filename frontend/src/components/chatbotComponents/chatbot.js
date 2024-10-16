@@ -2,12 +2,23 @@ import React, { useState } from "react";
 import "./../../styles/AskAI.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatbotAnimation from "./ChatbotAnimation";
+import { useEffect } from "react";
+import { useNarration } from '../../context/NarrationContext';
+import { getNarrationText } from '../../utils/narrationData';
 
 // Initialize the GoogleGenerativeAI Client
 const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" }); // Adjust based on your desired model
 
 const ChatBot = () => {
+  const { isNarrationActive, toggleNarration, narrate } = useNarration();
+  
+  useEffect(() => {
+    if (isNarrationActive) {
+      narrate(getNarrationText("AskAIMain"));
+    }
+  }, [isNarrationActive, narrate]);
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);

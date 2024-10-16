@@ -1,0 +1,33 @@
+Only need to edit src/utils/narrationData.js for each component
+
+import { useEffect } from "react";
+import { useNarration } from '../../context/NarrationContext';
+import { getNarrationText } from '../../utils/narrationData';
+
+
+onclick/ onFocus
+...
+  const { isNarrationActive, toggleNarration, narrate } = useNarration();
+
+  const handleNarrate = (textKey) => {
+    narrate(getNarrationText(textKey));
+  };
+  
+  handleNarrate("Id-in-narrationData") // somewhere
+...
+
+
+pageload:
+...
+  const { isNarrationActive, toggleNarration, narrate } = useNarration();
+  
+  useEffect(() => {
+    if (isNarrationActive) {
+      narrate(getNarrationText("Id-in-narrationData"));
+    }
+  }, [isNarrationActive, narrate]);
+...
+
+
+
+

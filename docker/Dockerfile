@@ -10,8 +10,9 @@ COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
 COPY frontend/ .
 COPY --from=0 /app/backend/myapp /app/backend/myapp
+COPY backend/.env /app/backend/.env
 
-WORKDIR /app
+WORKDIR /app/backend
 EXPOSE 3000 8080
 
-CMD ["sh", "-c", "./backend/myapp & cd frontend && npm start >/dev/null 2>/dev/null"]
+CMD ["sh", "-c", "./myapp & cd ../frontend && npm start >/dev/null 2>/dev/null"]

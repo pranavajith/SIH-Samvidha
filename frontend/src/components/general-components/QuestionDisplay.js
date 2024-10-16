@@ -4,8 +4,20 @@ import { MainButton } from "./MainButton";
 import { urlList } from "../../urls";
 import QuestionSlider from "./QuestionSlider";
 import { constitutional_questions } from "./../dummy-data/dummy-data";
+import { useEffect } from "react";
+import { useNarration } from '../../context/NarrationContext';
+import { getNarrationText } from '../../utils/narrationData';
 
 const QuestionDisplay = () => {
+
+  const { isNarrationActive, toggleNarration, narrate } = useNarration();
+  
+  useEffect(() => {
+    if (isNarrationActive) {
+      narrate(getNarrationText("DemoMain"));
+    }
+  }, [isNarrationActive, narrate]);
+
   const [questions, setQuestions] = useState(null);
   const [completedNum, setCompletedNum] = useState(-1);
 
