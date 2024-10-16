@@ -10,46 +10,46 @@ const constitutional_questions = {
         { value: "Mahatma Gandhi", correctStatus: false },
       ],
     },
-    {
-      question:
-        "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
-      Options: [
-        { value: "15th August 1947", correctStatus: false },
-        { value: "26th November 1949", correctStatus: false },
-        { value: "26th January 1950", correctStatus: true },
-        { value: "1st January 1950", correctStatus: false },
-      ],
-    },
-    {
-      question:
-        "Who was the first President of India, who took office on the same day the Constitution came into force?",
-      Options: [
-        { value: "Dr. Rajendra Prasad", correctStatus: true },
-        { value: "C. Rajagopalachari", correctStatus: false },
-        { value: "Sarvepalli Radhakrishnan", correctStatus: false },
-        { value: "Jawaharlal Nehru", correctStatus: false },
-      ],
-    },
-    {
-      question:
-        "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
-      Options: [
-        { value: "395", correctStatus: true },
-        { value: "448", correctStatus: false },
-        { value: "368", correctStatus: false },
-        { value: "280", correctStatus: false },
-      ],
-    },
-    {
-      question:
-        "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
-      Options: [
-        { value: "United States", correctStatus: false },
-        { value: "United Kingdom", correctStatus: false },
-        { value: "Ireland", correctStatus: true },
-        { value: "France", correctStatus: false },
-      ],
-    },
+    // {
+    //   question:
+    //     "On which date did the Indian Constitution come into effect, marking the birth of the Republic of India?",
+    //   Options: [
+    //     { value: "15th August 1947", correctStatus: false },
+    //     { value: "26th November 1949", correctStatus: false },
+    //     { value: "26th January 1950", correctStatus: true },
+    //     { value: "1st January 1950", correctStatus: false },
+    //   ],
+    // },
+    // {
+    //   question:
+    //     "Who was the first President of India, who took office on the same day the Constitution came into force?",
+    //   Options: [
+    //     { value: "Dr. Rajendra Prasad", correctStatus: true },
+    //     { value: "C. Rajagopalachari", correctStatus: false },
+    //     { value: "Sarvepalli Radhakrishnan", correctStatus: false },
+    //     { value: "Jawaharlal Nehru", correctStatus: false },
+    //   ],
+    // },
+    // {
+    //   question:
+    //     "How many Articles did the original Indian Constitution have when it was first adopted in 1949?",
+    //   Options: [
+    //     { value: "395", correctStatus: true },
+    //     { value: "448", correctStatus: false },
+    //     { value: "368", correctStatus: false },
+    //     { value: "280", correctStatus: false },
+    //   ],
+    // },
+    // {
+    //   question:
+    //     "Which country’s Constitution inspired the Directive Principles of State Policy included in the Indian Constitution?",
+    //   Options: [
+    //     { value: "United States", correctStatus: false },
+    //     { value: "United Kingdom", correctStatus: false },
+    //     { value: "Ireland", correctStatus: true },
+    //     { value: "France", correctStatus: false },
+    // ],
+    // },
   ],
   preamble_questions: [
     {

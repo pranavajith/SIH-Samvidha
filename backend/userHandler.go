@@ -135,34 +135,47 @@ func (s *Server) userHandler(w http.ResponseWriter, r *http.Request) {
 
 // Retrieve a single user by username
 func (s *Server) handleGetUser(w http.ResponseWriter, r *http.Request) {
-	var requestData struct {
-		Username string `json:"username"`
-	}
-
-	if err := json.NewDecoder(r.Body).Decode(&requestData); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+	username := r.URL.Query().Get("username")
+	if username == "" {
+		http.Error(w, "Username query parameter is missing", http.StatusBadRequest)
 		return
 	}
-
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	var user User
-	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": requestData.Username}).Decode(&user)
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": username}).Decode(&user)
 	if err != nil {
 		http.Error(w, "User not found", http.StatusNotFound)
 		return
 	}
 
-	user.PasswordHash = ""
-	userData, err := json.Marshal(user)
+	formattedDOB := user.DOB.Format("2006-01-02")
+
+	userResponse := UserResponse{
+		FirstName:        user.FirstName,
+		LastName:         user.LastName,
+		Username:         user.Username,
+		Email:            user.Email,
+		DOB:              formattedDOB, // Use the formatted DOB here
+		CompletedLevels:  user.CompletedLevels,
+		MultiPlayerScore: user.MultiPlayerScore,
+		StreakData:       user.StreakData,
+		UserProfileImage: user.UserProfileImage,
+		OngoingLevel:     user.OngoingLevel,
+		Badges:           user.Badges,
+		LongestStreak:    user.LongestStreak,
+	}
+
+	userJSON, err := json.Marshal(userResponse)
 	if err != nil {
 		http.Error(w, "Failed to encode user data", http.StatusInternalServerError)
 		return
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(userData)
+	w.Write(userJSON)
 }
 
 // Hash password for storage
@@ -419,15 +432,29 @@ func (s *Server) UserStreakUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Update the streak for the user
+	err := s.UpdateStreak(requestData.Username)
+	if err != nil {
+		http.Error(w, "Failed to update streak", http.StatusInternalServerError)
+		return
+	}
+
+	// Send a success response
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Streak updated successfully"))
+}
+
+func (s *Server) UpdateStreak(username string) error {
+
 	// Step 2: Retrieve the user from the database
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	var user User
-	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": requestData.Username}).Decode(&user)
+	err := s.usersCollection.FindOne(context.TODO(), bson.M{"username": username}).Decode(&user)
 	if err != nil {
-		http.Error(w, "User not found", http.StatusNotFound)
-		return
+		fmt.Println("User not found")
+		return err
 	}
 
 	// Step 3: Get current time (today's date)
@@ -458,18 +485,15 @@ func (s *Server) UserStreakUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Step 6: Update the user document in the database with the new streak data
-	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": requestData.Username}, bson.M{
+	_, err = s.usersCollection.UpdateOne(context.TODO(), bson.M{"username": username}, bson.M{
 		"$set": bson.M{
 			"streakData.latestPlayed":          user.StreakData.LatestPlayed,
 			"streakData.latestStreakStartDate": user.StreakData.LatestStreakStartDate,
 		},
 	})
 	if err != nil {
-		http.Error(w, "Failed to update streak data", http.StatusInternalServerError)
-		return
+		fmt.Println("Failed to update streak data")
+		return err
 	}
-
-	// Send a success response
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Streak updated successfully"))
+	return nil
 }
